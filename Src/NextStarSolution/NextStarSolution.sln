@@ -6,6 +6,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.IdentityServer", "Applications\NextStar.IdentityServer\NextStar.IdentityServer.csproj", "{5C1B2AA8-6240-407B-8D0B-ADBADAFBA77C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{74CA2B33-B9E6-490C-9BAA-93747F72AA93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.Framework.Core", "Shared\NextStar.Framework.Core\NextStar.Framework.Core.csproj", "{9439BBD0-6D12-4D0D-99AA-001E156BD0AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{5C1B2AA8-6240-407B-8D0B-ADBADAFBA77C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C1B2AA8-6240-407B-8D0B-ADBADAFBA77C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C1B2AA8-6240-407B-8D0B-ADBADAFBA77C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9439BBD0-6D12-4D0D-99AA-001E156BD0AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9439BBD0-6D12-4D0D-99AA-001E156BD0AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9439BBD0-6D12-4D0D-99AA-001E156BD0AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9439BBD0-6D12-4D0D-99AA-001E156BD0AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5C1B2AA8-6240-407B-8D0B-ADBADAFBA77C} = {AB2AF0C2-5BA8-4BC2-937C-D953E52D8D8B}
+		{9439BBD0-6D12-4D0D-99AA-001E156BD0AB} = {74CA2B33-B9E6-490C-9BAA-93747F72AA93}
 	EndGlobalSection
 EndGlobal
