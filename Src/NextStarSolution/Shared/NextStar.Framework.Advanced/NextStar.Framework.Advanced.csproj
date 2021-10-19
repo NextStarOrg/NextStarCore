@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\NextStar.Framework.Abstractions\NextStar.Framework.Abstractions.csproj" />
+      <ProjectReference Include="..\NextStar.Framework.Utils\NextStar.Framework.Utils.csproj" />
+    </ItemGroup>
+
+</Project>

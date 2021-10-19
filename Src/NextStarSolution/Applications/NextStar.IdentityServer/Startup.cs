@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using NextStar.IdentityServer.Configs;
 
 namespace NextStar.IdentityServer
 {
@@ -23,7 +25,11 @@ namespace NextStar.IdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSetting = Configuration.Get<AppSettingPartial>();
             services.AddControllersWithViews();
+            services.TryAddSingleton(Configuration);
+            services.AddHttpContextAccessor();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +50,8 @@ namespace NextStar.IdentityServer
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseIdentityServer();
 
             app.UseAuthorization();
 
