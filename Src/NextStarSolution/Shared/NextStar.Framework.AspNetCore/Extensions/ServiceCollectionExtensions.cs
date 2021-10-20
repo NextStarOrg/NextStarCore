@@ -1,0 +1,130 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using NextStar.Framework.Core.Consts;
+
+namespace NextStar.Framework.AspNetCore.Extensions
+{
+    public static class ServiceCollectionExtensions
+    {
+        /// <summary>
+        /// Gateway 自定义认证
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="appSetting"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddNextStarApiAuthentication(this IServiceCollection services,AppSetting appSetting)
+        {
+            services.AddAuthentication()
+                .AddJwtBearer("nextstarapi", options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.Authority = appSetting.Authority;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ClockSkew = TimeSpan.FromSeconds(30),
+                    };
+                });
+            return services;
+        }
+        
+        /// <summary>
+        /// Api 自定义授权
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddNextStarApiAuthorization(this IServiceCollection services)
+        {
+            return services.AddAuthorization(options =>
+            {
+                options.AddPolicy("apiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "nextstarapi");
+                });
+            });
+        }
+        
+        /// <summary>
+        /// Api 自定义认证
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="appSetting"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddNextStarJwtAuthentication(this IServiceCollection services,
+            AppSetting appSetting)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.Authority = appSetting.Authority;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false, //验证
+                        ValidateAudience = false, //
+                        ClockSkew = TimeSpan.FromSeconds(30),
+                    };
+                });
+            return services;
+        }
+        
+        /// <summary>
+        /// Redis 缓存配置
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="appSetting"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddCustomRedisCache(this IServiceCollection services, AppSetting appSetting)
+        {
+            return services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = appSetting.DataBaseSetting.Redis;
+            });
+        }
+
+        /// <summary>
+        /// API 添加自定义swagger
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="nameSpace"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddCustomSwaggerGen(this IServiceCollection services,string nameSpace)
+        {
+            return services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = $"NextStar.{nameSpace}.API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                    }
+                });
+            });
+        }
+    }
+}

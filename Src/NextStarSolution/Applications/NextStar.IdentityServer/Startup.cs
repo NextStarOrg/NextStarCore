@@ -51,7 +51,7 @@ namespace NextStar.IdentityServer
 
             app.UseRouting();
 
-            app.UseIdentityServer();
+            //app.UseIdentityServer();
 
             app.UseAuthorization();
 
