@@ -23,4 +23,15 @@
       <ProjectReference Include="..\..\Shared\NextStar.Framework.AspNetCore\NextStar.Framework.AspNetCore.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\image" />
+    </ItemGroup>
+
 </Project>

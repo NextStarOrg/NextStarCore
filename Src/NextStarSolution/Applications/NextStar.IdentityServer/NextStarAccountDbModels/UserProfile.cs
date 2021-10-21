@@ -8,7 +8,7 @@ namespace NextStar.IdentityServer.NextStarAccountDbModels
     public partial class UserProfile
     {
         public Guid UserKey { get; set; }
-        public long? Phone { get; set; }
+        public long Phone { get; set; }
         public string Email { get; set; }
         public string NickName { get; set; }
         public DateTime CreatedTime { get; set; }

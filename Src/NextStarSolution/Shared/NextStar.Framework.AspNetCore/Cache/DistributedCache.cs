@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using NextStar.Framework.Abstractions.Cache;
+using NextStar.Framework.Core.Consts;
 
 namespace NextStar.Framework.AspNetCore.Cache
 {
@@ -28,7 +29,7 @@ namespace NextStar.Framework.AspNetCore.Cache
 
         protected virtual string NormalizeKey(string key)
         {
-            return $"nextstar:{CacheName}:{key.ToLower()}";
+            return $"{NextStarCache.NextStar}:{CacheName}:{key.ToLower()}";
         }
 
         public TCacheItem Get(string key)

@@ -4,14 +4,22 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NextStar.Framework.Core.Consts;
+using NextStar.IdentityServer.Businesses;
 using NextStar.IdentityServer.Configs;
+using NextStar.IdentityServer.DbContexts;
 using NextStar.IdentityServer.Filters;
 
 namespace NextStar.IdentityServer.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddSystemIdentityServer(this IServiceCollection service,
+        /// <summary>
+        /// 添加认证框架
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="appSetting"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddNextStarIdentityServer(this IServiceCollection service,
             AppSettingPartial appSetting)
         {
             string basePath = Directory.GetCurrentDirectory();
@@ -41,6 +49,19 @@ namespace NextStar.IdentityServer.Extensions
                     options.EnableTokenCleanup = true;
                 });
 
+            return service;
+        }
+
+        public static IServiceCollection AddCustomDbContext(this IServiceCollection service, AppSetting appSetting)
+        {
+            service.AddDbContext<NextStarAccountDbContext>(options =>
+                options.UseSqlServer(appSetting.DataBaseSetting.Account));
+            return service;
+        }
+
+        public static IServiceCollection AddDependencyInjection(this IServiceCollection service)
+        {
+            service.AddTransient<ICommonBusiness, CommonBusiness>();
             return service;
         }
     }

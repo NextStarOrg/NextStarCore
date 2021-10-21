@@ -28,9 +28,13 @@ namespace NextStar.Framework.AspNetCore.DbContexts
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
 
-                entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
             });
 
             OnModelCreatingPartial(modelBuilder);

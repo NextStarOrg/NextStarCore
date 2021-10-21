@@ -8,6 +8,15 @@ namespace NextStar.IdentityServer.Configs
     {
         public IdentityServer IdentityServer { get; set; }
         public Certificates Certificates { get; set; }
+        /// <summary>
+        /// js cdn库
+        /// </summary>
+        public ICollection<CdnSettingConfig> JavaScript { get; set; } = new List<CdnSettingConfig>();
+        /// <summary>
+        /// css cdn库
+        /// </summary>
+        public ICollection<CdnSettingConfig> StyleSheet { get; set; } = new List<CdnSettingConfig>();
+
     }
 
     public class IdentityServer
@@ -20,4 +29,19 @@ namespace NextStar.IdentityServer.Configs
         public string Password { get; set; }
     }
 
+    public class CdnSettingConfig
+    {
+        /// <summary>
+        /// CDN 名称
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// 地址URL
+        /// </summary>
+        public string Url { get; set; }
+        /// <summary>
+        /// 完整性值验证
+        /// </summary>
+        public string Integrity { get; set; }
+    }
 }

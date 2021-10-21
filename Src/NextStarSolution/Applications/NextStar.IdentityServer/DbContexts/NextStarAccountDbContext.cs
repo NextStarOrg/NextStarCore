@@ -117,13 +117,17 @@ namespace NextStar.IdentityServer.DbContexts
 
                 entity.Property(e => e.UserKey).ValueGeneratedNever();
 
-                entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.LoginName)
                     .IsRequired()
                     .HasMaxLength(20);
 
-                entity.Property(e => e.NickName).HasMaxLength(100);
+                entity.Property(e => e.NickName)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.PassWord)
                     .IsRequired()
