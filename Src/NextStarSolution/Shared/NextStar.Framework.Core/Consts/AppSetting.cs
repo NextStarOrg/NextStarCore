@@ -9,7 +9,7 @@
         /// <summary>
         /// 数据库配置
         /// </summary>
-        public DatabaseSettingConfig DataBaseSetting { get; set; }
+        public DataBaseSettingConfig DataBaseSetting { get; set; }
         
         /// <summary>
         /// 认证服务器地址
@@ -22,7 +22,7 @@
         public string ConfigKey { get; set; } = "PROD";
     }
     
-    public class DatabaseSettingConfig
+    public class DataBaseSettingConfig
     {
         /// <summary>
         /// Redis 数据库配置

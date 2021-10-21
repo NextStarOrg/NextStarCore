@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Server=localhost;Database=NextStarAccount;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -Tables "User","UserHistory","UserProfile","ThirdParty" -OutputDir NextStarAccountDbModels -ContextDir DbContexts -Context NextStarAccountDbContext -Force -NoOnConfiguring

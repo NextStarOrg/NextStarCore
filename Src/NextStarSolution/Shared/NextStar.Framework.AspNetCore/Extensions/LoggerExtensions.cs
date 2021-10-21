@@ -1,11 +1,9 @@
-﻿using System.IO;
-using Microsoft.Extensions.Configuration;
-using NextStar.Framework.Core.Consts;
+﻿using NextStar.Framework.Core.Consts;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
-using Serilog.Sinks.SystemConsole.Themes;
+using System.IO;
 
 namespace NextStar.Framework.AspNetCore.Extensions
 {
@@ -31,37 +29,27 @@ namespace NextStar.Framework.AspNetCore.Extensions
                     loggerConfig.Filter.ByIncludingOnly(le =>
                             le.Level == LogEventLevel.Error ||
                             le.Level == LogEventLevel.Fatal)
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(errorConfiguration.Path, serverName + "-error.json"), LogEventLevel.Warning,
-                            errorConfiguration.FileSizeLimitBytes, errorConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(errorConfiguration.Path, serverName + "_error_.log"), restrictedToMinimumLevel: LogEventLevel.Warning, fileSizeLimitBytes: errorConfiguration.FileSizeLimitBytes, retainedFileCountLimit: errorConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 })
                 .WriteTo.Logger(loggerConfig =>
                 {
                     loggerConfig.Filter.ByIncludingOnly(le =>
                             le.Level == LogEventLevel.Warning)
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(errorConfiguration.Path, serverName + "-warning.json"), LogEventLevel.Warning,
-                            errorConfiguration.FileSizeLimitBytes, errorConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(errorConfiguration.Path, serverName + "_warning_.log"), restrictedToMinimumLevel: LogEventLevel.Warning, fileSizeLimitBytes: errorConfiguration.FileSizeLimitBytes, retainedFileCountLimit: errorConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 })
                 .WriteTo.Logger(loggerConfig =>
                 {
                     loggerConfig.Filter.ByIncludingOnly(le =>
                             le.Properties.TryGetValue("SourceContext", out var pValue) && pValue != null &&
                             pValue.ToString().Contains("NextStarAuditActionFilter"))
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(normalConfiguration.Path, serverName + "-audit.json"),
-                            LogEventLevel.Information, normalConfiguration.FileSizeLimitBytes,
-                            normalConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(normalConfiguration.Path, serverName + "_audit_.log"), restrictedToMinimumLevel: LogEventLevel.Information, fileSizeLimitBytes: normalConfiguration.FileSizeLimitBytes, retainedFileCountLimit: normalConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 })
                 .WriteTo.Logger(loggerConfig =>
                 {
                     loggerConfig.Filter.ByIncludingOnly(le =>
                             le.Properties.TryGetValue("SourceContext", out var pValue) && pValue != null &&
                             pValue.ToString().Contains("BusinessLogger"))
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(businessConfiguration.Path, serverName + "-business.json"),
-                            LogEventLevel.Information, businessConfiguration.FileSizeLimitBytes,
-                            businessConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(normalConfiguration.Path, serverName + "_business_.log"), restrictedToMinimumLevel: LogEventLevel.Information, fileSizeLimitBytes: normalConfiguration.FileSizeLimitBytes, retainedFileCountLimit: normalConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 })
                 .WriteTo.Logger(loggerConfig =>
                 {
@@ -71,10 +59,7 @@ namespace NextStar.Framework.AspNetCore.Extensions
                                  pValue.ToString().Contains("NextStarAuditActionFilter"))
                             && !(le.Properties.TryGetValue("SourceContext", out var pValue1) && pValue1 != null &&
                                  pValue1.ToString().Contains("BusinessLogger")))
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(normalConfiguration.Path, serverName + "-normal.json"),
-                            LogEventLevel.Information, normalConfiguration.FileSizeLimitBytes,
-                            normalConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(normalConfiguration.Path, serverName + "_normal_.log"), restrictedToMinimumLevel: LogEventLevel.Information, fileSizeLimitBytes: normalConfiguration.FileSizeLimitBytes, retainedFileCountLimit: normalConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 });
         }
 
@@ -98,27 +83,20 @@ namespace NextStar.Framework.AspNetCore.Extensions
                     loggerConfig.Filter.ByIncludingOnly(le =>
                             le.Level == LogEventLevel.Error ||
                             le.Level == LogEventLevel.Fatal)
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(errorConfiguration.Path, serverName + "-error.json"), LogEventLevel.Warning,
-                            errorConfiguration.FileSizeLimitBytes, errorConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(errorConfiguration.Path, serverName + "_error_.log"), restrictedToMinimumLevel: LogEventLevel.Warning, fileSizeLimitBytes: errorConfiguration.FileSizeLimitBytes, retainedFileCountLimit: errorConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 })
                 .WriteTo.Logger(loggerConfig =>
                 {
                     loggerConfig.Filter.ByIncludingOnly(le =>
                             le.Level == LogEventLevel.Warning)
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(errorConfiguration.Path, serverName + "-warning.json"), LogEventLevel.Warning,
-                            errorConfiguration.FileSizeLimitBytes, errorConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(errorConfiguration.Path, serverName + "_warning_.log"), restrictedToMinimumLevel: LogEventLevel.Warning, fileSizeLimitBytes: errorConfiguration.FileSizeLimitBytes, retainedFileCountLimit: errorConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 })
                 .WriteTo.Logger(loggerConfig =>
                 {
                     loggerConfig.Filter.ByIncludingOnly(le =>
                             le.Properties.TryGetValue("SourceContext", out var pValue) && pValue != null &&
                             pValue.ToString().Contains("BusinessLogger"))
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(businessConfiguration.Path, serverName + "-business.json"),
-                            LogEventLevel.Information, businessConfiguration.FileSizeLimitBytes,
-                            businessConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(normalConfiguration.Path, serverName + "_business_.log"), restrictedToMinimumLevel: LogEventLevel.Information, fileSizeLimitBytes: normalConfiguration.FileSizeLimitBytes, retainedFileCountLimit: normalConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 })
                 .WriteTo.Logger(loggerConfig =>
                 {
@@ -126,10 +104,7 @@ namespace NextStar.Framework.AspNetCore.Extensions
                             le.Level == LogEventLevel.Information
                             && !(le.Properties.TryGetValue("SourceContext", out var pValue1) && pValue1 != null &&
                                  pValue1.ToString().Contains("BusinessLogger")))
-                        .WriteTo.RollingFile(new CompactJsonFormatter(),
-                            Path.Combine(normalConfiguration.Path, serverName + "-normal.json"),
-                            LogEventLevel.Information, normalConfiguration.FileSizeLimitBytes,
-                            normalConfiguration.RetainedFileCountLimit);
+                        .WriteTo.File(new CompactJsonFormatter(), Path.Combine(normalConfiguration.Path, serverName + "_normal_.log"), restrictedToMinimumLevel: LogEventLevel.Information, fileSizeLimitBytes: normalConfiguration.FileSizeLimitBytes, retainedFileCountLimit: normalConfiguration.RetainedFileCountLimit, rollingInterval: RollingInterval.Day);
                 });
         }
     }

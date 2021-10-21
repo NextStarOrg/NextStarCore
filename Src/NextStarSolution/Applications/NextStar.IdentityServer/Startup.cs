@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using NextStar.Framework.AspNetCore.Extensions;
 using NextStar.IdentityServer.Configs;
 
 namespace NextStar.IdentityServer
@@ -30,6 +31,8 @@ namespace NextStar.IdentityServer
             services.TryAddSingleton(Configuration);
             services.AddHttpContextAccessor();
             services.AddHttpClient();
+            
+            services.AddCustomRedisCache(appSetting);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
