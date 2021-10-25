@@ -38,20 +38,26 @@ namespace NextStar.Framework.AspNetCore.Stores
             var sessionDb = await _context.UserSessions.FirstOrDefaultAsync(s => s.Id == sessionId);
             if (sessionDb != null)
             {
-                try
+                // 判断时间是否过期
+                if (sessionDb.ExpiredTime >= DateTime.Now)
                 {
-                    await _sessionCache.SetAsync(sessionDb.Id.ToString(), sessionDb, new DistributedCacheEntryOptions()
+                    try
                     {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)
-                    });
+                        await _sessionCache.SetAsync(sessionDb.Id.ToString(), sessionDb, new DistributedCacheEntryOptions()
+                        {
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Set {@session} to cache occur error. ", sessionDb);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Set {@session} to cache occur error. ", sessionDb);
-                }
+
+                return false;
             }
 
-            return sessionDb != null;
+            return false;
         }
 
         public async Task CreateAsync(UserSession session)
