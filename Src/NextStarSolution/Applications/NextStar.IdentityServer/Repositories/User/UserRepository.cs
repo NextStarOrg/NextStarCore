@@ -19,5 +19,10 @@ namespace NextStar.IdentityServer.Repositories.User
         {
             return await _accountDbContext.Users.Include(x=>x.UserProfile).FirstOrDefaultAsync(x => x.Key == key);
         }
+
+        public async Task<UserProfile> GetUserProfile(string loginName)
+        {
+            return await _accountDbContext.UserProfiles.FirstOrDefaultAsync(x => x.LoginName == loginName);
+        }
     }
 }

@@ -8,6 +8,7 @@ using NextStar.IdentityServer.Businesses;
 using NextStar.IdentityServer.Configs;
 using NextStar.IdentityServer.DbContexts;
 using NextStar.IdentityServer.Filters;
+using NextStar.IdentityServer.Repositories.User;
 
 namespace NextStar.IdentityServer.Extensions
 {
@@ -62,6 +63,8 @@ namespace NextStar.IdentityServer.Extensions
         public static IServiceCollection AddDependencyInjection(this IServiceCollection service)
         {
             service.AddTransient<ICommonBusiness, CommonBusiness>();
+            service.AddTransient<IAccountBusiness, AccountBusiness>();
+            service.AddTransient<IUserRepository, UserRepository>();
             return service;
         }
     }

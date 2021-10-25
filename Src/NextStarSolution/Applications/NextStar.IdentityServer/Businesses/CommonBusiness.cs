@@ -50,17 +50,18 @@ namespace NextStar.IdentityServer.Businesses
         public async Task<(IdentityServerUser User,AuthenticationProperties Props)> BuildIdentityServerUserAsync(BuildUserSessionDto buildUserSessionDto)
         {
             var user = await _userRepository.GetUserByKey(buildUserSessionDto.UserKey);
-            Guid leyserSessionId = Guid.NewGuid();
+            Guid nextStarSessionId = Guid.NewGuid();
             var identityServerUser = new IdentityServerUser(user.Key.ToString());
             identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.Name, user.UserProfile.NickName));
             identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.Email, user.UserProfile.Email));
             identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.Phone, user.UserProfile.Phone.ToString()));
             identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.ClientId, buildUserSessionDto.ClientId));
-            identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.SessionId, leyserSessionId.ToString()));
+            identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.SessionId, nextStarSessionId.ToString()));
             identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.Provider, ((int)buildUserSessionDto.LoginProvider).ToString()));
 
             var session = new UserSession()
             {
+                Id = nextStarSessionId,
                 UserKey = buildUserSessionDto.UserKey,
                 Provider = (int)buildUserSessionDto.LoginProvider,
                 Phone = user.UserProfile.Phone,

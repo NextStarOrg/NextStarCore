@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NextStar.IdentityServer.Models.Account
+namespace NextStar.IdentityServer.Models
 {
     public class LoginModel
     {
@@ -16,5 +16,7 @@ namespace NextStar.IdentityServer.Models.Account
         public string LoginPassword { get; set; }
         
         public string ReturnUrl { get; set; }
+        
+        public bool IsError { get; set; }
     }
 }
