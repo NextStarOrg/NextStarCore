@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -35,7 +36,7 @@ namespace NextStar.ManageService.API
             try
             {
                 Log.Information("Getting the identity server running...");
-                CreateHostBuilder(args).Build().Run();
+                CreateHostBuilder(args).UseServiceProviderFactory(new AutofacServiceProviderFactory()).Build().Run();
             }
             catch (Exception ex)
             {

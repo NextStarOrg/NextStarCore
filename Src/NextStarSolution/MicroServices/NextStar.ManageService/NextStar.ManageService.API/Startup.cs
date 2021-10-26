@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NextStar.Framework.AspNetCore.Auditing;
 using NextStar.Framework.AspNetCore.Extensions;
+using NextStar.Framework.AspNetCore.Result;
 using NextStar.ManageService.API.Configs;
 
 namespace NextStar.ManageService.API
