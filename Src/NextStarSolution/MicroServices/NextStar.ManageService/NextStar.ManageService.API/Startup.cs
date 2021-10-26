@@ -19,6 +19,7 @@ using NextStar.Framework.AspNetCore.Auditing;
 using NextStar.Framework.AspNetCore.Extensions;
 using NextStar.Framework.AspNetCore.Result;
 using NextStar.ManageService.API.Configs;
+using NextStar.ManageService.API.Extensions;
 
 namespace NextStar.ManageService.API
 {
@@ -44,9 +45,9 @@ namespace NextStar.ManageService.API
             services.AddNextStarJwtAuthentication(appSetting);
             services.AddNextStarApiAuthentication(appSetting);
             services.AddCustomRedisCache(appSetting);
-            
             services.AddNextStarSession(appSetting);
-            
+
+            services.AddDatabase(appSetting);
             services.AddControllers(options =>
             {
                 //追加Action审计日志
