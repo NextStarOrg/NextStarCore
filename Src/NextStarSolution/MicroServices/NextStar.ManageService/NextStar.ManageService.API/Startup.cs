@@ -43,7 +43,7 @@ namespace NextStar.ManageService.API
             services.AddMemoryCache();
             //添加身份认证相关设定
             services.AddNextStarJwtAuthentication(appSetting);
-            services.AddNextStarApiAuthentication(appSetting);
+            services.AddNextStarApiAuthorization();
             services.AddCustomRedisCache(appSetting);
             services.AddNextStarSession(appSetting);
 
@@ -81,8 +81,11 @@ namespace NextStar.ManageService.API
             }
             
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
-
-            app.UseHttpsRedirection();
+            
+            if (env.IsProduction())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseRouting();
 

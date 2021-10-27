@@ -14,7 +14,7 @@ namespace NextStar.Framework.AspNetCore.Result
         {
             Data = data;
             Success = true;
-            ErrorCode = "200";
+            ErrorCode = string.Empty;
         }
         
         public CommonDto(Dictionary<string, List<string>> errorList)
