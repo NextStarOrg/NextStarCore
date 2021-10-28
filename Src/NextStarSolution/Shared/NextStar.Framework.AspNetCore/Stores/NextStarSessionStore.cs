@@ -47,14 +47,16 @@ namespace NextStar.Framework.AspNetCore.Stores
                         {
                             AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)
                         });
+                        return true;
                     }
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Set {@session} to cache occur error. ", sessionDb);
+                        return false;
                     }
                 }
-
-                return false;
+                await DeleteAsync(sessionId);
+                return false;    
             }
 
             return false;

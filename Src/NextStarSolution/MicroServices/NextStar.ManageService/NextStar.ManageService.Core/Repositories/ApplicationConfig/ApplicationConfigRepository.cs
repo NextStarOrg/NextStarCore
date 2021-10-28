@@ -17,7 +17,24 @@ namespace NextStar.ManageService.Core.Repositories
 
         public async Task<List<ApplicationConfig>> GetAllListAsync()
         {
-            return await _accountDbContext.ApplicationConfigs.OrderBy(x => x.Id).ToListAsync();
+            return await _accountDbContext.ApplicationConfigs.AsNoTracking().OrderBy(x => x.Id).ToListAsync();
+        }
+        
+        public async Task<ApplicationConfig> GetDetailByIdAsync(int id)
+        {
+            return await _accountDbContext.ApplicationConfigs.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task UpdateConfigAsync(ApplicationConfig config)
+        {
+            var currentConfig = await _accountDbContext.ApplicationConfigs.FirstOrDefaultAsync(x => x.Id == config.Id);
+            if (currentConfig != null)
+            {
+                currentConfig.Value = config.Value;
+                currentConfig.Memo = config.Memo;
+                _accountDbContext.ApplicationConfigs.Update(currentConfig);
+                await _accountDbContext.SaveChangesAsync();
+            }
         }
     }
 }

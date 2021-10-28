@@ -13,7 +13,7 @@ namespace NextStar.ManageService.API.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     public class ApplicationConfigController : ControllerBase
     {
         private readonly ILogger<ApplicationConfigController> _logger;
@@ -25,8 +25,8 @@ namespace NextStar.ManageService.API.Controllers
             _business = business;
         }
 
-        [HttpGet]
-        public async Task<ICommonDto<List<ApplicationConfig>>> GetList()
+        [HttpGet("list")]
+        public async Task<ICommonDto<List<ApplicationConfig>>> GetListAsync()
         {
             try
             {
@@ -40,5 +40,40 @@ namespace NextStar.ManageService.API.Controllers
             }
         }
         
+        [HttpGet("{id:int}")]
+        public async Task<ICommonDto<ApplicationConfig>> GetDetailByIdAsync(int id)
+        {
+            try
+            {
+                var result = await _business.GetDetailByIdAsync(id);
+                return new CommonDto<ApplicationConfig>(result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e,"application config get list error");
+                return CommonDto<ApplicationConfig>.InternalServerErrorResult();
+            }
+        } 
+        [HttpPut("{id:int}")]
+        public async Task<ICommonDto<bool>> UpdateConfigAsync(int id,ApplicationConfig config)
+        {
+            try
+            {
+                if (id == config.Id)
+                {
+                    await _business.UpdateConfigAsync(config);
+                    return new CommonDto<bool>(true);
+                }
+                return new CommonDto<bool>(false);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e,"application config get list error");
+                return new CommonDto<bool>(false)
+                {
+                    ErrorCode = "500"
+                };
+            }
+        } 
     }
 }
