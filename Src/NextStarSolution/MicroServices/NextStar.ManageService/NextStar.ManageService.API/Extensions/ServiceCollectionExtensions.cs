@@ -22,7 +22,6 @@ namespace NextStar.ManageService.API.Extensions
         /// API 添加自定义swagger
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="nameSpace"></param>
         /// <returns></returns>
         public static IServiceCollection AddCustomSwaggerGen(this IServiceCollection services)
         {
