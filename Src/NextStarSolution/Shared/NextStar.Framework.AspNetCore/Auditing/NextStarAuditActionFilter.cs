@@ -55,14 +55,26 @@ namespace NextStar.Framework.AspNetCore.Auditing
         {
             auditLogAction = null;
 
+            var methodInfo = context.ActionDescriptor.GetMethodInfo();
+
             if (!context.ActionDescriptor.IsControllerAction())
             {
                 return false;
             }
 
-            if (!ShouldSaveAudit(context.ActionDescriptor.GetMethodInfo()))
+            if (!ShouldSaveAudit(methodInfo))
             {
                 return false;
+            }
+
+            if (!ShouldSaveParameter(methodInfo))
+            {
+                auditLogAction = CreateAuditLogAction(
+                    context.ActionDescriptor.AsControllerActionDescriptor().ControllerTypeInfo.AsType(),
+                    context.ActionDescriptor.AsControllerActionDescriptor().MethodInfo,
+                    new Dictionary<string, object>(){{"Ignore Data Auditing","null"}}
+                );
+                return true;
             }
 
             auditLogAction = CreateAuditLogAction(
@@ -76,7 +88,7 @@ namespace NextStar.Framework.AspNetCore.Auditing
         private AuditLogActionInfo CreateAuditLogAction(
             Type type,
             MethodInfo method,
-            IDictionary<string, object> arguments)
+            IDictionary<string, object> arguments = null)
         {
             var actionInfo = new AuditLogActionInfo
             {
@@ -90,7 +102,7 @@ namespace NextStar.Framework.AspNetCore.Auditing
 
             return actionInfo;
         }
-        public bool ShouldSaveAudit(MethodInfo methodInfo)
+        private bool ShouldSaveAudit(MethodInfo methodInfo)
         {
             if (methodInfo == null)
             {
@@ -103,6 +115,25 @@ namespace NextStar.Framework.AspNetCore.Auditing
             }
 
             if (methodInfo.IsDefined(typeof(DisableAuditingAttribute), true))
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private bool ShouldSaveParameter(MethodInfo methodInfo)
+        {
+            if (methodInfo == null)
+            {
+                return true;
+            }
+
+            if (!methodInfo.IsPublic)
+            {
+                return true;
+            }
+
+            if (methodInfo.IsDefined(typeof(IgnoreDataAuditingAttribute), true))
             {
                 return false;
             }

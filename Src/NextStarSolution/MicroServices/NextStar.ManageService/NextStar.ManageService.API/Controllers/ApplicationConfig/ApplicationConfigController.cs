@@ -25,6 +25,10 @@ namespace NextStar.ManageService.API.Controllers
             _business = business;
         }
 
+        /// <summary>
+        /// 获取所有配置
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("list")]
         public async Task<ICommonDto<List<ApplicationConfig>>> GetListAsync()
         {
@@ -40,6 +44,11 @@ namespace NextStar.ManageService.API.Controllers
             }
         }
         
+        /// <summary>
+        /// 获取配置详细
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id:int}")]
         public async Task<ICommonDto<ApplicationConfig>> GetDetailByIdAsync(int id)
         {
@@ -53,7 +62,14 @@ namespace NextStar.ManageService.API.Controllers
                 _logger.LogError(e,"application config get list error");
                 return CommonDto<ApplicationConfig>.InternalServerErrorResult();
             }
-        } 
+        }
+        
+        /// <summary>
+        /// 更新配置
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
         [HttpPut("{id:int}")]
         public async Task<ICommonDto<bool>> UpdateConfigAsync(int id,ApplicationConfig config)
         {

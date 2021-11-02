@@ -61,7 +61,7 @@ namespace NextStar.ManageService.API
                 };
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
-            services.AddCustomSwaggerGen("ManageService");
+            services.AddCustomSwaggerGen();
         }
         
         public static void ConfigureContainer(ContainerBuilder builder)

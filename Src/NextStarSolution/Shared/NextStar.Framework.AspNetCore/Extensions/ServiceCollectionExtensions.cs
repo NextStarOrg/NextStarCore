@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -134,6 +136,13 @@ namespace NextStar.Framework.AspNetCore.Extensions
                         new List<string>()
                     }
                 });
+                
+                // Set the comments path for the Swagger JSON and UI.
+                // 需要在 .csproj 文件中添加
+                // <PropertyGroup> <GenerateDocumentationFile>true</GenerateDocumentationFile> </PropertyGroup>
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
