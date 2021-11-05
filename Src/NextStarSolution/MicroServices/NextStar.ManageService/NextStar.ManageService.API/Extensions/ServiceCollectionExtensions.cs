@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using NextStar.Framework.Abstractions.AppSetting;
 using NextStar.Framework.Core.Consts;
 using NextStar.ManageService.Core.DbContexts;
 

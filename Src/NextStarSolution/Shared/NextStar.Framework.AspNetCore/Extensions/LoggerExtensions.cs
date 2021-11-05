@@ -4,6 +4,7 @@ using Serilog.Configuration;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
 using System.IO;
+using NextStar.Framework.Abstractions.AppSetting;
 
 namespace NextStar.Framework.AspNetCore.Extensions
 {

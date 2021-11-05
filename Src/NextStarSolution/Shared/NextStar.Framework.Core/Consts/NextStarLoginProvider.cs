@@ -2,10 +2,8 @@
 {
     public enum NextStarLoginProvider
     {
-        None = 0,
-        Github = 1,
-        Microsoft = 2,
-        Coding = 3,
-        Google = 4
+        None = 2 << 1,
+        Microsoft = 2 << 2,
+        Google = 2 << 3,
     }
 }

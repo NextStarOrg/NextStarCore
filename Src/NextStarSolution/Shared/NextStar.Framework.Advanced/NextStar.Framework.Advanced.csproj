@@ -5,8 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\NextStar.Framework.Abstractions\NextStar.Framework.Abstractions.csproj" />
-      <ProjectReference Include="..\NextStar.Framework.Utils\NextStar.Framework.Utils.csproj" />
+      <ProjectReference Include="..\NextStar.Framework.AspNetCore\NextStar.Framework.AspNetCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
     </ItemGroup>
 
 </Project>

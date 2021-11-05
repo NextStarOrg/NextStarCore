@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using IdentityServer4.Models;
+using NextStar.Framework.Abstractions.AppSetting;
 using NextStar.Framework.Core.Consts;
 
 namespace NextStar.IdentityServer.Configs

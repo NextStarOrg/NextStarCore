@@ -3,6 +3,7 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NextStar.Framework.Abstractions.AppSetting;
 using NextStar.Framework.Core.Consts;
 using NextStar.IdentityServer.Businesses;
 using NextStar.IdentityServer.Configs;

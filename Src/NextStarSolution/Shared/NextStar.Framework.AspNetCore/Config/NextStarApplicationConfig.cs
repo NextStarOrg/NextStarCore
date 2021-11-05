@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NextStar.Framework.Abstractions.AppSetting;
 using NextStar.Framework.Abstractions.Config;
 using NextStar.Framework.Core.Consts;
 using NextStar.Framework.Utils;

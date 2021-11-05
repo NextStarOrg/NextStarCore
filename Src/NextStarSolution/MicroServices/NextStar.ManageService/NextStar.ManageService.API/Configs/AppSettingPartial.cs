@@ -1,4 +1,5 @@
-﻿using NextStar.Framework.Core.Consts;
+﻿using NextStar.Framework.Abstractions.AppSetting;
+using NextStar.Framework.Core.Consts;
 
 namespace NextStar.ManageService.API.Configs
 {

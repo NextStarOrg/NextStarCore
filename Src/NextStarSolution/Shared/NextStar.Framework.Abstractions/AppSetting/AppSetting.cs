@@ -1,4 +1,4 @@
-﻿namespace NextStar.Framework.Core.Consts
+﻿namespace NextStar.Framework.Abstractions.AppSetting
 {
     public class AppSetting
     {

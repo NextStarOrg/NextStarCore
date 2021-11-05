@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using NextStar.Framework.Abstractions.AppSetting;
 using NextStar.Framework.Abstractions.Cache;
 using NextStar.Framework.Abstractions.Config;
 using NextStar.Framework.Abstractions.Session;
