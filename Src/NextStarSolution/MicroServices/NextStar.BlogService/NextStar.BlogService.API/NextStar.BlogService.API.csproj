@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+        <PackageReference Include="Serilog" Version="2.10.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\NextStar.Framework.AspNetCore\NextStar.Framework.AspNetCore.csproj" />
+      <ProjectReference Include="..\NextStar.BlogService.Core\NextStar.BlogService.Core.csproj" />
+    </ItemGroup>
+
+</Project>
