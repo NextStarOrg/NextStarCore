@@ -32,14 +32,14 @@ namespace NextStar.Framework.AspNetCore.Stores
             var session = await _sessionCache.GetAsync(sessionId.ToString());
             if (session != null)
             {
-                return true;
+                return DateTime.Compare(session.ExpiredTime, DateTime.Now.AddSeconds(30)) >= 0;
             }
 
             var sessionDb = await _context.UserSessions.FirstOrDefaultAsync(s => s.Id == sessionId);
             if (sessionDb != null)
             {
                 // 判断时间是否过期
-                if (sessionDb.ExpiredTime >= DateTime.Now)
+                if (DateTime.Compare(sessionDb.ExpiredTime,DateTime.Now.AddSeconds(30)) >= 0)
                 {
                     try
                     {
