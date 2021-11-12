@@ -28,29 +28,31 @@ namespace NextStar.Framework.Advanced.OAuth2
         }
         public async Task<string> GetAuthorizationUrlAsync(string returnUrl, NextStarLoginProvider provider)
         {
-            var state = Guid.NewGuid().ToString("N");
-            var cacheKey = state;
-            var googleAuthorizationCodeRequestUrl =
-                new GoogleAuthorizationCodeRequestUrl(new Uri(_requestAuthorizationUrl))
-                {
-                    ResponseType = "code",
-                    Scope = _scope,
-                    ClientId = _clientId,
-                    State = state,
-                    RedirectUri = _redirectUri,
-                    Nonce = Guid.NewGuid().ToString("N")
-                };
-            
-            await _distributedCache.SetAsync(cacheKey, new OfficeStateCache()
-            {
-                State = state,
-                ReturnUrl = returnUrl
-            }, new DistributedCacheEntryOptions()
-            {
-                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
-            });
-            
-            return googleAuthorizationCodeRequestUrl.Build().ToString();
+            // var openIdConfiguration = await GetProviderConfigurationAsync(provider);
+            // var state = Guid.NewGuid().ToString("N");
+            // var cacheKey = state;
+            // var googleAuthorizationCodeRequestUrl =
+            //     new GoogleAuthorizationCodeRequestUrl(new Uri(openIdConfiguration.AuthorizationEndpoint))
+            //     {
+            //         ResponseType = "code",
+            //         Scope = _scope,
+            //         ClientId = _clientId,
+            //         State = state,
+            //         RedirectUri = _redirectUri,
+            //         Nonce = Guid.NewGuid().ToString("N")
+            //     };
+            //
+            // await _distributedCache.SetAsync(cacheKey, new OfficeStateCache()
+            // {
+            //     State = state,
+            //     ReturnUrl = returnUrl
+            // }, new DistributedCacheEntryOptions()
+            // {
+            //     AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
+            // });
+            //
+            // return googleAuthorizationCodeRequestUrl.Build().ToString();
+            throw new System.NotImplementedException();
         }
 
         public async Task<OAuthUserInfo> PostRequestTokenAsync(RequestTokenParameter tokenParameter)
@@ -91,12 +93,30 @@ namespace NextStar.Framework.Advanced.OAuth2
                     config.RedirectUri =
                         await _nextStarApplicationConfig.GetConfigValueAsync(NextStarApplicationName
                             .MicrosoftLoginProvider.MicrosoftLoginRedirectUri);
+                    config.Scope =
+                        await _nextStarApplicationConfig.GetConfigValueAsync(NextStarApplicationName
+                            .MicrosoftLoginProvider.MicrosoftLoginScope);
                     break;
                 case NextStarLoginProvider.Google:
+                    config.ClientId =
+                        await _nextStarApplicationConfig.GetConfigValueAsync(NextStarApplicationName
+                            .GoogleLoginProvider.GoogleLoginClientId);
+                    config.ClientSecret =
+                        await _nextStarApplicationConfig.GetConfigValueAsync(NextStarApplicationName
+                            .GoogleLoginProvider.GoogleLoginClientSecret);
+                    config.RedirectUri =
+                        await _nextStarApplicationConfig.GetConfigValueAsync(NextStarApplicationName
+                            .GoogleLoginProvider.GoogleLoginRedirectUri);
+                    config.Scope =
+                        await _nextStarApplicationConfig.GetConfigValueAsync(NextStarApplicationName
+                            .GoogleLoginProvider.GoogleLoginScope);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(provider), provider, null);
             }
+
+            config.ResponseType = "code";
+            return config;
         }
     }
 }
