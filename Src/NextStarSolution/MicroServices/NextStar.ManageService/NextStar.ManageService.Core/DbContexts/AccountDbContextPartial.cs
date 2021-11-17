@@ -8,7 +8,7 @@ public partial class AccountDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 #if DEBUG
-        optionsBuilder.LogTo(message => Debug.WriteLine(message));
+        optionsBuilder.LogTo(message => Debug.WriteLine(message)).EnableSensitiveDataLogging();
 #endif
     }
 }
