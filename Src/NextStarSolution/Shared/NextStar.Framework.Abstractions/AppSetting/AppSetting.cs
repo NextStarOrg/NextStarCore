@@ -33,6 +33,11 @@
         /// 账户/账号管理
         /// </summary>
         public string Account { get; set; }
+        
+        /// <summary>
+        /// 博客数据库相关
+        /// </summary>
+        public string Blog { get; set; }
     }
     
     public class SerilogSettingConfig
