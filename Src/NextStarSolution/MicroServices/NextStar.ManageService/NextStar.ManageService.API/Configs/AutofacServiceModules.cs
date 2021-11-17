@@ -15,6 +15,12 @@ namespace NextStar.ManageService.API.Configs
             builder.RegisterAssemblyTypes(coreAssembly)
                 .Where(t => t.Name.EndsWith("Business") || t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
+            
+            // 注入为单实例
+            builder.RegisterAssemblyTypes(coreAssembly)
+                .Where(t => t.Name.EndsWith("SingleBusiness") || t.Name.EndsWith("SingleRepository"))
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }
