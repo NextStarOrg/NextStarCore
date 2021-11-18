@@ -16,7 +16,7 @@ using NextStar.Framework.AspNetCore.Config;
 using NextStar.Framework.AspNetCore.DbContexts;
 using NextStar.Framework.AspNetCore.Session;
 using NextStar.Framework.AspNetCore.Stores;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 
 namespace NextStar.Framework.AspNetCore.Extensions
 {

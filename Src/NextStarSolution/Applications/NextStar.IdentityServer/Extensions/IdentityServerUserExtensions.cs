@@ -2,7 +2,7 @@
 using System.Linq;
 using IdentityModel;
 using IdentityServer4;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 
 namespace NextStar.IdentityServer.Extensions
 {

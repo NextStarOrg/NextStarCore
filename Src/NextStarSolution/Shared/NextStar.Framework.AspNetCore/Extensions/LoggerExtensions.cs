@@ -1,4 +1,4 @@
-﻿using NextStar.Framework.Core.Consts;
+﻿using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Events;

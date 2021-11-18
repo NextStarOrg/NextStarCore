@@ -9,7 +9,7 @@ using NextStar.Framework.Abstractions.Config;
 using NextStar.Framework.AspNetCore.Extensions;
 using NextStar.Framework.AspNetCore.NextStarSessionDbModels;
 using NextStar.Framework.AspNetCore.Stores;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 using NextStar.IdentityServer.Dto;
 using NextStar.IdentityServer.Extensions;
 using NextStar.IdentityServer.Repositories.User;

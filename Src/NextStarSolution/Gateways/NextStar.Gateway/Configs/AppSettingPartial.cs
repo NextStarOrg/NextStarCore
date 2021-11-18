@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using NextStar.Framework.Abstractions.AppSetting;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 
 namespace NextStar.Gateway.Configs
 {

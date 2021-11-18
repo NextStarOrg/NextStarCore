@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using NextStar.Framework.Abstractions.Config;
 using NextStar.Framework.AspNetCore.Extensions;
 using NextStar.Framework.AspNetCore.Stores;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 using NextStar.IdentityServer.Businesses;
 using NextStar.IdentityServer.Dto;
 using NextStar.IdentityServer.Filters;

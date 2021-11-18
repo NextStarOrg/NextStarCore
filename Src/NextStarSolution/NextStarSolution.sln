@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.BlogService.API", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.BlogService.Core", "MicroServices\NextStar.BlogService\NextStar.BlogService.Core\NextStar.BlogService.Core.csproj", "{7AA766DB-0CF3-4F43-8D8E-00A83C2E53DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.Framework.EntityFrameworkCore", "Shared\NextStar.Framework.EntityFrameworkCore\NextStar.Framework.EntityFrameworkCore.csproj", "{8F9C76BC-A185-4A94-AA00-F76653D28939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{7AA766DB-0CF3-4F43-8D8E-00A83C2E53DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA766DB-0CF3-4F43-8D8E-00A83C2E53DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA766DB-0CF3-4F43-8D8E-00A83C2E53DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F9C76BC-A185-4A94-AA00-F76653D28939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9C76BC-A185-4A94-AA00-F76653D28939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F9C76BC-A185-4A94-AA00-F76653D28939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F9C76BC-A185-4A94-AA00-F76653D28939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5C1B2AA8-6240-407B-8D0B-ADBADAFBA77C} = {AB2AF0C2-5BA8-4BC2-937C-D953E52D8D8B}
@@ -99,5 +105,6 @@ Global
 		{4FED7A81-039D-494E-91E9-39918CF71084} = {106252CA-3E6C-4A68-AE5C-4B78491C6AE8}
 		{BFDEDB54-3765-407A-90F1-953E2383C1C7} = {4FED7A81-039D-494E-91E9-39918CF71084}
 		{7AA766DB-0CF3-4F43-8D8E-00A83C2E53DC} = {4FED7A81-039D-494E-91E9-39918CF71084}
+		{8F9C76BC-A185-4A94-AA00-F76653D28939} = {74CA2B33-B9E6-490C-9BAA-93747F72AA93}
 	EndGlobalSection
 EndGlobal

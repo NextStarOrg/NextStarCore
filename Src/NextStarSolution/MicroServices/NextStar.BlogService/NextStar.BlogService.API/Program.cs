@@ -1,6 +1,11 @@
+using System.Configuration;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NextStar.BlogService.API.Configs;
+using NextStar.BlogService.API.Extensions;
+using NextStar.Framework.AspNetCore.Auditing;
 using NextStar.Framework.AspNetCore.Extensions;
 using Serilog;
 
@@ -28,13 +33,33 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
     builder.Host.UseSerilog();
-    
-// Add services to the container.
 
-    builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    var services = builder.Services;
+// Add services to the container.
+    services.AddSingleton(configuration);
+    services.AddHttpContextAccessor();
+    services.AddMemoryCache();
+    //添加身份认证相关设定
+    services.AddNextStarJwtAuthentication(appSetting);
+    services.AddNextStarApiAuthorization();
+    services.AddCustomRedisCache(appSetting);
+    services.AddNextStarSession(appSetting);
+
+    services.AddDatabase(appSetting);
+    services.AddControllers(options =>
+    {
+        //追加Action审计日志
+        options.Filters.Add<NextStarAuditActionFilter>();
+    }).AddNewtonsoftJson(options =>
+    {
+        // options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'z'";
+        options.SerializerSettings.ContractResolver = new DefaultContractResolver()
+        {
+            NamingStrategy = new CamelCaseNamingStrategy()
+        };
+        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    });
+    services.AddCustomSwaggerGen();
 
     //使用AutoFac替换默认容易
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Build();
@@ -53,7 +78,7 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
 
     app.UseAuthorization();
 

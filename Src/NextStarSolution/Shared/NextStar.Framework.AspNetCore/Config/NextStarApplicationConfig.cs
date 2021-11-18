@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NextStar.Framework.Abstractions.AppSetting;
 using NextStar.Framework.Abstractions.Config;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 using NextStar.Framework.Utils;
 
 namespace NextStar.Framework.AspNetCore.Config

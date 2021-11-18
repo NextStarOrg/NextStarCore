@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 using Serilog.Core;
 using Serilog.Events;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using IdentityModel;
 using IdentityServer4.Models;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 
 namespace NextStar.IdentityServer.Configs
 {

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using IdentityModel;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 
 namespace NextStar.Framework.AspNetCore.Extensions
 {

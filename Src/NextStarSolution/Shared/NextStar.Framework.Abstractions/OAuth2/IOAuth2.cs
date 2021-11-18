@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 
 namespace NextStar.Framework.Abstractions.OAuth2
 {

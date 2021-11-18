@@ -1,5 +1,5 @@
 ﻿using System;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 
 namespace NextStar.IdentityServer.Dto
 {

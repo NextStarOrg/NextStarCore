@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using NextStar.Framework.Abstractions.Cache;
 using NextStar.Framework.Abstractions.Config;
 using NextStar.Framework.Abstractions.OAuth2;
-using NextStar.Framework.Core.Consts;
+using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 using DistributedCacheEntryOptions = Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions;
 
 namespace NextStar.Framework.Advanced.OAuth2

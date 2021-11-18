@@ -1,4 +1,4 @@
-﻿namespace NextStar.Framework.Core.Consts
+﻿namespace NextStar.Framework.EntityFrameworkCore.Input.Consts
 {
     public enum NextStarCodeProvider
     {
