@@ -10,5 +10,5 @@ public class SortDescriptor
     /// <summary>
     ///  属性名
     /// </summary>
-    public string PropertyName { get; set; }
+    public string PropertyName { get; set; } = null!;
 }

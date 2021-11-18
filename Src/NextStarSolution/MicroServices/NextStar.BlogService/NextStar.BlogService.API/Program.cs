@@ -60,6 +60,7 @@ try
         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
     });
     services.AddCustomSwaggerGen();
+    services.AddAutoMapper(typeof(MapperProfile));
 
     //使用AutoFac替换默认容易
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Build();
