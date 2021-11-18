@@ -12,7 +12,8 @@ using Serilog;
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json",
+        optional: true)
     .AddEnvironmentVariables()
     .Build();
 
@@ -63,16 +64,15 @@ try
     services.AddAutoMapper(typeof(MapperProfile));
 
     //使用AutoFac替换默认容易
-    builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Build();
-    builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
-    {
-        builder.RegisterModule<AutofacServiceModules>();
-    });
-   #endregion
-   
-   #region Configure
-   
-   var app = builder.Build();
+    builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+    builder.Host.ConfigureContainer<ContainerBuilder>(builder => { builder.RegisterModule<AutofacServiceModules>(); });
+
+    #endregion
+
+    var app = builder.Build();
+
+    #region Configure
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
@@ -81,10 +81,12 @@ try
 
     //app.UseHttpsRedirection();
 
+    app.UseAuthentication();
+
     app.UseAuthorization();
 
     app.MapControllers();
-    
+
     #endregion
 
     app.Run();

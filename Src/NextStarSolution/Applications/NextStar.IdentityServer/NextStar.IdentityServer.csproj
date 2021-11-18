@@ -34,4 +34,10 @@
       <Folder Include="wwwroot\image" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="IS4.pfx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

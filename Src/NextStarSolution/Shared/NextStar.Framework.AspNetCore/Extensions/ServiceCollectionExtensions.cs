@@ -31,7 +31,7 @@ namespace NextStar.Framework.AspNetCore.Extensions
         public static IServiceCollection AddNextStarApiAuthentication(this IServiceCollection services,AppSetting appSetting)
         {
             services.AddAuthentication()
-                .AddJwtBearer("nextstarapi", options =>
+                .AddJwtBearer("nextstar", options =>
                 {
                     options.RequireHttpsMetadata = false;
                     options.Authority = appSetting.Authority;

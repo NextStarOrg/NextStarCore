@@ -1,1 +1,1 @@
-﻿dotnet ef dbcontext scaffold "Server=localhost;Database=NextStarBlog;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer  -o NextStarBlogDbModels --context-dir DbContexts --context-namespace BlogDbContext -f --no-onconfiguring
+﻿dotnet ef dbcontext scaffold "Server=localhost;Database=NextStarBlog;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -o NextStarBlogDbModels --context-dir DbContexts -c BlogDbContext -f --no-onconfiguring

@@ -12,7 +12,7 @@ public static class QuerableExntensions
     /// </summary>
     /// <param name="source"></param>
     /// <param name="commonInput"></param>
-    /// <param name="defaultSort"></param>
+    /// <param name="defaultSort">默认Id排序</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static IQueryable<T> SortPagination<T>(this IQueryable<T> source, ICommonInput commonInput, string defaultSort = "Id")

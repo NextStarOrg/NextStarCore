@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using BlogDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using NextStar.BlogService.Core.DbContexts;
 using NextStar.Framework.Abstractions.AppSetting;
 using NextStar.Framework.EntityFrameworkCore.Input.Consts;
 
@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDatabase(this IServiceCollection service, AppSetting appSetting)
     {
-        service.AddDbContext<NextStarBlogContext>(options => options.UseSqlServer(appSetting.DataBaseSetting.Blog));
+        service.AddDbContext<BlogDbContext>(options => options.UseSqlServer(appSetting.DataBaseSetting.Blog));
         return service;
     }
 

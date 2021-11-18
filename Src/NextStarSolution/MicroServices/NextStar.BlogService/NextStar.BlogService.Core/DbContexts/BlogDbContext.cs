@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using NextStar.BlogService.Core.NextStarBlogDbModels;
 
-namespace BlogDbContext
+namespace NextStar.BlogService.Core.DbContexts
 {
-    public partial class NextStarBlogContext : DbContext
+    public partial class BlogDbContext : DbContext
     {
-        public NextStarBlogContext()
+        public BlogDbContext()
         {
         }
 
-        public NextStarBlogContext(DbContextOptions<NextStarBlogContext> options)
+        public BlogDbContext(DbContextOptions<BlogDbContext> options)
             : base(options)
         {
         }

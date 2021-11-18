@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlogDbContext;
+namespace NextStar.BlogService.Core.DbContexts;
 
-public partial class NextStarBlogContext : DbContext
+public partial class BlogDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
