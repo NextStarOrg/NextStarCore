@@ -27,6 +27,11 @@ public class AuthorBusiness:IAuthorBusiness
             queryList = queryList.Where(x => x.Name.Contains(input.SearchText));
         }
         
+        if (input.Filters.Any())
+        {
+            queryList = queryList.Filter(input);
+        }
+        
         var count = queryList.Count();
         queryList = queryList.SortPagination(input);
         var data = await queryList.ToListAsync();

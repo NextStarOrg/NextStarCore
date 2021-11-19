@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\NextStar.Framework.Core\NextStar.Framework.Core.csproj" />
+      <ProjectReference Include="..\NextStar.Framework.Utils\NextStar.Framework.Utils.csproj" />
     </ItemGroup>
 
 </Project>

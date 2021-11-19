@@ -13,8 +13,4 @@
       <ProjectReference Include="..\NextStar.Framework.Core\NextStar.Framework.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Extensions" />
-    </ItemGroup>
-
 </Project>

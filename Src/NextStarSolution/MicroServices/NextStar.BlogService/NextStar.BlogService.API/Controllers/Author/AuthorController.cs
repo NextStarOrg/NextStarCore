@@ -23,7 +23,7 @@ public class AuthorController:ControllerBase
         _business = business;
     }
 
-    [HttpGet("list")]
+    [HttpPost("list")]
     public async Task<ICommonDto<SelectListOutput<Author>>> GetListAsync(AuthorSelectInput input)
     {
         try
