@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using NextStar.Framework.EntityFrameworkCore.Sort;
 using System.Linq.Dynamic.Core;
+using System.Text;
 using NextStar.Framework.EntityFrameworkCore.Filter;
 using NextStar.Framework.EntityFrameworkCore.Input;
 
@@ -50,6 +51,21 @@ public static class QuerableExntensions
             }
         }
 
+        return source;
+    }
+
+    public static IQueryable<T> WhereSearchText<T>(this IQueryable<T> source, string searchText, params string[] strings)
+    {
+        var strs = strings.ToList();
+        var whereStr = new StringBuilder();
+        foreach (var str in strs)
+        {
+            whereStr.Append("str.Contains(\"{0}\")");
+            whereStr.Append(" || ");
+        }
+
+        whereStr.Remove(whereStr.Length - 1, 1);
+        source = source.Where(whereStr.ToString(), searchText);
         return source;
     }
 }

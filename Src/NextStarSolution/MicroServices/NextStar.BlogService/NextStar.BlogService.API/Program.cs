@@ -53,7 +53,7 @@ try
         options.Filters.Add<NextStarAuditActionFilter>();
     }).AddNewtonsoftJson(options =>
     {
-        // options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'z'";
+        options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'z'";
         options.SerializerSettings.ContractResolver = new DefaultContractResolver()
         {
             NamingStrategy = new CamelCaseNamingStrategy()

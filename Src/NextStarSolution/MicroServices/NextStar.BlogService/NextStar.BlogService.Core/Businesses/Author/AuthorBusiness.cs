@@ -19,9 +19,44 @@ public class AuthorBusiness:IAuthorBusiness
         _repository = repository;
     }
 
+    public async Task<bool> CreateAsync(AuthorCreatInput input)
+    {
+        var key = Guid.NewGuid();
+        var author = new Author()
+        {
+            Key = key,
+            Name = input.Name,
+            CreatedTime = DateTime.UtcNow,
+            AuthorProfile = new AuthorProfile()
+            {
+                Email = input.Profile.Email,
+                Url = input.Profile.Url
+            }
+        };
+        await _repository.CreateAsync(author);
+        return true;
+    }
+
+    public async Task<bool> UpdateAsync(AuthorUpdateInput input)
+    {
+        var author = await _repository.GetWithProfileByKeyAsync(input.Key);
+        if (author != null)
+        {
+            author.Name = input.Name;
+            if (author.AuthorProfile != null)
+            {
+                
+            }
+            await _repository.UpdateAuthorAsync(author);
+            return true;
+        }
+
+        return false;
+    }
+
     public async Task<SelectListOutput<Author>> GetListAsync(AuthorSelectInput input)
     {
-        var queryList = _repository.GetList();
+        var queryList = _repository.GetAuthors();
         if (!string.IsNullOrWhiteSpace(input.SearchText))
         {
             queryList = queryList.Where(x => x.Name.Contains(input.SearchText));
