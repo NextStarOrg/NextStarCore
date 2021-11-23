@@ -27,14 +27,14 @@ public static class QuerableExntensions
             .Take(commonInput.PageSize);
     }
 
-    public static IQueryable<T> Filter<T>(this IQueryable<T> source, IFilter filter)
+    public static IQueryable<T> Filter<T>(this IQueryable<T> source, IFilterInput filterInput)
     {
-        if (filter.Filters.Any())
+        if (filterInput.Filters.Any())
         {
             return source;
         }
 
-        foreach (var filterItem in filter.Filters)
+        foreach (var filterItem in filterInput.Filters)
         {
             if (filterItem.Values.Any())
             {

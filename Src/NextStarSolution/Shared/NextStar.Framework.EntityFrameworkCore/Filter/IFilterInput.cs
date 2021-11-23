@@ -1,6 +1,6 @@
 ﻿namespace NextStar.Framework.EntityFrameworkCore.Filter;
 
-public interface IFilter
+public interface IFilterInput
 {
     public List<FilterDescriptor> Filters { get; set; }
 }

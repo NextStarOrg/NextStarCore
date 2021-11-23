@@ -43,10 +43,8 @@ public class AuthorBusiness:IAuthorBusiness
         if (author != null)
         {
             author.Name = input.Name;
-            if (author.AuthorProfile != null)
-            {
-                
-            }
+            author.AuthorProfile.Email = input.Profile.Email;
+            author.AuthorProfile.Url = input.Profile.Url;
             await _repository.UpdateAuthorAsync(author);
             return true;
         }

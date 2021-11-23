@@ -63,6 +63,11 @@ public class AuthorController:ControllerBase
         }
     }
     
+    /// <summary>
+    /// 获取查询作者列表
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
     [HttpPost("list")]
     public async Task<ICommonDto<SelectListOutput<Author>>> GetListAsync(AuthorSelectInput input)
     {

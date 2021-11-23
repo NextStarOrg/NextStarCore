@@ -35,7 +35,7 @@ namespace NextStar.Gateway
 
             try
             {
-                Log.Information("Getting the identity server running...");
+                Log.Information("Getting the gateway server running...");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)

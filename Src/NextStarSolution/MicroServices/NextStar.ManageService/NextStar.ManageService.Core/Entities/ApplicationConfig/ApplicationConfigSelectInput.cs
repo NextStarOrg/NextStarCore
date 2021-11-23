@@ -1,10 +1,11 @@
-﻿using NextStar.Framework.EntityFrameworkCore.Filter;
+﻿using System.Collections.Generic;
+using NextStar.Framework.EntityFrameworkCore.Filter;
 using NextStar.Framework.EntityFrameworkCore.Input;
 using NextStar.Framework.EntityFrameworkCore.Sort;
 
-namespace NextStar.BlogService.Core.Entities;
+namespace NextStar.ManageService.Core.Entities.ApplicationConfig;
 
-public class AuthorSelectInput:ICommonInput,IFilterInput
+public class ApplicationConfigSelectInput:ICommonInput,IFilterInput
 {
     public string SearchText { get; set; } = string.Empty;
     public List<SortDescriptor> Sorts { get; set; } = new List<SortDescriptor>();

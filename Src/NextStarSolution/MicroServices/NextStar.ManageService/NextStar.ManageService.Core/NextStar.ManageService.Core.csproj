@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\NextStar.Framework.AspNetCore\NextStar.Framework.AspNetCore.csproj" />
+      <ProjectReference Include="..\..\..\Shared\NextStar.Framework.EntityFrameworkCore\NextStar.Framework.EntityFrameworkCore.csproj" />
     </ItemGroup>
 
 </Project>
