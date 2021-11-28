@@ -29,7 +29,6 @@ public class AppSetting
         /// Redis 数据库配置
         /// </summary>
         public string Redis { get; set; } = string.Empty;
-        
         /// <summary>
         /// 账户/账号管理
         /// </summary>

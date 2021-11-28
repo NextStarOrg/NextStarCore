@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NextStar.Identity.Configs;
+using NextStar.Identity.Extensions;
 using NextStar.Library.AspNetCore.Extensions;
 using Serilog;
 
@@ -38,8 +39,8 @@ try
     services.AddSessionStore(appSetting);
     services.AddApplicationConfigStore(appSetting);
     // self
-    //services.AddNextStarIdentityServer(appSetting);
-    //services.AddCustomDbContext(appSetting);
+    services.AddNextStarIdentityServer(appSetting);
+    services.AddCustomDbContext(appSetting);
     //services.AddDependencyInjection();
     #endregion
 

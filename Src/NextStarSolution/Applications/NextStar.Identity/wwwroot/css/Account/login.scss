@@ -1,0 +1,25 @@
+.third-party {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  align-content: center;
+  margin: 10px auto;
+
+  .icon-login {
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid #1890ff;
+    padding: 4px;
+
+    &:hover {
+      border-color: #69c0ff;
+    }
+
+    & > img {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

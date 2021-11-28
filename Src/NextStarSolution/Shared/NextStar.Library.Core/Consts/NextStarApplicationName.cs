@@ -3,7 +3,8 @@
 public class NextStarApplicationName
 {
     public const string CookieExpiredSeconds = "CookieExpiredSeconds";
-        
+
+    public const string IsAllowPasswordLogin = "IsAllowPasswordLogin";
     public static class GoogleLoginProvider
     {
         public const string GoogleLoginClientId = "GoogleLoginClientId";

@@ -51,8 +51,8 @@ public static class ServiceCollectionExtensions
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection service, AppSetting appSetting)
         {
-            //service.AddDbContext<NextStarAccountDbContext>(options =>
-            //    options.UseSqlServer(appSetting.DataBaseSetting.Account));
+            service.AddDbContext<AccountDbContext>(options =>
+                options.UseSqlServer(appSetting.DataBaseSetting.Account));
             return service;
         }
 
