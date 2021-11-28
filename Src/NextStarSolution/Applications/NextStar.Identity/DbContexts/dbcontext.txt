@@ -1,0 +1,2 @@
+# Account 
+dotnet ef dbcontext scaffold "Server=localhost;Database=NextStarAccount;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -t "User" -t "UserLoginHistory" -t "UserProfile" -t "UserThirdPartyLogin" -o  AccountDbModels --context-dir DbContexts -c AccountDbContext -f --no-onconfiguring
