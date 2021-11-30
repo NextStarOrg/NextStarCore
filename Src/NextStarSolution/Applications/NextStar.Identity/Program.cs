@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NextStar.Identity.Configs;
 using NextStar.Identity.Extensions;
@@ -25,9 +27,9 @@ try
 {
     Log.Information("Getting the identity server running...");
     var builder = WebApplication.CreateBuilder(args);
-    builder.Host.UseSerilog();
+    builder.Host.UseSerilog().UseServiceProviderFactory(new AutofacServiceProviderFactory());
+    
     #region ConfigureServices
-
     var services = builder.Services;
     // Add services to the container.
     services.AddControllersWithViews();
@@ -42,10 +44,13 @@ try
     services.AddNextStarIdentityServer(appSetting);
     services.AddCustomDbContext(appSetting);
     //services.AddDependencyInjection();
+    services.AddAutoMapper(typeof(MapperProfile));
     #endregion
 
+    // Register your own things directly with Autofac here. Don't
+    // call builder.Populate(), that happens in AutofacServiceProviderFactory for you.
+    builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacServiceModules()));
     var app = builder.Build();
-    
 
     #region Configure
 
