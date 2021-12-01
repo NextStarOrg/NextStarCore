@@ -15,20 +15,9 @@
     <link rel="stylesheet" href="~/css/Account/login.css"/>
 }
 
-<h1>登录</h1>
+<h1 id="h1">登录</h1>
 <form asp-action="Login" method="post" asp-route-returnUrl="@Model.ReturnUrl">
     <input type="hidden" asp-for="ReturnUrl" name="ReturnUrl"/>
-    <div class="third-party">
-        <a class="icon-login">
-            <img src="~/image/Account/google.svg" alt="Google icon">
-        </a>
-        <a class="icon-login">
-            <img src="~/image/Account/microsoft.svg" alt="Microsoft icon">
-        </a>
-        <a class="icon-login">
-            <img src="~/image/Account/github.svg" alt="Github icon">
-        </a>
-    </div>
     @if (await _applicationConfigStore.GetConfigBoolAsync(NextStarApplicationName.IsAllowPasswordLogin))
     {
         <div class="mb-3">
@@ -43,5 +32,31 @@
         </div>
         <button type="submit" class="btn btn-primary">登录</button>
     }
+    else
+    {
+        <div class="alert alert-primary" role="alert">
+            站点已被管理员禁止使用账号密码登录
+        </div>
+    }
+    <div class="third-party">
+        <div class="third-party-top">
+            <span>第三方登录</span>
+        </div>
+        <div class="third-party-main">
+            <a class="icon-login" href="javascript:void(0);">
+                <img src="~/image/Account/google.svg" alt="Google icon">
+                <span>Google</span>
+            </a>
+            <a class="icon-login" href="javascript:void(0);">
+                <img src="~/image/Account/microsoft.svg" alt="Microsoft icon">
+                <span>Microsoft</span>
+            </a>
+            <a class="icon-login" href="javascript:void(0);">
+                <img src="~/image/Account/github.svg" alt="Github icon">
+                <span>Github</span>
+            </a>
+        </div>
+    </div>
+
 
 </form>

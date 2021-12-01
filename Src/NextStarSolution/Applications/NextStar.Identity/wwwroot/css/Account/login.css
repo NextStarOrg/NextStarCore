@@ -1,24 +1,67 @@
+.ThirdPartyTopLine, .third-party .third-party-top:after, .third-party .third-party-top:before {
+  position: absolute;
+  top: 50%;
+  background: #FFFFFF;
+  content: "";
+  height: 1px;
+  width: calc((100% - 120px) / 2);
+}
+
+#h1 {
+  color: #FFFFFF;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 8px;
+}
+
 .third-party {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+}
+.third-party .third-party-top {
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+.third-party .third-party-top > span {
+  color: #FFFFFF;
+}
+.third-party .third-party-top:before {
+  left: 0;
+}
+.third-party .third-party-top:after {
+  right: 0;
+}
+.third-party .third-party-main {
+  margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-around;
   align-content: center;
-  margin: 10px auto;
 }
-.third-party .icon-login {
-  display: inline-block;
+.third-party .third-party-main .icon-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
   cursor: pointer;
-  border: 1px solid #1890ff;
-  padding: 4px;
 }
-.third-party .icon-login:hover {
-  border-color: #69c0ff;
-}
-.third-party .icon-login > img {
+.third-party .third-party-main .icon-login > img {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  background-color: #FFF;
+  border-radius: 36px;
+  cursor: pointer;
+}
+.third-party .third-party-main .icon-login > span {
+  margin-top: 4px;
+  color: #FFF;
+  font-size: 16px;
 }
 
 /*# sourceMappingURL=login.css.map */
