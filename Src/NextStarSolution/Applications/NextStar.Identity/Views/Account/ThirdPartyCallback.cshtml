@@ -1,0 +1,24 @@
+﻿@using NextStar.Library.AspNetCore.Abstractions
+@model ThirdPartyLoginInfo
+@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    ViewData["Title"] = "第三方登录";
+    ViewData["Description"] = "第三方登陆失败";
+    ViewData["Keywords"] = "manager,login";
+    ViewData["Author"] = "NextStar";
+}
+
+<h1 id="h1">登录失败</h1>
+<form asp-action="Login" method="post" asp-route-returnUrl="@Model.ReturnUrl">
+    <div class="alert alert-danger" role="alert">
+        当前第三方登录账户未关联上任何用户，无法登录
+        <br/>
+        第三方账户Key: @Model.Key
+        <br/>
+        第三方账户邮箱: @Model.Email
+        <br/>
+        第三方账户名字: @Model.Name
+        <br/>
+        请联系管理员添加
+    </div>
+</form>

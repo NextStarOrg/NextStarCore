@@ -30,5 +30,12 @@ p {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
 }
+#LoginWarp #LoginMain #h1 {
+  color: #FFFFFF;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 8px;
+}
 
 /*# sourceMappingURL=account.css.map */
