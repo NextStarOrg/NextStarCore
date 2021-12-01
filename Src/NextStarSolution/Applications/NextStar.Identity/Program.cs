@@ -40,6 +40,7 @@ try
     services.AddCustomRedisCache(appSetting);
     services.AddSessionStore(appSetting);
     services.AddApplicationConfigStore(appSetting);
+    services.AddThirdPartyLogin();
     // self
     services.AddNextStarIdentityServer(appSetting);
     services.AddCustomDbContext(appSetting);

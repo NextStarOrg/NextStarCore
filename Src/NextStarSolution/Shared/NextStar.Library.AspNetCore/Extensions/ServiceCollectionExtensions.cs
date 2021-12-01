@@ -7,6 +7,7 @@ using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.AspNetCore.Cache;
 using NextStar.Library.AspNetCore.DbContexts;
 using NextStar.Library.AspNetCore.Stores;
+using NextStar.Library.AspNetCore.ThirdParty;
 using NextStar.Library.Core.Abstractions;
 
 namespace NextStar.Library.AspNetCore.Extensions;
@@ -91,7 +92,7 @@ public static class ServiceCollectionExtensions
             options.Configuration = appSetting.DataBaseSetting.Redis;
         });
     }
-    
+
     /// <summary>
     /// Session 配置
     /// </summary>
@@ -105,10 +106,10 @@ public static class ServiceCollectionExtensions
             contextLifetime: ServiceLifetime.Transient,
             optionsLifetime: ServiceLifetime.Singleton);
         services.TryAddSingleton(typeof(IDistributedCache<>), typeof(DistributedCache<>));
-        services.TryAddTransient<INextStarSessionStore,NextStarSessionStore>();
+        services.TryAddTransient<INextStarSessionStore, NextStarSessionStore>();
         return services;
     }
-    
+
     /// <summary>
     /// ApplicationConfig 配置
     /// </summary>
@@ -122,7 +123,15 @@ public static class ServiceCollectionExtensions
             contextLifetime: ServiceLifetime.Transient,
             optionsLifetime: ServiceLifetime.Singleton);
         services.TryAddSingleton(typeof(IDistributedCache<>), typeof(DistributedCache<>));
-        services.TryAddTransient<IApplicationConfigStore,ApplicationConfigStore>();
+        services.TryAddTransient<IApplicationConfigStore, ApplicationConfigStore>();
+        return services;
+    }
+
+    public static IServiceCollection AddThirdPartyLogin(this IServiceCollection services)
+    {
+        services.TryAddSingleton(typeof(IDistributedCache<>), typeof(DistributedCache<>));
+        services.TryAddTransient<IApplicationConfigStore, ApplicationConfigStore>();
+        services.TryAddTransient<IThirdPartyLogin, ThirdPartyLogin>();
         return services;
     }
 }
