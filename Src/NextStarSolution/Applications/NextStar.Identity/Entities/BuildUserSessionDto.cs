@@ -9,4 +9,5 @@ public class BuildUserSessionDto
     public string ClientId { get; set; } = string.Empty;
     public string ThirdPartyEmail { get; set; } = string.Empty;
     public string ThirdPartyName { get; set; } = string.Empty;
+    public int Seconds { get; set; } = 0;
 }

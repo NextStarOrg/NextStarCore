@@ -88,10 +88,12 @@ public class ThirdPartyLogin : IThirdPartyLogin
 
         var requestTokenStr = JsonSerializer.Serialize(requestToken);
         var json = JsonSerializer.Deserialize<Dictionary<string, string>>(requestTokenStr);
+        if (json == null) throw new NullReferenceException("request token body must not null");
         var data = new FormUrlEncodedContent(json);
         var responseMessage = await http.PostAsync(new Uri(config.TokenUri), data);
-        string result = await responseMessage.Content.ReadAsStringAsync();
+        var result = await responseMessage.Content.ReadAsStringAsync();
         var oAuthTokenDto = JsonSerializer.Deserialize<ThirdPartyLoginTokenResult>(result);
+        if (oAuthTokenDto == null) throw new NullReferenceException("token response must not null");
         var idToken = new JwtSecurityToken(oAuthTokenDto.IdToken);
         var sub = idToken.Subject;
         var email = idToken.GetEmail();
@@ -103,6 +105,7 @@ public class ThirdPartyLogin : IThirdPartyLogin
             Email = email,
             Name = name,
             ReturnUrl = cache.ReturnUrl,
+            Provider = provider
         };
     }
 
@@ -117,14 +120,14 @@ public class ThirdPartyLogin : IThirdPartyLogin
         if (cache == null)
         {
             var openIdConfig = await GetProviderOpenIdConfigurationAsync(provider,
-                _applicationConfigStore.GetConfigValue(provider + "LoginOpenIdUri"));
+                 await _applicationConfigStore.GetConfigValueAsync(provider + "LoginOpenIdUri"));
             var result = new ThirdPartyLoginConfig()
             {
-                ClientId = _applicationConfigStore.GetConfigValue(provider + "LoginClientId"),
-                ClientSecret = _applicationConfigStore.GetConfigValue(provider + "LoginClientSecret"),
-                RedirectUri = _applicationConfigStore.GetConfigValue(provider + "LoginRedirectUri"),
-                Scope = _applicationConfigStore.GetConfigValue(provider + "LoginScope"),
-                OpenIdUri = _applicationConfigStore.GetConfigValue(provider + "LoginOpenIdUri"),
+                ClientId = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginClientId"),
+                ClientSecret = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginClientSecret"),
+                RedirectUri = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginRedirectUri"),
+                Scope = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginScope"),
+                OpenIdUri = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginOpenIdUri"),
                 AuthorizationUri = openIdConfig.AuthorizationEndpoint,
                 TokenUri = openIdConfig.TokenEndpoint
             };
@@ -154,6 +157,7 @@ public class ThirdPartyLogin : IThirdPartyLogin
             var http = new HttpClient();
             var result = await http.GetStringAsync(openIdUrl);
             var config = JsonSerializer.Deserialize<ThirdPartyLoginOpenidConfiguration>(result);
+            if (config == null) throw new NullReferenceException($"Get provider {provider} openid configuration body must not null");
             await _openIdCache.SetAsync(provider.ToString(), config, new DistributedCacheEntryOptions()
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)

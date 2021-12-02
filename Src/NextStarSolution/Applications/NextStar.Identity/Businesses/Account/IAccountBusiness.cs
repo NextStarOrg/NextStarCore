@@ -1,11 +1,17 @@
 ﻿using System.Security.Claims;
 using IdentityServer4;
+using Microsoft.AspNetCore.Authentication;
 using NextStar.Identity.Entities;
+using NextStar.Library.AspNetCore.Abstractions;
 
 namespace NextStar.Identity.Businesses;
 
-public interface ICommonBusiness
+public interface IAccountBusiness
 {
+    Task<Guid?> ThirdPartyLogin(ThirdPartyLoginInfo loginInfo);
+    
+    
+    
     /// <summary>
     /// 验证用户是否已经登录
     /// </summary>
@@ -19,4 +25,10 @@ public interface ICommonBusiness
     /// <param name="buildUserSessionDto"></param>
     /// <returns></returns>
     Task<IdentityServerUser?> BuildIdentityServerUserAsync(BuildUserSessionDto buildUserSessionDto);
+
+    /// <summary>
+    /// 设置身份认证属性
+    /// </summary>
+    /// <returns></returns>
+    Task<AuthenticationProperties> GetAuthProp();
 }

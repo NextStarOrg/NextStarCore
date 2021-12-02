@@ -6,28 +6,34 @@ using NextStar.Identity.Entities;
 using NextStar.Identity.Repositories;
 using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.AspNetCore.Extensions;
+using NextStar.Library.AspNetCore.SessionDbModels;
 using NextStar.Library.Core.Consts;
 
 namespace NextStar.Identity.Businesses;
 
-public class CommonBusiness : ICommonBusiness
+public class AccountBusiness:IAccountBusiness
 {
-    private readonly ILogger<CommonBusiness> _logger;
+    private readonly ILogger<AccountBusiness> _logger;
     private readonly INextStarSessionStore _nextStarSessionStore;
-    private readonly IUserRepository _userRepository;
     private readonly IApplicationConfigStore _applicationConfigStore;
-
-    public CommonBusiness(ILogger<CommonBusiness> logger,
+    private readonly IAccountRepository _repository;
+    public AccountBusiness(IAccountRepository repository,
+        ILogger<AccountBusiness> logger,
         INextStarSessionStore nextStarSessionStore,
-        IUserRepository userRepository,
         IApplicationConfigStore applicationConfigStore)
     {
+        _repository = repository;
         _logger = logger;
         _nextStarSessionStore = nextStarSessionStore;
-        _userRepository = userRepository;
         _applicationConfigStore = applicationConfigStore;
     }
 
+    public async Task<Guid?> ThirdPartyLogin(ThirdPartyLoginInfo loginInfo)
+    {
+        return await _repository.GetUserByThirdPartyKey(loginInfo.Key, loginInfo.Provider);
+    }
+    
+    
     public async Task<bool> ValidateUserIsAuthenticated(ClaimsPrincipal user)
     {
         if (user is { Identity: { IsAuthenticated: true } })
@@ -47,7 +53,7 @@ public class CommonBusiness : ICommonBusiness
 
     public async Task<IdentityServerUser?> BuildIdentityServerUserAsync(BuildUserSessionDto buildUserSessionDto)
     {
-        var user = await _userRepository.GetUserByKey(Guid.Empty);
+        var user = await _repository.GetUserByKey(buildUserSessionDto.UserKey);
         if (user == null) return null;
         var nextStarSessionId = Guid.NewGuid();
         var identityServerUser = new IdentityServerUser(user.Key.ToString());
@@ -61,6 +67,28 @@ public class CommonBusiness : ICommonBusiness
             buildUserSessionDto.ThirdPartyEmail));
         identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.ThirdPartyName,
             buildUserSessionDto.ThirdPartyName));
+
+        var session = new UserSession()
+        {
+            SessionId = nextStarSessionId,
+            UserKey = user.Key,
+            CreatedTime = DateTime.UtcNow,
+            ExpiredTime = DateTime.Now.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
+        };
+
+        await _nextStarSessionStore.CreateAsync(session);
         return identityServerUser;
+    }
+
+    public async Task<AuthenticationProperties> GetAuthProp()
+    {
+        var expiredSeconds =
+            await _applicationConfigStore.GetConfigIntAsync(NextStarApplicationName.CookieExpiredSeconds);
+        var props = new AuthenticationProperties
+        {
+            IsPersistent = true,
+            ExpiresUtc = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(expiredSeconds))
+        };
+        return props;
     }
 }

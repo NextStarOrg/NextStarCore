@@ -29,14 +29,14 @@ public class NextStarSessionStore:INextStarSessionStore
         var session = await _sessionCache.GetAsync(sessionId.ToString());
         if (session != null)
         {
-            return DateTime.Compare(session.ExpiredTime, DateTime.Now.AddSeconds(30)) >= 0;
+            return DateTime.Compare(session.ExpiredTime, DateTime.UtcNow.AddSeconds(30)) >= 0;
         }
 
         var sessionDb = await _context.UserSessions.FirstOrDefaultAsync(s => s.SessionId == sessionId);
         if (sessionDb != null)
         {
             // 判断时间是否过期
-            if (DateTime.Compare(sessionDb.ExpiredTime,DateTime.Now.AddSeconds(30)) >= 0)
+            if (DateTime.Compare(sessionDb.ExpiredTime,DateTime.UtcNow.AddSeconds(30)) >= 0)
             {
                 try
                 {
