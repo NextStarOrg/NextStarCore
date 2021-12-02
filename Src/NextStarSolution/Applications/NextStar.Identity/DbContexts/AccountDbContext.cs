@@ -24,8 +24,6 @@ namespace NextStar.Identity.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.Key)
@@ -61,6 +59,8 @@ namespace NextStar.Identity.DbContexts
                 entity.Property(e => e.IpV4).HasMaxLength(20);
 
                 entity.Property(e => e.IpV6).HasMaxLength(50);
+
+                entity.Property(e => e.LoginType).HasMaxLength(50);
 
                 entity.Property(e => e.UserAgent).HasMaxLength(200);
 
@@ -103,6 +103,8 @@ namespace NextStar.Identity.DbContexts
 
                 entity.HasIndex(e => e.Id, "UserThirdPartyLogin_Id_uindex")
                     .IsUnique();
+
+                entity.Property(e => e.LoginType).HasMaxLength(50);
 
                 entity.Property(e => e.ThirdPartyEmail).HasMaxLength(100);
 

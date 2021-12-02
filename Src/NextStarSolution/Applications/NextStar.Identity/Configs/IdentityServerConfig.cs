@@ -21,6 +21,7 @@ public class IdentityServerConfig
         resource.UserClaims.Add(NextStarClaimTypes.SessionId);
         resource.UserClaims.Add(NextStarClaimTypes.ThirdPartyName);
         resource.UserClaims.Add(NextStarClaimTypes.ThirdPartyEmail);
+        resource.UserClaims.Add(NextStarClaimTypes.Provider);
         return resource;
     }
 
@@ -33,6 +34,7 @@ public class IdentityServerConfig
                 NextStarClaimTypes.SessionId,
                 NextStarClaimTypes.ThirdPartyName,
                 NextStarClaimTypes.ThirdPartyEmail,
+                NextStarClaimTypes.Provider
             })
         };
 

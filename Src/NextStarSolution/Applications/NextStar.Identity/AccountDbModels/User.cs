@@ -21,4 +21,3 @@ namespace NextStar.Identity.AccountDbModels
         public virtual ICollection<UserThirdPartyLogin> UserThirdPartyLogins { get; set; }
     }
 }
-

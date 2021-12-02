@@ -7,7 +7,7 @@ namespace NextStar.Identity.AccountDbModels
     {
         public int Id { get; set; }
         public Guid UserKey { get; set; }
-        public int LoginType { get; set; }
+        public string LoginType { get; set; } = null!;
         public string UserAgent { get; set; } = null!;
         public string? IpV4 { get; set; }
         public string? IpV6 { get; set; }

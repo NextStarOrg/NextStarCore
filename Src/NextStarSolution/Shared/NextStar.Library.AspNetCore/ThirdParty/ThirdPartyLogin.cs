@@ -10,7 +10,7 @@ using NextStar.Library.Core.Consts;
 
 namespace NextStar.Library.AspNetCore.ThirdParty;
 
-public class ThirdPartyLogin:IThirdPartyLogin
+public class ThirdPartyLogin : IThirdPartyLogin
 {
     private readonly IApplicationConfigStore _applicationConfigStore;
     private readonly ILogger<ThirdPartyLogin> _logger;
@@ -128,7 +128,10 @@ public class ThirdPartyLogin:IThirdPartyLogin
                 AuthorizationUri = openIdConfig.AuthorizationEndpoint,
                 TokenUri = openIdConfig.TokenEndpoint
             };
-            await _configCache.SetAsync(provider.ToString(), result);
+            await _configCache.SetAsync(provider.ToString(), result, new DistributedCacheEntryOptions()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)
+            });
             return result;
         }
 
@@ -141,7 +144,8 @@ public class ThirdPartyLogin:IThirdPartyLogin
     /// <param name="provider"></param>
     /// <param name="openIdUrl"></param>
     /// <returns></returns>
-    private async Task<ThirdPartyLoginOpenidConfiguration> GetProviderOpenIdConfigurationAsync(NextStarLoginType provider,
+    private async Task<ThirdPartyLoginOpenidConfiguration> GetProviderOpenIdConfigurationAsync(
+        NextStarLoginType provider,
         string openIdUrl)
     {
         var cache = await _openIdCache.GetAsync(provider.ToString());
@@ -150,7 +154,10 @@ public class ThirdPartyLogin:IThirdPartyLogin
             var http = new HttpClient();
             var result = await http.GetStringAsync(openIdUrl);
             var config = JsonSerializer.Deserialize<ThirdPartyLoginOpenidConfiguration>(result);
-            await _openIdCache.SetAsync(provider.ToString(), config);
+            await _openIdCache.SetAsync(provider.ToString(), config, new DistributedCacheEntryOptions()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)
+            });
             return config;
         }
 
