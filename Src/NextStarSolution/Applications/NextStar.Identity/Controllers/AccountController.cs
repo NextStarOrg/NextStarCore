@@ -79,7 +79,7 @@ public class AccountController : Controller
             }
             catch (Exception e)
             {
-                _logger.LogError(e, $"{routingParameters} is get openid configuration key error");
+                _logger.LogError(e, "{RoutingParameters} is get openid configuration key error", routingParameters);
                 return BadRequest();
             }
         }
@@ -99,7 +99,7 @@ public class AccountController : Controller
                 var userKey = await _business.ThirdPartyLogin(loginInfo);
                 // 如果返回后查询没有关联其他数据则返回对于Key并提示用户添加进去
                 if (userKey == null) return View(loginInfo);
-                
+
                 var context = await _interaction.GetAuthorizationContextAsync(loginInfo.ReturnUrl);
                 var buildUserSessionDto = new BuildUserSessionDto()
                 {
@@ -108,7 +108,8 @@ public class AccountController : Controller
                     ClientId = "Unknown",
                     ThirdPartyEmail = loginInfo.Email,
                     ThirdPartyName = loginInfo.Name,
-                    Seconds = await _applicationConfigStore.GetConfigIntAsync(NextStarApplicationName.CookieExpiredSeconds)
+                    Seconds = await _applicationConfigStore.GetConfigIntAsync(NextStarApplicationName
+                        .CookieExpiredSeconds)
                 };
                 if (context != null)
                 {
@@ -118,13 +119,13 @@ public class AccountController : Controller
 
                 var identityServerUser = await _business.BuildIdentityServerUserAsync(buildUserSessionDto);
                 if (identityServerUser == null) return BadRequest();
-                
+
                 var props = await _business.GetAuthProp();
                 return await PersonalSingInAsync(identityServerUser, context, props, loginInfo.ReturnUrl);
             }
             catch (Exception e)
             {
-                _logger.LogError(e, $"{routingParameters} is get key error");
+                _logger.LogError(e, "{RoutingParameters} is get key error", routingParameters);
                 return BadRequest();
             }
         }
@@ -159,7 +160,7 @@ public class AccountController : Controller
         }
 
         // user might have clicked on a malicious link - should be logged
-        _logger.LogError(string.Format("invalid return URL: {0}", returnUrl));
+        _logger.LogError("invalid return URL: {ReturnUrl}", returnUrl);
         return StatusCode(500);
     }
 

@@ -4,6 +4,13 @@ public interface IApplicationConfigStore
 {
     Task<string> GetConfigValueAsync(string name);
     string GetConfigValue(string name);
+
+    /// <summary>
+    /// 清除配置缓存
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    Task ClearConfigCacheAsync(string name);
     /// <summary>
     /// 无值返回false，在进行配置数据时请注意
     /// </summary>

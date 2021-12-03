@@ -43,17 +43,13 @@
             <span>第三方登录</span>
         </div>
         <div class="third-party-main">
-            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Google">
+            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Google" title="Google 登录">
                 <img src="~/image/Account/google.svg" alt="Google icon">
                 <span>Google</span>
             </a>
-            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Microsoft">
+            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Microsoft" title="Microsoft 登录">
                 <img src="~/image/Account/microsoft.svg" alt="Microsoft icon">
                 <span>Microsoft</span>
-            </a>
-            <a class="icon-login" href="javascript:void(0);">
-                <img src="~/image/Account/github.svg" alt="Github icon">
-                <span>Github</span>
             </a>
         </div>
     </div>
