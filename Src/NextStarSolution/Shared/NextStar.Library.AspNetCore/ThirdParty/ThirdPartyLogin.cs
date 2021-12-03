@@ -98,8 +98,7 @@ public class ThirdPartyLogin : IThirdPartyLogin
         var sub = idToken.Subject;
         var email = idToken.GetEmail();
         var name = idToken.GetName();
-        await _stateCache.RemoveAsync(state);
-        return new ThirdPartyLoginInfo()
+        var loginInfo = new ThirdPartyLoginInfo()
         {
             Key = sub,
             Email = email,
@@ -107,6 +106,8 @@ public class ThirdPartyLogin : IThirdPartyLogin
             ReturnUrl = cache.ReturnUrl,
             Provider = provider
         };
+        await _stateCache.RemoveAsync(state);
+        return loginInfo;
     }
 
     /// <summary>

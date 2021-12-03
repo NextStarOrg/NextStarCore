@@ -43,11 +43,11 @@
             <span>第三方登录</span>
         </div>
         <div class="third-party-main">
-            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Google" title="Google 登录">
+            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Google" title="Google 登录" asp-route-returnUrl="@Model.ReturnUrl">
                 <img src="~/image/Account/google.svg" alt="Google icon">
                 <span>Google</span>
             </a>
-            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Microsoft" title="Microsoft 登录">
+            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Microsoft" title="Microsoft 登录" asp-route-returnUrl="@Model.ReturnUrl">
                 <img src="~/image/Account/microsoft.svg" alt="Microsoft icon">
                 <span>Microsoft</span>
             </a>

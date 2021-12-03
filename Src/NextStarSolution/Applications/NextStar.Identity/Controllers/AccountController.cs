@@ -71,14 +71,14 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> ThirdPartyLogin(string routingParameters)
+    public async Task<IActionResult> ThirdPartyLogin(string routingParameters, string returnUrl)
     {
         var isEnum = Enum.TryParse<NextStarLoginType>(routingParameters, true, out var provider);
         if (isEnum)
         {
             try
             {
-                var url = await _thirdPartyLogin.GetAuthorizationUrlAsync(string.Empty, provider);
+                var url = await _thirdPartyLogin.GetAuthorizationUrlAsync(returnUrl, provider);
                 return Redirect(url);
             }
             catch (Exception e)
@@ -136,68 +136,69 @@ public class AccountController : Controller
 
         return BadRequest();
     }
-    
+
     [HttpGet]
-        public async Task<IActionResult> Logout(string? logoutId)
+    public async Task<IActionResult> Logout(string? logoutId)
+    {
+        try
         {
-            try
+            // build a model so the logged out page knows what to display
+            //var vm = await BuildLoggedOutViewModelAsync(model.LogoutId);
+            if (User != null)
             {
-                // build a model so the logged out page knows what to display
-                //var vm = await BuildLoggedOutViewModelAsync(model.LogoutId);
-                if (User != null)
+                var sessionId = User.GetNextStarSessionId();
+                // delete local authentication cookie
+                await HttpContext.SignOutAsync();
+                try
                 {
-                    var sessionId = User.GetNextStarSessionId();
-                    // delete local authentication cookie
-                    await HttpContext.SignOutAsync();
-                    try
+                    if (sessionId != null)
                     {
-                        if (sessionId != null)
-                        {
-                            //删除session和更新登录记录的退出时间
-                            await _nextStarSessionStore.DeleteAsync(sessionId.Value);
-                            await _business.UpdateHistoryLogoutAsync(sessionId.Value);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Delete session {SessionId} occur error", sessionId);
+                        //删除session和更新登录记录的退出时间
+                        await _nextStarSessionStore.DeleteAsync(sessionId.Value);
+                        await _business.UpdateHistoryLogoutAsync(sessionId.Value);
                     }
                 }
-
-                if (logoutId == null)
+                catch (Exception ex)
                 {
-                    await HttpContext.SignOutAsync();
-                    //默认重定向到shcool site
-                    var client = await _clientStore.FindClientByIdAsync(NextStarClientIds.ManageClientId);
+                    _logger.LogError(ex, "Delete session {SessionId} occur error", sessionId);
+                }
+            }
+
+            if (logoutId == null)
+            {
+                await HttpContext.SignOutAsync();
+                //默认重定向到shcool site
+                var client = await _clientStore.FindClientByIdAsync(NextStarClientIds.ManageClientId);
+
+                return Redirect(client.PostLogoutRedirectUris.First());
+            }
+            else
+            {
+                var context = await _interaction.GetLogoutContextAsync(logoutId);
+
+                if (context == null || string.IsNullOrEmpty(context.PostLogoutRedirectUri))
+                {
+                    //默认重定向到parent site
+                    var client =
+                        await _clientStore.FindClientByIdAsync(context?.ClientId ?? NextStarClientIds.ManageClientId);
 
                     return Redirect(client.PostLogoutRedirectUris.First());
                 }
-                else
-                {
-                    var context = await _interaction.GetLogoutContextAsync(logoutId);
 
-                    if (context == null || string.IsNullOrEmpty(context.PostLogoutRedirectUri))
-                    {
-                        //默认重定向到parent site
-                        var client = await _clientStore.FindClientByIdAsync(context?.ClientId ?? NextStarClientIds.ManageClientId);
-
-                        return Redirect(client.PostLogoutRedirectUris.First());
-                    }
-
-                    return Redirect(context.PostLogoutRedirectUri);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Logout occur error");
-
-                await HttpContext.SignOutAsync();
-
-                //默认重定向到parent site
-                var client = await _clientStore.FindClientByIdAsync(NextStarClientIds.ManageClientId);
-                return Redirect(client.PostLogoutRedirectUris.First());
+                return Redirect(context.PostLogoutRedirectUri);
             }
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Logout occur error");
+
+            await HttpContext.SignOutAsync();
+
+            //默认重定向到parent site
+            var client = await _clientStore.FindClientByIdAsync(NextStarClientIds.ManageClientId);
+            return Redirect(client.PostLogoutRedirectUris.First());
+        }
+    }
 
     #region Private Method
 
