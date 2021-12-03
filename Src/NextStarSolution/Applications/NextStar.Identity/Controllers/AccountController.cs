@@ -9,6 +9,7 @@ using NextStar.Identity.Businesses;
 using NextStar.Identity.Entities;
 using NextStar.Identity.Models;
 using NextStar.Library.AspNetCore.Abstractions;
+using NextStar.Library.AspNetCore.Extensions;
 using NextStar.Library.Core.Consts;
 
 namespace NextStar.Identity.Controllers;
@@ -21,13 +22,15 @@ public class AccountController : Controller
     private readonly IThirdPartyLogin _thirdPartyLogin;
     private readonly IAccountBusiness _business;
     private readonly IApplicationConfigStore _applicationConfigStore;
+    private readonly INextStarSessionStore _nextStarSessionStore;
 
     public AccountController(ILogger<AccountController> logger,
         IIdentityServerInteractionService interaction,
         IClientStore clientStore,
         IThirdPartyLogin thirdPartyLogin,
         IAccountBusiness business,
-        IApplicationConfigStore applicationConfigStore)
+        IApplicationConfigStore applicationConfigStore,
+        INextStarSessionStore nextStarSessionStore)
     {
         _logger = logger;
         _interaction = interaction;
@@ -35,6 +38,7 @@ public class AccountController : Controller
         _thirdPartyLogin = thirdPartyLogin;
         _business = business;
         _applicationConfigStore = applicationConfigStore;
+        _nextStarSessionStore = nextStarSessionStore;
     }
 
     [HttpGet]
@@ -42,7 +46,7 @@ public class AccountController : Controller
     {
         var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
 
-        if (!await _business.ValidateUserIsAuthenticated(User))
+        if (!await _business.ValidateUserIsAuthenticatedAsync(User))
         {
             await HttpContext.SignOutAsync();
         }
@@ -96,7 +100,7 @@ public class AccountController : Controller
             try
             {
                 var loginInfo = await _thirdPartyLogin.PostRequestTokenAsync(state, code, provider);
-                var userKey = await _business.ThirdPartyLogin(loginInfo);
+                var userKey = await _business.ThirdPartyLoginAsync(loginInfo);
                 // 如果返回后查询没有关联其他数据则返回对于Key并提示用户添加进去
                 if (userKey == null) return View(loginInfo);
 
@@ -119,8 +123,8 @@ public class AccountController : Controller
 
                 var identityServerUser = await _business.BuildIdentityServerUserAsync(buildUserSessionDto);
                 if (identityServerUser == null) return BadRequest();
-
-                var props = await _business.GetAuthProp();
+                await _business.LoginHistoryAsync(identityServerUser, HttpContext);
+                var props = await _business.GetAuthPropAsync();
                 return await PersonalSingInAsync(identityServerUser, context, props, loginInfo.ReturnUrl);
             }
             catch (Exception e)
@@ -132,6 +136,68 @@ public class AccountController : Controller
 
         return BadRequest();
     }
+    
+    [HttpGet]
+        public async Task<IActionResult> Logout(string? logoutId)
+        {
+            try
+            {
+                // build a model so the logged out page knows what to display
+                //var vm = await BuildLoggedOutViewModelAsync(model.LogoutId);
+                if (User != null)
+                {
+                    var sessionId = User.GetNextStarSessionId();
+                    // delete local authentication cookie
+                    await HttpContext.SignOutAsync();
+                    try
+                    {
+                        if (sessionId != null)
+                        {
+                            //删除session和更新登录记录的退出时间
+                            await _nextStarSessionStore.DeleteAsync(sessionId.Value);
+                            await _business.UpdateHistoryLogoutAsync(sessionId.Value);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Delete session {SessionId} occur error", sessionId);
+                    }
+                }
+
+                if (logoutId == null)
+                {
+                    await HttpContext.SignOutAsync();
+                    //默认重定向到shcool site
+                    var client = await _clientStore.FindClientByIdAsync(NextStarClientIds.ManageClientId);
+
+                    return Redirect(client.PostLogoutRedirectUris.First());
+                }
+                else
+                {
+                    var context = await _interaction.GetLogoutContextAsync(logoutId);
+
+                    if (context == null || string.IsNullOrEmpty(context.PostLogoutRedirectUri))
+                    {
+                        //默认重定向到parent site
+                        var client = await _clientStore.FindClientByIdAsync(context?.ClientId ?? NextStarClientIds.ManageClientId);
+
+                        return Redirect(client.PostLogoutRedirectUris.First());
+                    }
+
+                    return Redirect(context.PostLogoutRedirectUri);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Logout occur error");
+
+                await HttpContext.SignOutAsync();
+
+                //默认重定向到parent site
+                var client = await _clientStore.FindClientByIdAsync(NextStarClientIds.ManageClientId);
+                return Redirect(client.PostLogoutRedirectUris.First());
+            }
+        }
 
     #region Private Method
 

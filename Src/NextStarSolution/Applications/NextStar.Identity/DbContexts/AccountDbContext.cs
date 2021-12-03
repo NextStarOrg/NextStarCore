@@ -54,8 +54,6 @@ namespace NextStar.Identity.DbContexts
                 entity.HasIndex(e => e.Id, "UserLoginHistory_Id_uindex")
                     .IsUnique();
 
-                entity.Property(e => e.Column8).HasColumnName("column_8");
-
                 entity.Property(e => e.IpV4).HasMaxLength(20);
 
                 entity.Property(e => e.IpV6).HasMaxLength(50);

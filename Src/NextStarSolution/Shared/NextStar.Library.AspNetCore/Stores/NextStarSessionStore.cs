@@ -99,6 +99,11 @@ public class NextStarSessionStore:INextStarSessionStore
     {
         return await _context.UserSessions.AsNoTracking().Where(u => u.UserKey == userId).ToListAsync();
     }
+    
+    public async Task<UserSession?> GetSessionByIdAsync(Guid sessionId)
+    {
+        return await _context.UserSessions.AsNoTracking().FirstOrDefaultAsync(u => u.SessionId == sessionId);
+    }
 
     public async Task DeleteAllByUserIdAsync(Guid userId)
     {

@@ -5,7 +5,9 @@ namespace NextStar.Identity.Repositories;
 
 public interface IAccountRepository
 {
-    Task<User?> GetUserByKey(Guid userKey);
-    Task<UserProfile?> GetUserProfileByLoginName(string loginName);
-    Task<Guid?> GetUserByThirdPartyKey(string key, NextStarLoginType provider);
+    Task<User?> GetUserByKeyAsync(Guid userKey);
+    Task<UserProfile?> GetUserProfileByLoginNameAsync(string loginName);
+    Task<Guid?> GetUserByThirdPartyKeyAsync(string key, NextStarLoginType provider);
+    Task CreateUserLoginHistoryAsync(UserLoginHistory userLoginHistory);
+    Task UpdateHistoryLogoutTimeAsync(Guid sessionId);
 }

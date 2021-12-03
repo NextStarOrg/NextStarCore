@@ -8,16 +8,13 @@ namespace NextStar.Identity.Businesses;
 
 public interface IAccountBusiness
 {
-    Task<Guid?> ThirdPartyLogin(ThirdPartyLoginInfo loginInfo);
-    
-    
-    
+    Task<Guid?> ThirdPartyLoginAsync(ThirdPartyLoginInfo loginInfo);
     /// <summary>
     /// 验证用户是否已经登录
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    Task<bool> ValidateUserIsAuthenticated(ClaimsPrincipal user);
+    Task<bool> ValidateUserIsAuthenticatedAsync(ClaimsPrincipal user);
 
     /// <summary>
     /// 构建认证服务的用户
@@ -30,5 +27,8 @@ public interface IAccountBusiness
     /// 设置身份认证属性
     /// </summary>
     /// <returns></returns>
-    Task<AuthenticationProperties> GetAuthProp();
+    Task<AuthenticationProperties> GetAuthPropAsync();
+
+    Task LoginHistoryAsync(IdentityServerUser user, HttpContext httpContext);
+    Task UpdateHistoryLogoutAsync(Guid sessionId);
 }

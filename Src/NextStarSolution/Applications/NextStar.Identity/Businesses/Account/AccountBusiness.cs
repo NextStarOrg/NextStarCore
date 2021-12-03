@@ -2,7 +2,9 @@
 using IdentityModel;
 using IdentityServer4;
 using Microsoft.AspNetCore.Authentication;
+using NextStar.Identity.AccountDbModels;
 using NextStar.Identity.Entities;
+using NextStar.Identity.Extensions;
 using NextStar.Identity.Repositories;
 using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.AspNetCore.Extensions;
@@ -28,13 +30,13 @@ public class AccountBusiness:IAccountBusiness
         _applicationConfigStore = applicationConfigStore;
     }
 
-    public async Task<Guid?> ThirdPartyLogin(ThirdPartyLoginInfo loginInfo)
+    public async Task<Guid?> ThirdPartyLoginAsync(ThirdPartyLoginInfo loginInfo)
     {
-        return await _repository.GetUserByThirdPartyKey(loginInfo.Key, loginInfo.Provider);
+        return await _repository.GetUserByThirdPartyKeyAsync(loginInfo.Key, loginInfo.Provider);
     }
     
     
-    public async Task<bool> ValidateUserIsAuthenticated(ClaimsPrincipal user)
+    public async Task<bool> ValidateUserIsAuthenticatedAsync(ClaimsPrincipal user)
     {
         if (user is { Identity: { IsAuthenticated: true } })
         {
@@ -53,7 +55,7 @@ public class AccountBusiness:IAccountBusiness
 
     public async Task<IdentityServerUser?> BuildIdentityServerUserAsync(BuildUserSessionDto buildUserSessionDto)
     {
-        var user = await _repository.GetUserByKey(buildUserSessionDto.UserKey);
+        var user = await _repository.GetUserByKeyAsync(buildUserSessionDto.UserKey);
         if (user == null) return null;
         var nextStarSessionId = Guid.NewGuid();
         var identityServerUser = new IdentityServerUser(user.Key.ToString());
@@ -73,14 +75,14 @@ public class AccountBusiness:IAccountBusiness
             SessionId = nextStarSessionId,
             UserKey = user.Key,
             CreatedTime = DateTime.UtcNow,
-            ExpiredTime = DateTime.Now.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
+            ExpiredTime = DateTime.UtcNow.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
         };
 
         await _nextStarSessionStore.CreateAsync(session);
         return identityServerUser;
     }
 
-    public async Task<AuthenticationProperties> GetAuthProp()
+    public async Task<AuthenticationProperties> GetAuthPropAsync()
     {
         var expiredSeconds =
             await _applicationConfigStore.GetConfigIntAsync(NextStarApplicationName.CookieExpiredSeconds);
@@ -90,5 +92,29 @@ public class AccountBusiness:IAccountBusiness
             ExpiresUtc = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(expiredSeconds))
         };
         return props;
+    }
+
+    public async Task LoginHistoryAsync(IdentityServerUser user,HttpContext httpContext)
+    {
+        var sessionId = user.GetSessionId();
+        var provider = user.GetProvider();
+        var session = await _nextStarSessionStore.GetSessionByIdAsync(sessionId);
+        if (session == null) throw new NullReferenceException("session is null");
+        var userHistory = new UserLoginHistory()
+        {
+            UserKey = session.UserKey,
+            LoginType = provider.ToString(),
+            UserAgent = httpContext.Request.Headers["User-Agent"].ToString(),
+            IpV4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString(),
+            IpV6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv6().ToString(),
+            SessionId = sessionId,
+            LoginTime = session.CreatedTime
+        };
+        await _repository.CreateUserLoginHistoryAsync(userHistory);
+    }
+
+    public async Task UpdateHistoryLogoutAsync(Guid sessionId)
+    {
+        await _repository.UpdateHistoryLogoutTimeAsync(sessionId);
     }
 }
