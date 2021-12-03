@@ -13,25 +13,4 @@ public partial class AccountDbContext : DbContext
         optionsBuilder.LogTo(message => Debug.WriteLine(message)).EnableSensitiveDataLogging();
 #endif
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<User>(entity =>
-        {
-            entity.Property(p=>p.Id)
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-        });
-        
-        modelBuilder.Entity<UserLoginHistory>(entity =>
-        {
-            entity.Property(p=>p.Id)
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-        });
-        
-        modelBuilder.Entity<UserThirdPartyLogin>(entity =>
-        {
-            entity.Property(p=>p.Id)
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-        });
-    }
 }
