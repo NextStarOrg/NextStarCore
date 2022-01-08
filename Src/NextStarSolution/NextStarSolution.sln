@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.Library.Core", "Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.Library.AspNetCore", "Shared\NextStar.Library.AspNetCore\NextStar.Library.AspNetCore.csproj", "{071EEA8C-AA0F-4484-85E7-0CE39FAEBEEE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{609F1ECD-99FB-48ED-BA92-688CE6303252}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.Gateway.Manage", "Gateways\NextStar.Gateway.Manage\NextStar.Gateway.Manage.csproj", "{1AD81317-A26D-454A-8B69-A78781B327C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,7 @@ Global
 		{E9B8ABBE-377E-438B-AB6D-337E8BA06961} = {90A590B8-DCE0-48D7-BD84-AB7E77E4F78D}
 		{675AD456-57B1-440B-B44B-9357BEF3C557} = {4BC76145-52F7-4D13-9596-588E6E025C5A}
 		{071EEA8C-AA0F-4484-85E7-0CE39FAEBEEE} = {4BC76145-52F7-4D13-9596-588E6E025C5A}
+		{1AD81317-A26D-454A-8B69-A78781B327C5} = {609F1ECD-99FB-48ED-BA92-688CE6303252}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E9B8ABBE-377E-438B-AB6D-337E8BA06961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -33,5 +38,9 @@ Global
 		{071EEA8C-AA0F-4484-85E7-0CE39FAEBEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{071EEA8C-AA0F-4484-85E7-0CE39FAEBEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{071EEA8C-AA0F-4484-85E7-0CE39FAEBEEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AD81317-A26D-454A-8B69-A78781B327C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AD81317-A26D-454A-8B69-A78781B327C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AD81317-A26D-454A-8B69-A78781B327C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AD81317-A26D-454A-8B69-A78781B327C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
