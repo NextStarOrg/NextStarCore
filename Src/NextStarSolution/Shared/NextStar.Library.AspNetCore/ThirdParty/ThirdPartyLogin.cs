@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Google.Apis.Auth.OAuth2.Requests;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.AspNetCore.Extensions;
@@ -17,18 +18,21 @@ public class ThirdPartyLogin : IThirdPartyLogin
     private readonly IDistributedCache<ThirdPartyLoginStateCache> _stateCache;
     private readonly IDistributedCache<ThirdPartyLoginOpenidConfiguration> _openIdCache;
     private readonly IDistributedCache<ThirdPartyLoginConfig> _configCache;
+    private readonly IMemoryCache _stateBackupCache;
 
     public ThirdPartyLogin(IApplicationConfigStore applicationConfigStore,
         ILogger<ThirdPartyLogin> logger,
         IDistributedCache<ThirdPartyLoginStateCache> stateCache,
         IDistributedCache<ThirdPartyLoginOpenidConfiguration> openIdCache,
-        IDistributedCache<ThirdPartyLoginConfig> configCache)
+        IDistributedCache<ThirdPartyLoginConfig> configCache,
+        IMemoryCache stateBackupCache)
     {
         _applicationConfigStore = applicationConfigStore;
         _logger = logger;
         _stateCache = stateCache;
         _openIdCache = openIdCache;
         _configCache = configCache;
+        _stateBackupCache = stateBackupCache;
     }
 
     /// <summary>
@@ -53,15 +57,32 @@ public class ThirdPartyLogin : IThirdPartyLogin
                 Nonce = Guid.NewGuid().ToString("N")
             };
 
-        await _stateCache.SetAsync(cacheKey, new ThirdPartyLoginStateCache()
+        try
         {
-            State = state,
-            ReturnUrl = returnUrl,
-            Provider = provider.ToString()
-        }, new DistributedCacheEntryOptions()
+            await _stateCache.SetAsync(cacheKey, new ThirdPartyLoginStateCache()
+            {
+                State = state,
+                ReturnUrl = returnUrl,
+                Provider = provider.ToString()
+            }, new DistributedCacheEntryOptions()
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
+            });
+        }
+        catch (Exception e)
         {
-            AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
-        });
+            _logger.LogWarning(e,"redis set cache error");
+            // redis 如果不通，则使用内存处理
+            _stateBackupCache.Set(cacheKey, new ThirdPartyLoginStateCache()
+            {
+                State = state,
+                ReturnUrl = returnUrl,
+                Provider = provider.ToString()
+            }, new MemoryCacheEntryOptions()
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
+            });
+        }
 
         return googleAuthorizationCodeRequestUrl.Build().ToString();
     }
@@ -71,7 +92,18 @@ public class ThirdPartyLogin : IThirdPartyLogin
     {
         var config = await GetProviderConfigAsync(provider);
         var http = new HttpClient();
-        var cache = await _stateCache.GetAsync(state);
+        ThirdPartyLoginStateCache? cache;
+        try
+        {
+            cache = await _stateCache.GetAsync(state);
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning(e,"redis get cache error");
+            // redis 如果不通，则使用内存处理
+            cache = _stateBackupCache.Get<ThirdPartyLoginStateCache>(state);
+        }
+        
         if (cache == null)
         {
             throw new NullReferenceException("office cache state is null");

@@ -41,6 +41,7 @@ try
     services.AddSessionStore(appSetting);
     services.AddApplicationConfigStore(appSetting);
     services.AddThirdPartyLogin();
+    services.AddMemoryCache();
     // self
     services.AddNextStarIdentityServer(appSetting);
     services.AddCustomDbContext(appSetting);
