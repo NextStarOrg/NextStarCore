@@ -57,32 +57,25 @@ public class ThirdPartyLogin : IThirdPartyLogin
                 Nonce = Guid.NewGuid().ToString("N")
             };
 
-        try
+        await _stateCache.SetAsync(cacheKey, new ThirdPartyLoginStateCache()
         {
-            await _stateCache.SetAsync(cacheKey, new ThirdPartyLoginStateCache()
-            {
-                State = state,
-                ReturnUrl = returnUrl,
-                Provider = provider.ToString()
-            }, new DistributedCacheEntryOptions()
-            {
-                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
-            });
-        }
-        catch (Exception e)
+            State = state,
+            ReturnUrl = returnUrl,
+            Provider = provider.ToString()
+        }, new DistributedCacheEntryOptions()
         {
-            _logger.LogWarning(e,"redis set cache error");
-            // redis 如果不通，则使用内存处理
-            _stateBackupCache.Set(cacheKey, new ThirdPartyLoginStateCache()
-            {
-                State = state,
-                ReturnUrl = returnUrl,
-                Provider = provider.ToString()
-            }, new MemoryCacheEntryOptions()
-            {
-                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
-            });
-        }
+            AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
+        });
+        // redis 如果不通，则使用内存处理
+        _stateBackupCache.Set(cacheKey, new ThirdPartyLoginStateCache()
+        {
+            State = state,
+            ReturnUrl = returnUrl,
+            Provider = provider.ToString()
+        }, new MemoryCacheEntryOptions()
+        {
+            AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(60)
+        });
 
         return googleAuthorizationCodeRequestUrl.Build().ToString();
     }
@@ -96,17 +89,19 @@ public class ThirdPartyLogin : IThirdPartyLogin
         try
         {
             cache = await _stateCache.GetAsync(state);
+            if (cache == null)
+                throw new NullReferenceException("state cache not null");
         }
         catch (Exception e)
         {
-            _logger.LogWarning(e,"redis get cache error");
+            _logger.LogWarning(e, "redis get cache error");
             // redis 如果不通，则使用内存处理
             cache = _stateBackupCache.Get<ThirdPartyLoginStateCache>(state);
         }
-        
+
         if (cache == null)
         {
-            throw new NullReferenceException("office cache state is null");
+            throw new NullReferenceException("state cache is null");
         }
 
         var requestToken = new ThirdPartyLoginRequestTokenBody()
@@ -139,6 +134,7 @@ public class ThirdPartyLogin : IThirdPartyLogin
             Provider = provider
         };
         await _stateCache.RemoveAsync(state);
+        _stateBackupCache.Remove(state);
         return loginInfo;
     }
 
@@ -153,7 +149,7 @@ public class ThirdPartyLogin : IThirdPartyLogin
         if (cache == null)
         {
             var openIdConfig = await GetProviderOpenIdConfigurationAsync(provider,
-                 await _applicationConfigStore.GetConfigValueAsync(provider + "LoginOpenIdUri"));
+                await _applicationConfigStore.GetConfigValueAsync(provider + "LoginOpenIdUri"));
             var result = new ThirdPartyLoginConfig()
             {
                 ClientId = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginClientId"),
@@ -190,7 +186,8 @@ public class ThirdPartyLogin : IThirdPartyLogin
             var http = new HttpClient();
             var result = await http.GetStringAsync(openIdUrl);
             var config = JsonSerializer.Deserialize<ThirdPartyLoginOpenidConfiguration>(result);
-            if (config == null) throw new NullReferenceException($"Get provider {provider} openid configuration body must not null");
+            if (config == null)
+                throw new NullReferenceException($"Get provider {provider} openid configuration body must not null");
             await _openIdCache.SetAsync(provider.ToString(), config, new DistributedCacheEntryOptions()
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)
