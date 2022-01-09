@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NextStar.SystemService.API.Controllers;
 
+/// <summary>
+/// Wadwa
+/// </summary>
 [ApiController]
 [Route("[controller]/[action]")]
 public class WeatherForecastController : ControllerBase
@@ -18,6 +21,10 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// 获取列表
+    /// </summary>
+    /// <returns></returns>
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
