@@ -1,5 +1,5 @@
 # Management Database
-dotnet  ef dbcontext scaffold "Server=localhost;Database=NextStarManagement;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -t "ApplicationConfig" -o ManagementDbModels --context-dir DbContexts -c ManagementDbContext -f --no-onconfiguring
+dotnet  ef dbcontext scaffold "Server=localhost;Database=NextStarManagement;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -t "ApplicationConfig" -o ApplicationDbModels --context-dir DbContexts -c ApplicationDbContext -f --no-onconfiguring
 
 # Session About Database
 dotnet ef dbcontext scaffold "Server=localhost;Database=NextStarAccount;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -t "UserSession" -o SessionDbModels --context-dir DbContexts -c SessionDbContext -f --no-onconfiguring

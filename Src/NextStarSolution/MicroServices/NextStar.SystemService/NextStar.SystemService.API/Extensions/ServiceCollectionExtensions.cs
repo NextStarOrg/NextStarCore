@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using NextStar.Library.Core.Abstractions;
+using NextStar.SystemService.Core.DbContexts;
 
 namespace NextStar.SystemService.API.Extensions;
 
@@ -8,7 +10,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDatabase(this IServiceCollection service, AppSetting appSetting)
     {
-        //service.AddDbContext<AccountDbContext>(options => options.UseSqlServer(appSetting.DataBaseSetting.Account));
+        service.AddDbContext<ManagementDbContext>(options => options.UseSqlServer(appSetting.DataBaseSetting.Management));
         return service;
     }
 

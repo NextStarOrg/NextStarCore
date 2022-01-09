@@ -3,8 +3,8 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NextStar.Library.AspNetCore.Abstractions;
+using NextStar.Library.AspNetCore.ApplicationDbModels;
 using NextStar.Library.AspNetCore.DbContexts;
-using NextStar.Library.AspNetCore.ManagementDbModels;
 using NextStar.Library.AspNetCore.SessionDbModels;
 using NextStar.Library.Core.Abstractions;
 
@@ -12,12 +12,12 @@ namespace NextStar.Library.AspNetCore.Stores;
 
 public class ApplicationConfigStore : IApplicationConfigStore
 {
-    private readonly ManagementDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IConfiguration _configuration;
     private readonly ILogger<ApplicationConfigStore> _logger;
     private readonly IDistributedCache<ApplicationConfig> _configCache;
 
-    public ApplicationConfigStore(ManagementDbContext context,
+    public ApplicationConfigStore(ApplicationDbContext context,
         ILogger<ApplicationConfigStore> logger,
         IDistributedCache<ApplicationConfig> configCache,
         IConfiguration configuration)

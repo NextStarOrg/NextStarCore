@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using NextStar.Library.AspNetCore.ManagementDbModels;
+using NextStar.SystemService.Core.ManagementDbModels;
 
-namespace NextStar.Library.AspNetCore.DbContexts
+namespace NextStar.SystemService.Core.DbContexts
 {
     public partial class ManagementDbContext : DbContext
     {
@@ -21,8 +21,6 @@ namespace NextStar.Library.AspNetCore.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<ApplicationConfig>(entity =>
             {
                 entity.HasKey(e => e.Key)

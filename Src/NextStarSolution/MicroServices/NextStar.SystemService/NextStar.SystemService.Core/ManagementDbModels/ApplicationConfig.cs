@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NextStar.Library.AspNetCore.ManagementDbModels
+namespace NextStar.SystemService.Core.ManagementDbModels
 {
     public partial class ApplicationConfig
     {

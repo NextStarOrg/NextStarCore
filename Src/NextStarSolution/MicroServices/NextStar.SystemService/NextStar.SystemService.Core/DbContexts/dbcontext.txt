@@ -1,0 +1,1 @@
+﻿dotnet ef dbcontext scaffold "Server=localhost;Database=NextStarManagement;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -t "ApplicationConfig" -o  ManagementDbModels --context-dir DbContexts -c ManagementDbContext -f --no-onconfiguring

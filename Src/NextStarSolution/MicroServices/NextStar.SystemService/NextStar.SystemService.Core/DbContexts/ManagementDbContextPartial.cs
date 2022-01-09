@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
-namespace NextStar.Library.AspNetCore.DbContexts;
+namespace NextStar.SystemService.Core.DbContexts;
 
 public partial class ManagementDbContext : DbContext
 {
