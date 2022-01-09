@@ -28,7 +28,7 @@ Log.Logger = new LoggerConfiguration()
 
 try
 {
-    Log.Information("Getting the identity server running...");
+    Log.Information("Getting the manage gateway server running...");
     var builder = WebApplication.CreateBuilder(args);
     builder.Host.UseSerilog();
 
@@ -80,7 +80,7 @@ try
     app.UseCors();
     app.UseEndpoints(endpoints =>
     {
-        endpoints.MapGet("/", async context => { await context.Response.WriteAsync("NextStar Gateway!"); });
+        endpoints.MapGet("/", async context => { await context.Response.WriteAsync("NextStar Gateway Manage!"); });
     });
 
     var configuration = new OcelotPipelineConfiguration

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NextStar.Library.AspNetCore.Audit;
 using NextStar.Library.AspNetCore.Extensions;
+using NextStar.Library.MicroService.Filters;
 using NextStar.SystemService.API.Configs;
 using NextStar.SystemService.API.Extensions;
 using Serilog;
@@ -23,7 +24,7 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Debug()
     .WriteTo.Console()
-    .WriteTo.AddNextStarLoggersWithoutAudit(appSetting)
+    .WriteTo.AddNextStarLoggers(appSetting)
     .CreateLogger();
 try
 {
@@ -44,10 +45,14 @@ try
     services.AddSessionStore(appSetting);
     services.AddApplicationConfigStore(appSetting);
     
+    //self
+    services.AddDatabase(appSetting);
     services.AddControllers(options =>
     {
         //追加Action审计日志
         options.Filters.Add<NextStarAuditActionFilter>();
+        // 追加ServiceApplication错误
+        options.Filters.Add(new ServiceApplicationExceptionFilter());
     }).AddNewtonsoftJson(options =>
     {
         //options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'+0900'";

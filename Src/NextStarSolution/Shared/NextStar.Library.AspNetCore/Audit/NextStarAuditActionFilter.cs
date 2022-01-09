@@ -100,7 +100,7 @@ public class NextStarAuditActionFilter : IAsyncActionFilter
     {
         var actionInfo = new AuditLogActionInfo
         {
-            ServiceName = type?.FullName ?? "NullServiceName",
+            ServiceName = type?.Name ?? "NullServiceName",
             MethodName = method?.Name ?? "NullMethodName",
             Parameters = arguments ?? new Dictionary<string, object?>(),
             ExecutionTime = DateTime.UtcNow
