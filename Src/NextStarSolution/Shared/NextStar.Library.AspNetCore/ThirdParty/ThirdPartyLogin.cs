@@ -74,7 +74,7 @@ public class ThirdPartyLogin : IThirdPartyLogin
             Provider = provider.ToString()
         }, new MemoryCacheEntryOptions()
         {
-            AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(60)
+            AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
         });
 
         return googleAuthorizationCodeRequestUrl.Build().ToString();

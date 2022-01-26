@@ -30,6 +30,11 @@ public class AccountBusiness:IAccountBusiness
         _applicationConfigStore = applicationConfigStore;
     }
 
+    public async Task<UserProfile?> GetUserProfileByLoginNameAsync(string name)
+    {
+        return await _repository.GetUserProfileByLoginNameAsync(name);
+    }
+
     public async Task<Guid?> ThirdPartyLoginAsync(ThirdPartyLoginInfo loginInfo)
     {
         return await _repository.GetUserByThirdPartyKeyAsync(loginInfo.Key, loginInfo.Provider);

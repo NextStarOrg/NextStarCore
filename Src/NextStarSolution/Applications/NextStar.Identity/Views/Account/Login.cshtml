@@ -16,10 +16,16 @@
 }
 
 <h1 id="h1">登录</h1>
-<form asp-action="Login" method="post" asp-route-returnUrl="@Model.ReturnUrl">
-    <input type="hidden" asp-for="ReturnUrl" name="ReturnUrl"/>
-    @if (await _applicationConfigStore.GetConfigBoolAsync(NextStarApplicationName.IsAllowPasswordLogin))
-    {
+@if (await _applicationConfigStore.GetConfigBoolAsync(NextStarApplicationName.IsAllowPasswordLogin))
+{
+    <form class="login-form" asp-action="Login" method="post" asp-route-returnUrl="@Model.ReturnUrl">
+        <input type="hidden" asp-for="ReturnUrl" name="ReturnUrl"/>
+        @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.ErrorMessage
+            </div>
+        }
         <div class="mb-3">
             <label for="LoginName" class="form-label">账号</label>
             <input type="text" class="form-control" id="LoginName" name="LoginName" asp-for="LoginName" autocomplete="off" placeholder="登录名">
@@ -31,26 +37,28 @@
             <span class="invalid-feedback" asp-validation-for="LoginPassword"></span>
         </div>
         <button type="submit" class="btn btn-primary">登录</button>
-    }
-    else
-    {
-        <div class="alert alert-primary" role="alert">
-            该站点已被管理员禁止使用账号密码登录
-        </div>
-    }
-    <div class="third-party">
-        <div class="third-party-top">
-            <span>第三方登录</span>
-        </div>
-        <div class="third-party-main">
-            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Google" title="Google 登录" asp-route-returnUrl="@Model.ReturnUrl">
-                <img src="~/image/Account/google.svg" alt="Google icon">
-                <span>Google</span>
-            </a>
-            <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Microsoft" title="Microsoft 登录" asp-route-returnUrl="@Model.ReturnUrl">
-                <img src="~/image/Account/microsoft.svg" alt="Microsoft icon">
-                <span>Microsoft</span>
-            </a>
-        </div>
+    </form>
+}
+else
+{
+    <div class="alert alert-primary" role="alert">
+        该站点已被管理员禁止使用账号密码登录
     </div>
-</form>
+}
+
+
+<div class="third-party">
+    <div class="third-party-top">
+        <span>第三方登录</span>
+    </div>
+    <div class="third-party-main">
+        <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Google" title="Google 登录" asp-route-returnUrl="@Model.ReturnUrl">
+            <img src="~/image/Account/google.svg" alt="Google icon">
+            <span>Google</span>
+        </a>
+        <a class="icon-login" asp-controller="Account" asp-action="ThirdPartyLogin" asp-route-routingParameters="Microsoft" title="Microsoft 登录" asp-route-returnUrl="@Model.ReturnUrl">
+            <img src="~/image/Account/microsoft.svg" alt="Microsoft icon">
+            <span>Microsoft</span>
+        </a>
+    </div>
+</div>

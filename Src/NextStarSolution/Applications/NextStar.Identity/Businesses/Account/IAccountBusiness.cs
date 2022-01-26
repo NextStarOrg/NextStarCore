@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using IdentityServer4;
 using Microsoft.AspNetCore.Authentication;
+using NextStar.Identity.AccountDbModels;
 using NextStar.Identity.Entities;
 using NextStar.Library.AspNetCore.Abstractions;
 
@@ -8,6 +9,7 @@ namespace NextStar.Identity.Businesses;
 
 public interface IAccountBusiness
 {
+    Task<UserProfile?> GetUserProfileByLoginNameAsync(string name);
     Task<Guid?> ThirdPartyLoginAsync(ThirdPartyLoginInfo loginInfo);
     /// <summary>
     /// 验证用户是否已经登录

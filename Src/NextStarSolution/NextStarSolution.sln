@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.SystemService.Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.Library.MicroService", "Shared\NextStar.Library.MicroService\NextStar.Library.MicroService.csproj", "{96C8B3E0-0646-4529-92FA-F700D2D7B15F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextStar.Library.Utils", "Shared\NextStar.Library.Utils\NextStar.Library.Utils.csproj", "{1923D340-FD94-40A5-A0E4-65B8AAEA2490}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,7 @@ Global
 		{E022801A-CCA2-48E4-AF71-10EA29C4252D} = {CDBE69B2-3E4D-4E58-ACED-EDD3C490E1ED}
 		{B5DB0D91-FC71-4E93-B74B-1FF129FA40AC} = {CDBE69B2-3E4D-4E58-ACED-EDD3C490E1ED}
 		{96C8B3E0-0646-4529-92FA-F700D2D7B15F} = {4BC76145-52F7-4D13-9596-588E6E025C5A}
+		{1923D340-FD94-40A5-A0E4-65B8AAEA2490} = {4BC76145-52F7-4D13-9596-588E6E025C5A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E9B8ABBE-377E-438B-AB6D-337E8BA06961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -68,5 +71,9 @@ Global
 		{96C8B3E0-0646-4529-92FA-F700D2D7B15F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96C8B3E0-0646-4529-92FA-F700D2D7B15F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96C8B3E0-0646-4529-92FA-F700D2D7B15F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1923D340-FD94-40A5-A0E4-65B8AAEA2490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1923D340-FD94-40A5-A0E4-65B8AAEA2490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1923D340-FD94-40A5-A0E4-65B8AAEA2490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1923D340-FD94-40A5-A0E4-65B8AAEA2490}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

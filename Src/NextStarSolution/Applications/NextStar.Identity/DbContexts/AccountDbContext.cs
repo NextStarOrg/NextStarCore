@@ -87,7 +87,7 @@ namespace NextStar.Identity.DbContexts
 
                 entity.Property(e => e.LoginName).HasMaxLength(50);
 
-                entity.Property(e => e.PassWord).HasMaxLength(150);
+                entity.Property(e => e.PassWord).HasMaxLength(512);
 
                 entity.HasOne(d => d.UserKeyNavigation)
                     .WithOne(p => p.UserProfile)

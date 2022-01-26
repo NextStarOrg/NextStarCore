@@ -11,6 +11,7 @@ using NextStar.Identity.Models;
 using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.AspNetCore.Extensions;
 using NextStar.Library.Core.Consts;
+using NextStar.Library.Utils;
 
 namespace NextStar.Identity.Controllers;
 
@@ -65,6 +66,50 @@ public class AccountController : Controller
             _applicationConfigStore.GetConfigBoolAsync(NextStarApplicationName.IsAllowPasswordLogin);
         if (isAllowPasswordLogin)
         {
+            var userProfile = await _business.GetUserProfileByLoginNameAsync(model.LoginName);
+            if (userProfile == null)
+            {
+                model.ErrorMessage = "当前登录账户不存在";
+                return View(model);
+            }
+
+            if (userProfile is { Salt: null } or { PassWord: null })
+            {
+                model.ErrorMessage = "当前登录账户不支持密码登录";
+                return View(model);
+            }
+
+            var str = PasswordUtils.Encryptio512(userProfile.Salt.Value, model.LoginPassword);
+            if (str != userProfile.PassWord)
+            {
+                model.ErrorMessage = "当前用户密码错误";
+                return View(model);
+            }
+            
+            AuthorizationRequest context = null;
+            context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
+
+            var buildUserSessionDto = new BuildUserSessionDto()
+            {
+                UserKey = userProfile.UserKey,
+                Provider = NextStarLoginType.None,
+                ClientId = "Unknown",
+                ThirdPartyEmail = string.Empty,
+                ThirdPartyName = string.Empty,
+                Seconds = await _applicationConfigStore.GetConfigIntAsync(NextStarApplicationName
+                    .CookieExpiredSeconds)
+            };
+            if (context != null)
+            {
+                buildUserSessionDto.ClientId = context.Client.ClientId;
+                buildUserSessionDto.Seconds = context.Client.AccessTokenLifetime;
+            }
+
+            var identityServerUser = await _business.BuildIdentityServerUserAsync(buildUserSessionDto);
+            if (identityServerUser == null) return BadRequest();
+            await _business.LoginHistoryAsync(identityServerUser, HttpContext);
+            var props = await _business.GetAuthPropAsync();
+            return await PersonalSingInAsync(identityServerUser, context, props, model.ReturnUrl);
         }
 
         return BadRequest();
@@ -104,7 +149,9 @@ public class AccountController : Controller
                 // 如果返回后查询没有关联其他数据则返回对于Key并提示用户添加进去
                 if (userKey == null) return View(loginInfo);
 
-                var context = await _interaction.GetAuthorizationContextAsync(loginInfo.ReturnUrl);
+                AuthorizationRequest context = null;
+                context = await _interaction.GetAuthorizationContextAsync(loginInfo.ReturnUrl);
+
                 var buildUserSessionDto = new BuildUserSessionDto()
                 {
                     UserKey = userKey.Value,
@@ -228,7 +275,7 @@ public class AccountController : Controller
 
         // user might have clicked on a malicious link - should be logged
         _logger.LogError("invalid return URL: {ReturnUrl}", returnUrl);
-        return StatusCode(500);
+        return StatusCode(400);
     }
 
     #endregion
