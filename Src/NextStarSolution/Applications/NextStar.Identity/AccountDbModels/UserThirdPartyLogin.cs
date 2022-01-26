@@ -7,7 +7,7 @@ namespace NextStar.Identity.AccountDbModels
     {
         public int Id { get; set; }
         public Guid UserKey { get; set; }
-        public int LoginType { get; set; }
+        public string LoginType { get; set; } = null!;
         public string ThirdPartyKey { get; set; } = null!;
         public string? ThirdPartyName { get; set; }
         public string? ThirdPartyEmail { get; set; }

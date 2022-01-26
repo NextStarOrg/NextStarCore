@@ -41,6 +41,7 @@ try
     services.AddSessionStore(appSetting);
     services.AddApplicationConfigStore(appSetting);
     services.AddThirdPartyLogin();
+    services.AddMemoryCache();
     // self
     services.AddNextStarIdentityServer(appSetting);
     services.AddCustomDbContext(appSetting);
@@ -56,7 +57,7 @@ try
     #region Configure
 
     // Configure the HTTP request pipeline.
-    if (!app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Home/Error");
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.

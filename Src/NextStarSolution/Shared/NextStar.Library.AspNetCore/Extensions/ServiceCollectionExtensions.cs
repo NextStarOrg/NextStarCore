@@ -118,7 +118,7 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddApplicationConfigStore(this IServiceCollection services, AppSetting appSetting)
     {
-        services.AddDbContext<ManagementDbContext>(options =>
+        services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(appSetting.DataBaseSetting.Management),
             contextLifetime: ServiceLifetime.Transient,
             optionsLifetime: ServiceLifetime.Singleton);

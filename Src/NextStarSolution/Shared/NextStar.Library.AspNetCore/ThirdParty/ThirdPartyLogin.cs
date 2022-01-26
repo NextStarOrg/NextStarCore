@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Google.Apis.Auth.OAuth2.Requests;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.AspNetCore.Extensions;
@@ -10,25 +11,28 @@ using NextStar.Library.Core.Consts;
 
 namespace NextStar.Library.AspNetCore.ThirdParty;
 
-public class ThirdPartyLogin:IThirdPartyLogin
+public class ThirdPartyLogin : IThirdPartyLogin
 {
     private readonly IApplicationConfigStore _applicationConfigStore;
     private readonly ILogger<ThirdPartyLogin> _logger;
     private readonly IDistributedCache<ThirdPartyLoginStateCache> _stateCache;
     private readonly IDistributedCache<ThirdPartyLoginOpenidConfiguration> _openIdCache;
     private readonly IDistributedCache<ThirdPartyLoginConfig> _configCache;
+    private readonly IMemoryCache _stateBackupCache;
 
     public ThirdPartyLogin(IApplicationConfigStore applicationConfigStore,
         ILogger<ThirdPartyLogin> logger,
         IDistributedCache<ThirdPartyLoginStateCache> stateCache,
         IDistributedCache<ThirdPartyLoginOpenidConfiguration> openIdCache,
-        IDistributedCache<ThirdPartyLoginConfig> configCache)
+        IDistributedCache<ThirdPartyLoginConfig> configCache,
+        IMemoryCache stateBackupCache)
     {
         _applicationConfigStore = applicationConfigStore;
         _logger = logger;
         _stateCache = stateCache;
         _openIdCache = openIdCache;
         _configCache = configCache;
+        _stateBackupCache = stateBackupCache;
     }
 
     /// <summary>
@@ -62,6 +66,16 @@ public class ThirdPartyLogin:IThirdPartyLogin
         {
             AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
         });
+        // redis 如果不通，则使用内存处理
+        _stateBackupCache.Set(cacheKey, new ThirdPartyLoginStateCache()
+        {
+            State = state,
+            ReturnUrl = returnUrl,
+            Provider = provider.ToString()
+        }, new MemoryCacheEntryOptions()
+        {
+            AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
+        });
 
         return googleAuthorizationCodeRequestUrl.Build().ToString();
     }
@@ -71,10 +85,23 @@ public class ThirdPartyLogin:IThirdPartyLogin
     {
         var config = await GetProviderConfigAsync(provider);
         var http = new HttpClient();
-        var cache = await _stateCache.GetAsync(state);
+        ThirdPartyLoginStateCache? cache;
+        try
+        {
+            cache = await _stateCache.GetAsync(state);
+            if (cache == null)
+                throw new NullReferenceException("state cache not null");
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning(e, "redis get cache error");
+            // redis 如果不通，则使用内存处理
+            cache = _stateBackupCache.Get<ThirdPartyLoginStateCache>(state);
+        }
+
         if (cache == null)
         {
-            throw new NullReferenceException("office cache state is null");
+            throw new NullReferenceException("state cache is null");
         }
 
         var requestToken = new ThirdPartyLoginRequestTokenBody()
@@ -88,22 +115,27 @@ public class ThirdPartyLogin:IThirdPartyLogin
 
         var requestTokenStr = JsonSerializer.Serialize(requestToken);
         var json = JsonSerializer.Deserialize<Dictionary<string, string>>(requestTokenStr);
+        if (json == null) throw new NullReferenceException("request token body must not null");
         var data = new FormUrlEncodedContent(json);
         var responseMessage = await http.PostAsync(new Uri(config.TokenUri), data);
-        string result = await responseMessage.Content.ReadAsStringAsync();
+        var result = await responseMessage.Content.ReadAsStringAsync();
         var oAuthTokenDto = JsonSerializer.Deserialize<ThirdPartyLoginTokenResult>(result);
+        if (oAuthTokenDto == null) throw new NullReferenceException("token response must not null");
         var idToken = new JwtSecurityToken(oAuthTokenDto.IdToken);
         var sub = idToken.Subject;
         var email = idToken.GetEmail();
         var name = idToken.GetName();
-        await _stateCache.RemoveAsync(state);
-        return new ThirdPartyLoginInfo()
+        var loginInfo = new ThirdPartyLoginInfo()
         {
             Key = sub,
             Email = email,
             Name = name,
             ReturnUrl = cache.ReturnUrl,
+            Provider = provider
         };
+        await _stateCache.RemoveAsync(state);
+        _stateBackupCache.Remove(state);
+        return loginInfo;
     }
 
     /// <summary>
@@ -117,18 +149,21 @@ public class ThirdPartyLogin:IThirdPartyLogin
         if (cache == null)
         {
             var openIdConfig = await GetProviderOpenIdConfigurationAsync(provider,
-                _applicationConfigStore.GetConfigValue(provider + "LoginOpenIdUri"));
+                await _applicationConfigStore.GetConfigValueAsync(provider + "LoginOpenIdUri"));
             var result = new ThirdPartyLoginConfig()
             {
-                ClientId = _applicationConfigStore.GetConfigValue(provider + "LoginClientId"),
-                ClientSecret = _applicationConfigStore.GetConfigValue(provider + "LoginClientSecret"),
-                RedirectUri = _applicationConfigStore.GetConfigValue(provider + "LoginRedirectUri"),
-                Scope = _applicationConfigStore.GetConfigValue(provider + "LoginScope"),
-                OpenIdUri = _applicationConfigStore.GetConfigValue(provider + "LoginOpenIdUri"),
+                ClientId = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginClientId"),
+                ClientSecret = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginClientSecret"),
+                RedirectUri = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginRedirectUri"),
+                Scope = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginScope"),
+                OpenIdUri = await _applicationConfigStore.GetConfigValueAsync(provider + "LoginOpenIdUri"),
                 AuthorizationUri = openIdConfig.AuthorizationEndpoint,
                 TokenUri = openIdConfig.TokenEndpoint
             };
-            await _configCache.SetAsync(provider.ToString(), result);
+            await _configCache.SetAsync(provider.ToString(), result, new DistributedCacheEntryOptions()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)
+            });
             return result;
         }
 
@@ -141,7 +176,8 @@ public class ThirdPartyLogin:IThirdPartyLogin
     /// <param name="provider"></param>
     /// <param name="openIdUrl"></param>
     /// <returns></returns>
-    private async Task<ThirdPartyLoginOpenidConfiguration> GetProviderOpenIdConfigurationAsync(NextStarLoginType provider,
+    private async Task<ThirdPartyLoginOpenidConfiguration> GetProviderOpenIdConfigurationAsync(
+        NextStarLoginType provider,
         string openIdUrl)
     {
         var cache = await _openIdCache.GetAsync(provider.ToString());
@@ -150,7 +186,12 @@ public class ThirdPartyLogin:IThirdPartyLogin
             var http = new HttpClient();
             var result = await http.GetStringAsync(openIdUrl);
             var config = JsonSerializer.Deserialize<ThirdPartyLoginOpenidConfiguration>(result);
-            await _openIdCache.SetAsync(provider.ToString(), config);
+            if (config == null)
+                throw new NullReferenceException($"Get provider {provider} openid configuration body must not null");
+            await _openIdCache.SetAsync(provider.ToString(), config, new DistributedCacheEntryOptions()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(4)
+            });
             return config;
         }
 

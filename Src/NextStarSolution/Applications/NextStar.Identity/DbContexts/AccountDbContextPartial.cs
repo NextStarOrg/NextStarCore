@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using NextStar.Identity.AccountDbModels;
 
 namespace NextStar.Identity.DbContexts;
 

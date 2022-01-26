@@ -26,6 +26,7 @@ public interface INextStarSessionStore
     Task DeleteAsync(Guid sessionId);
 
     Task<List<UserSession>> GetByUserIdAsync(Guid userId);
+    Task<UserSession?> GetSessionByIdAsync(Guid sessionId);
 
     Task DeleteAllByUserIdAsync(Guid userId);
 }
