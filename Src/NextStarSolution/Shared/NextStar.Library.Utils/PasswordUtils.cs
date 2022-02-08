@@ -11,7 +11,7 @@ public static class PasswordUtils
     /// <param name="salt"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public static string Encryptio512(Guid salt,string password)
+    public static string Encryption512(Guid salt,string password)
     {
         var str = $"next{salt}star{password}";
         using var sha = SHA512.Create();

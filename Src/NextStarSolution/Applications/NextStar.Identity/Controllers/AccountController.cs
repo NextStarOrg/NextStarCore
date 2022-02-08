@@ -79,7 +79,7 @@ public class AccountController : Controller
                 return View(model);
             }
 
-            var str = PasswordUtils.Encryptio512(userProfile.Salt.Value, model.LoginPassword);
+            var str = PasswordUtils.Encryption512(userProfile.Salt.Value, model.LoginPassword);
             if (str != userProfile.PassWord)
             {
                 model.ErrorMessage = "当前用户密码错误";
