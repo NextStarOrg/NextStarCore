@@ -79,8 +79,8 @@ public class AccountBusiness:IAccountBusiness
         {
             SessionId = nextStarSessionId,
             UserKey = user.Key,
-            CreatedTime = DateTime.UtcNow,
-            ExpiredTime = DateTime.UtcNow.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
+            CreatedTime = DateTime.Now,
+            ExpiredTime = DateTime.Now.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
         };
 
         await _nextStarSessionStore.CreateAsync(session);

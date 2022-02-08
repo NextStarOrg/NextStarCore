@@ -49,7 +49,7 @@ public class AccountRepository:IAccountRepository
         var userHistory = await _accountDbContext.UserLoginHistories.OrderByDescending(x=>x.LoginTime).FirstOrDefaultAsync(x => x.SessionId == sessionId && !x.LogoutTime.HasValue);
         if (userHistory != null)
         {
-            userHistory.LogoutTime = DateTime.UtcNow;
+            userHistory.LogoutTime = DateTime.Now;
             _accountDbContext.UserLoginHistories.Update(userHistory);
             await _accountDbContext.SaveChangesAsync();
         }

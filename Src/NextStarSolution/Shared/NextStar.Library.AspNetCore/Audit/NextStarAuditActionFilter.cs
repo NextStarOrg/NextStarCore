@@ -103,7 +103,7 @@ public class NextStarAuditActionFilter : IAsyncActionFilter
             ServiceName = type?.Name ?? "NullServiceName",
             MethodName = method?.Name ?? "NullMethodName",
             Parameters = arguments ?? new Dictionary<string, object?>(),
-            ExecutionTime = DateTime.UtcNow
+            ExecutionTime = DateTime.Now
         };
 
         return actionInfo;
