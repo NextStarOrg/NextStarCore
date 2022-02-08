@@ -17,10 +17,6 @@ public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
     public async Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(SelectInput selectInput)
     {
         var query = _Repository.GetAllQuery();
-        if (!string.IsNullOrWhiteSpace(selectInput.Environment))
-        {
-            query = query.Where(x => x.Environment == selectInput.Environment);
-        }
 
         if (!string.IsNullOrWhiteSpace(selectInput.SearchText))
         {
