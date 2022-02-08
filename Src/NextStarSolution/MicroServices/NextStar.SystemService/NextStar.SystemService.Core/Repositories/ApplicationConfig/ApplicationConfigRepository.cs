@@ -15,4 +15,14 @@ public class ApplicationConfigRepository:IApplicationConfigRepository
     {
         return _managementDbContext.ApplicationConfigs.AsNoTracking();
     }
+
+    public async Task UpdateAsync(string name, string value)
+    {
+        var config = await _managementDbContext.ApplicationConfigs.FirstOrDefaultAsync(x => x.Name == name);
+        if(config == null)
+            return;
+        config.Value = value;
+        _managementDbContext.ApplicationConfigs.Update(config);
+        await _managementDbContext.SaveChangesAsync();
+    }
 }

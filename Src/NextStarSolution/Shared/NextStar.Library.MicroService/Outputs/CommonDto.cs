@@ -9,7 +9,7 @@ public partial class CommonDto<T>:ICommonDto<T>
 
     public bool Success => string.IsNullOrWhiteSpace(ErrorCode) && string.IsNullOrWhiteSpace(ErrorMessage) && ErrorInfo?.Count == 0;
 
-    public CommonDto(T? data)
+    private CommonDto(T? data)
     {
         Data = data;
     }

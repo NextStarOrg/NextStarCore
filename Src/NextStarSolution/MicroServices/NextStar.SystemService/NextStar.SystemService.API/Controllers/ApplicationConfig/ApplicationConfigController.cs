@@ -25,7 +25,13 @@ public class ApplicationConfigController : ControllerBase
     public async Task<ICommonDto<PageCommonDto<ApplicationConfig>?>> GetList(SelectInput selectInput)
     {
         var result = await _business.GetApplicationConfigListAsync(selectInput);
-
         return CommonDto<PageCommonDto<ApplicationConfig>>.Ok(result);
+    }
+
+    [HttpPut]
+    public async Task<ICommonDto<bool>> Update(ApplicationConfig config)
+    {
+        var result = await _business.UpdateApplicationConfigAsync(config);
+        return CommonDto<bool>.Ok(result);
     }
 }
