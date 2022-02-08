@@ -5,7 +5,7 @@ namespace NextStar.SystemService.Core.Businesses.ApplicationConfig;
 
 public interface IApplicationConfigBusiness
 {
-    Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(SelectInput selectInput);
+    Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(ApplicationConfigSelectInput applicationConfigSelectInput);
     
     Task<bool> UpdateApplicationConfigAsync(ManagementDbModels.ApplicationConfig config);
 }

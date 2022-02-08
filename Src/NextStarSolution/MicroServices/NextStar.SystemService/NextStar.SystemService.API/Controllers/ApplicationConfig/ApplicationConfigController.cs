@@ -22,9 +22,9 @@ public class ApplicationConfigController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ICommonDto<PageCommonDto<ApplicationConfig>?>> GetList(SelectInput selectInput)
+    public async Task<ICommonDto<PageCommonDto<ApplicationConfig>?>> GetList(ApplicationConfigSelectInput applicationConfigSelectInput)
     {
-        var result = await _business.GetApplicationConfigListAsync(selectInput);
+        var result = await _business.GetApplicationConfigListAsync(applicationConfigSelectInput);
         return CommonDto<PageCommonDto<ApplicationConfig>>.Ok(result);
     }
 

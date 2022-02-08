@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NextStar.Library.MicroService.Outputs;
+using NextStar.SystemService.Core.Entities.ThirdPartyLogin;
 
 namespace NextStar.SystemService.API.Controllers;
 
@@ -15,7 +16,7 @@ public class ThirdPartyLoginController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ICommonDto<bool>> GetList()
+    public async Task<ICommonDto<bool>> GetList(ThirdPartyLoginSelectInput selectInput)
     {
         return CommonDto<bool>.Ok(true);
     }

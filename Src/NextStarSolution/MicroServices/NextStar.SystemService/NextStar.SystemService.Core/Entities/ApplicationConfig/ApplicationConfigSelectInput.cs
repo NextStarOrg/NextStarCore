@@ -2,6 +2,6 @@
 
 namespace NextStar.SystemService.Core.Entities.ApplicationConfig;
 
-public class SelectInput:PageSearchTextInput
+public class ApplicationConfigSelectInput:PageSearchTextInput
 {
 }

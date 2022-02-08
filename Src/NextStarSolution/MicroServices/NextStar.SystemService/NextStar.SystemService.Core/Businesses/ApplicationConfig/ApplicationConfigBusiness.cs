@@ -11,22 +11,23 @@ public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
 {
     private readonly IApplicationConfigRepository _repository;
     private readonly ILogger<ApplicationConfigConfigBusiness> _logger;
-    public ApplicationConfigConfigBusiness(IApplicationConfigRepository repository,ILogger<ApplicationConfigConfigBusiness> logger)
+    public ApplicationConfigConfigBusiness(IApplicationConfigRepository repository,
+        ILogger<ApplicationConfigConfigBusiness> logger)
     {
         _repository = repository;
         _logger = logger;
     }
 
-    public async Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(SelectInput selectInput)
+    public async Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(ApplicationConfigSelectInput applicationConfigSelectInput)
     {
         var query = _repository.GetAllQuery();
 
-        if (!string.IsNullOrWhiteSpace(selectInput.SearchText))
+        if (!string.IsNullOrWhiteSpace(applicationConfigSelectInput.SearchText))
         {
-            query = query.Where(x => x.Name.Contains(selectInput.SearchText) || x.Value.Contains(selectInput.SearchText));
+            query = query.Where(x => x.Name.Contains(applicationConfigSelectInput.SearchText) || x.Value.Contains(applicationConfigSelectInput.SearchText));
         }
 
-        query = query.CommonPageSort(selectInput, "Id asc");
+        query = query.CommonPageSort(applicationConfigSelectInput, "Id asc");
 
         var result = await query.ToListAsync();
         var count = await query.CountAsync();

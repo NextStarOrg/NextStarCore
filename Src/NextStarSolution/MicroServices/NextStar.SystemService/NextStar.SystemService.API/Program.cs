@@ -8,6 +8,7 @@ using NextStar.Library.AspNetCore.Extensions;
 using NextStar.Library.MicroService.Filters;
 using NextStar.SystemService.API.Configs;
 using NextStar.SystemService.API.Extensions;
+using NextStar.SystemService.Core;
 using Serilog;
 
 var Configuration = new ConfigurationBuilder()

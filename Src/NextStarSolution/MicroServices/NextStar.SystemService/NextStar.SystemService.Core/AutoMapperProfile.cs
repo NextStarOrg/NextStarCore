@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace NextStar.SystemService.API.Configs;
+namespace NextStar.SystemService.Core;
 
 public class AutoMapperProfile: Profile
 {
