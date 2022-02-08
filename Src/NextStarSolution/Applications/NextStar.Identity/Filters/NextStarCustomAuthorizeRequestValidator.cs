@@ -20,7 +20,7 @@ public class NextStarCustomAuthorizeRequestValidator:ICustomAuthorizeRequestVali
     /// <value>
     /// The HTTP context.
     /// </value>
-    protected HttpContext HttpContext => HttpContextAccessor.HttpContext;
+    protected HttpContext? HttpContext => HttpContextAccessor.HttpContext;
 
     public NextStarCustomAuthorizeRequestValidator(
         INextStarSessionStore nextStarSessionStore,
@@ -40,7 +40,7 @@ public class NextStarCustomAuthorizeRequestValidator:ICustomAuthorizeRequestVali
             if (sessionId != null && !await _nextStarSessionStore.IsExistsOrNotExpiredAsync(sessionId.Value))
             {
                 context.Result.ValidatedRequest.Subject = Principal.Anonymous;
-                await HttpContext.SignOutAsync();
+                await HttpContext?.SignOutAsync()!;
             }
         }
     }

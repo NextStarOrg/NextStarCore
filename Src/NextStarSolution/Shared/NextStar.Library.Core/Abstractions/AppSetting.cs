@@ -16,11 +16,6 @@ public class AppSetting
     /// 认证服务器地址
     /// </summary>
     public string Authority { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 环境配置key - 开发环境一般为DEBUG 生产环境一般为 PROD
-    /// </summary>
-    public string ConfigEnvironment { get; set; } = "PROD";
 }
 
 public class DataBaseSettingConfig

@@ -15,6 +15,11 @@ public class ServiceApplicationExceptionFilter : IActionFilter, IOrderedFilter
             context.Result = new JsonResult(new CommonDto<object>("500",exception.Message));
             context.ExceptionHandled = true;
         }
+        else
+        {
+            context.Result = new JsonResult(new CommonDto<object>("500","发生未知错误信息，请求失败。"));
+            context.ExceptionHandled = true;
+        }
     }
 
     public void OnActionExecuting(ActionExecutingContext context)

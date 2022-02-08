@@ -9,10 +9,11 @@ namespace NextStar.SystemService.API.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class ApplicationConfigController:ControllerBase
+public class ApplicationConfigController : ControllerBase
 {
     private readonly ILogger<ApplicationConfigController> _logger;
     private readonly IApplicationConfigBusiness _business;
+
     public ApplicationConfigController(ILogger<ApplicationConfigController> logger,
         IApplicationConfigBusiness business)
     {
@@ -21,18 +22,10 @@ public class ApplicationConfigController:ControllerBase
     }
 
     [HttpPost]
-    public async Task<ICommonDto<PageCommonDto<ApplicationConfig>>> GetList(SelectInput selectInput)
+    public async Task<ICommonDto<PageCommonDto<ApplicationConfig>?>> GetList(SelectInput selectInput)
     {
-        try
-        {
-            var result = await _business.GetApplicationConfigListAsync(selectInput);
+        var result = await _business.GetApplicationConfigListAsync(selectInput);
 
-            return CommonDto<PageCommonDto<ApplicationConfig>>.Ok(result);
-        }
-        catch (Exception e)
-        {
-            _logger.LogWarning(e,"Request ApplicationConfig GetList Error");
-            throw new InternalServerException();
-        }
+        return CommonDto<PageCommonDto<ApplicationConfig>>.Ok(result);
     }
 }

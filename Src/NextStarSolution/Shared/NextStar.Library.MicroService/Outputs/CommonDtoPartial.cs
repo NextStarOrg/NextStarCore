@@ -2,8 +2,8 @@
 
 public partial class CommonDto<T>:ICommonDto<T>
 {
-    public static ICommonDto<T> Ok(T data)
+    public static ICommonDto<T?> Ok(T? data)
     {
-        return new CommonDto<T>(data);
+        return new CommonDto<T?>(data);
     }
 }

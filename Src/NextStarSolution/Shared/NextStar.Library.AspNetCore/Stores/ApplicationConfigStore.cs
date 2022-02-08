@@ -13,7 +13,6 @@ namespace NextStar.Library.AspNetCore.Stores;
 public class ApplicationConfigStore : IApplicationConfigStore
 {
     private readonly ApplicationDbContext _context;
-    private readonly IConfiguration _configuration;
     private readonly ILogger<ApplicationConfigStore> _logger;
     private readonly IDistributedCache<ApplicationConfig> _configCache;
 
@@ -25,15 +24,11 @@ public class ApplicationConfigStore : IApplicationConfigStore
         _context = context;
         _logger = logger;
         _configCache = configCache;
-        _configuration = configuration;
     }
-
-    private AppSetting AppSettingConfig => _configuration.Get<AppSetting>();
-    private string ConfigEnvironment => AppSettingConfig.ConfigEnvironment;
 
     private string NormalizeKey(string key)
     {
-        return $"{ConfigEnvironment}_{key}";
+        return $"{key}";
     }
 
     public async Task<string> GetConfigValueAsync(string name)
@@ -54,7 +49,7 @@ public class ApplicationConfigStore : IApplicationConfigStore
             try
             {
                 config = await _context.ApplicationConfigs.FirstOrDefaultAsync(x =>
-                    x.Name == name && x.Environment == ConfigEnvironment);
+                    x.Name == name);
                 if (config == null)
                 {
                     return string.Empty;
@@ -105,7 +100,7 @@ public class ApplicationConfigStore : IApplicationConfigStore
             try
             {
                 config = _context.ApplicationConfigs.FirstOrDefault(x =>
-                    x.Name == name && x.Environment == ConfigEnvironment);
+                    x.Name == name);
                 if (config == null)
                 {
                     return string.Empty;

@@ -86,7 +86,7 @@ public class AccountController : Controller
                 return View(model);
             }
             
-            AuthorizationRequest context = null;
+            AuthorizationRequest? context = null;
             context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
 
             var buildUserSessionDto = new BuildUserSessionDto()
@@ -149,7 +149,7 @@ public class AccountController : Controller
                 // 如果返回后查询没有关联其他数据则返回对于Key并提示用户添加进去
                 if (userKey == null) return View(loginInfo);
 
-                AuthorizationRequest context = null;
+                AuthorizationRequest? context = null;
                 context = await _interaction.GetAuthorizationContextAsync(loginInfo.ReturnUrl);
 
                 var buildUserSessionDto = new BuildUserSessionDto()

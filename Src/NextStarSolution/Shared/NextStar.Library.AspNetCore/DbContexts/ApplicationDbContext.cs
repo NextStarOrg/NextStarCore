@@ -23,7 +23,7 @@ namespace NextStar.Library.AspNetCore.DbContexts
         {
             modelBuilder.Entity<ApplicationConfig>(entity =>
             {
-                entity.HasKey(e => e.Key)
+                entity.HasKey(e => e.Name)
                     .HasName("ApplicationConfig_pk");
 
                 entity.ToTable("ApplicationConfig");
@@ -31,16 +31,12 @@ namespace NextStar.Library.AspNetCore.DbContexts
                 entity.HasIndex(e => e.Id, "ApplicationConfig_Id_uindex")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Key, "ApplicationConfig_Key_uindex")
+                entity.HasIndex(e => e.Name, "ApplicationConfig_Name_uindex")
                     .IsUnique();
 
-                entity.Property(e => e.Key).HasDefaultValueSql("(newsequentialid())");
-
-                entity.Property(e => e.Environment).HasMaxLength(20);
+                entity.Property(e => e.Name).HasMaxLength(200);
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Name).HasMaxLength(200);
 
                 entity.Property(e => e.Value).HasMaxLength(200);
             });
