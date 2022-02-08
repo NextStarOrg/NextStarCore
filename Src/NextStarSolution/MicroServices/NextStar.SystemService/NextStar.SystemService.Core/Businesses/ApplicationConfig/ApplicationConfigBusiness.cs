@@ -8,15 +8,15 @@ namespace NextStar.SystemService.Core.Businesses.ApplicationConfig;
 
 public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
 {
-    private readonly IApplicationConfigRepository _Repository;
+    private readonly IApplicationConfigRepository _repository;
     public ApplicationConfigConfigBusiness(IApplicationConfigRepository Repository)
     {
-        _Repository = Repository;
+        _repository = Repository;
     }
 
     public async Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(SelectInput selectInput)
     {
-        var query = _Repository.GetAllQuery();
+        var query = _repository.GetAllQuery();
 
         if (!string.IsNullOrWhiteSpace(selectInput.SearchText))
         {
