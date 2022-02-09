@@ -8,7 +8,7 @@ using NextStar.SystemService.Core.ManagementDbModels;
 namespace NextStar.SystemService.API.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
+[Route("api/[controller]/[action]")]
 public class ApplicationConfigController : ControllerBase
 {
     private readonly ILogger<ApplicationConfigController> _logger;

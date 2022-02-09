@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using NextStar.Identity.Businesses;
 using NextStar.Identity.Entities;
+using NextStar.Identity.Filters;
 using NextStar.Identity.Models;
 using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.AspNetCore.Extensions;
@@ -15,6 +16,8 @@ using NextStar.Library.Utils;
 
 namespace NextStar.Identity.Controllers;
 
+
+[SecurityHeaders]
 public class AccountController : Controller
 {
     private readonly ILogger<AccountController> _logger;

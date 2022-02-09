@@ -5,7 +5,7 @@ using NextStar.SystemService.Core.Entities.ThirdPartyLogin;
 namespace NextStar.SystemService.API.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
+[Route("api/[controller]/[action]")]
 public class ThirdPartyLoginController : ControllerBase
 {
     private readonly ILogger<ThirdPartyLoginController> _logger;

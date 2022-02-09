@@ -31,9 +31,14 @@ public class DataBaseSettingConfig
     public string Account { get; set; } = string.Empty;
 
     /// <summary>
-    /// 博客数据库相关
+    /// 管理数据库相关
     /// </summary>
     public string Management { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// 博客数据库相关
+    /// </summary>
+    public string Blog { get; set; } = string.Empty;
 }
 
 public class SerilogSettingConfig
