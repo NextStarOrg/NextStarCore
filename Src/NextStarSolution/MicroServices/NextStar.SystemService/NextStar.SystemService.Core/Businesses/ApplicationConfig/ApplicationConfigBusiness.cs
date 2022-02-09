@@ -46,9 +46,9 @@ public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
     {
         try
         {
-            // 更新之前删除掉原有缓存数据
-            await _applicationConfigStore.ClearConfigCacheAsync(config.Name);
             await _repository.UpdateAsync(config.Name, config.Value);
+            // 更新之后删除掉原有缓存数据 - 之前删除可能导致正在更新时有访问导致缓存依旧为旧版数据
+            await _applicationConfigStore.ClearConfigCacheAsync(config.Name);
             return true;
         }
         catch (Exception e)
