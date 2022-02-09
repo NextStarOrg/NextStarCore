@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.MicroService.Outputs;
 using NextStar.Library.MicroService.Utils;
 using NextStar.SystemService.Core.Entities.ApplicationConfig;
@@ -11,11 +12,14 @@ public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
 {
     private readonly IApplicationConfigRepository _repository;
     private readonly ILogger<ApplicationConfigConfigBusiness> _logger;
+    private readonly IApplicationConfigStore _applicationConfigStore;
     public ApplicationConfigConfigBusiness(IApplicationConfigRepository repository,
-        ILogger<ApplicationConfigConfigBusiness> logger)
+        ILogger<ApplicationConfigConfigBusiness> logger,
+        IApplicationConfigStore applicationConfigStore)
     {
         _repository = repository;
         _logger = logger;
+        _applicationConfigStore = applicationConfigStore;
     }
 
     public async Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(ApplicationConfigSelectInput applicationConfigSelectInput)
@@ -42,6 +46,8 @@ public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
     {
         try
         {
+            // 更新之前删除掉原有缓存数据
+            await _applicationConfigStore.ClearConfigCacheAsync(config.Name);
             await _repository.UpdateAsync(config.Name, config.Value);
             return true;
         }
