@@ -138,7 +138,7 @@ async Task NextStarAuthenticationMiddleware(HttpContext httpContext, Func<Task> 
         // 认证失败返回401
         var error = new UnauthenticatedError(
             string.Format("Request for authenticated route {0} by {1} was unauthenticated", httpContext.Request.Path,
-                httpContext.User.Identity.Name));
+                httpContext.User.Identity?.Name));
 
         Log.Warning(
             "Client has NOT been authenticated for {@Path} and pipeline error set. {@Error}", httpContext.Request.Path,

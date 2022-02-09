@@ -13,6 +13,7 @@ public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
     private readonly IApplicationConfigRepository _repository;
     private readonly ILogger<ApplicationConfigConfigBusiness> _logger;
     private readonly IApplicationConfigStore _applicationConfigStore;
+
     public ApplicationConfigConfigBusiness(IApplicationConfigRepository repository,
         ILogger<ApplicationConfigConfigBusiness> logger,
         IApplicationConfigStore applicationConfigStore)
@@ -22,14 +23,12 @@ public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
         _applicationConfigStore = applicationConfigStore;
     }
 
-    public async Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(ApplicationConfigSelectInput applicationConfigSelectInput)
+    public async Task<PageCommonDto<ManagementDbModels.ApplicationConfig>> GetApplicationConfigListAsync(
+        ApplicationConfigSelectInput applicationConfigSelectInput)
     {
-        var query = _repository.GetAllQuery();
-
-        if (!string.IsNullOrWhiteSpace(applicationConfigSelectInput.SearchText))
-        {
-            query = query.Where(x => x.Name.Contains(applicationConfigSelectInput.SearchText) || x.Value.Contains(applicationConfigSelectInput.SearchText));
-        }
+        var query = _repository.GetAllQuery(applicationConfigSelectInput.SearchText,
+            x => x.Name.Contains(applicationConfigSelectInput.SearchText) ||
+                 x.Value.Contains(applicationConfigSelectInput.SearchText));
 
         query = query.CommonPageSort(applicationConfigSelectInput, "Id asc");
 
@@ -53,7 +52,7 @@ public class ApplicationConfigConfigBusiness : IApplicationConfigBusiness
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"ERROR 10-010-030 Update config value error");
+            _logger.LogError(e, "ERROR 10-010-030 Update config value error");
             return false;
         }
     }

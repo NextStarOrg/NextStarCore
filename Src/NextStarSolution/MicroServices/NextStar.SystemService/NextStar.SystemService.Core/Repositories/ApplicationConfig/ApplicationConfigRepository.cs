@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using NextStar.SystemService.Core.DbContexts;
 
 namespace NextStar.SystemService.Core.Repositories.ApplicationConfig;
@@ -11,8 +12,12 @@ public class ApplicationConfigRepository:IApplicationConfigRepository
         _managementDbContext = managementDbContext;
     }
 
-    public IQueryable<ManagementDbModels.ApplicationConfig> GetAllQuery()
+    public IQueryable<ManagementDbModels.ApplicationConfig> GetAllQuery(string searchText,Expression<Func<ManagementDbModels.ApplicationConfig,bool>> predicate)
     {
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            return _managementDbContext.ApplicationConfigs.Where(predicate).AsNoTracking();
+        }
         return _managementDbContext.ApplicationConfigs.AsNoTracking();
     }
 
