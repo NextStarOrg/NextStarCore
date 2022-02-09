@@ -59,7 +59,8 @@ public class ApplicationConfigStore : IApplicationConfigStore
                 {
                     await _configCache.SetAsync(configCacheKey, config, new DistributedCacheEntryOptions()
                     {
-                        AbsoluteExpiration = DateTimeOffset.Now.AddHours(8)
+                        AbsoluteExpiration = DateTimeOffset.Now.AddHours(72),
+                        SlidingExpiration = TimeSpan.FromHours(8)
                     });
                 }
                 catch (Exception e)
@@ -110,7 +111,8 @@ public class ApplicationConfigStore : IApplicationConfigStore
                 {
                     _configCache.Set(configCacheKey, config, new DistributedCacheEntryOptions()
                     {
-                        AbsoluteExpiration = DateTimeOffset.Now.AddHours(8)
+                        AbsoluteExpiration = DateTimeOffset.Now.AddHours(72),
+                        SlidingExpiration = TimeSpan.FromHours(8)
                     });
                 }
                 catch (Exception e)
