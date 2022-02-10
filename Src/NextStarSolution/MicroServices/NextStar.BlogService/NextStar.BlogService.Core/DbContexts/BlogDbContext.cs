@@ -20,6 +20,8 @@ namespace NextStar.BlogService.Core.DbContexts
         public virtual DbSet<Article> Articles { get; set; } = null!;
         public virtual DbSet<ArticleCategory> ArticleCategories { get; set; } = null!;
         public virtual DbSet<ArticleCodeEnvironment> ArticleCodeEnvironments { get; set; } = null!;
+        public virtual DbSet<ArticleContent> ArticleContents { get; set; } = null!;
+        public virtual DbSet<ArticleLastContent> ArticleLastContents { get; set; } = null!;
         public virtual DbSet<ArticleTag> ArticleTags { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<CodeEnvironment> CodeEnvironments { get; set; } = null!;
@@ -84,6 +86,31 @@ namespace NextStar.BlogService.Core.DbContexts
                     .WithMany()
                     .HasForeignKey(d => d.EnvironmentKey)
                     .HasConstraintName("ArticleEnvironment_Environment_Key_fk");
+            });
+
+            modelBuilder.Entity<ArticleContent>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ArticleContent");
+
+                entity.HasIndex(e => e.CreatedTime, "Article_CreatedTime_index");
+
+                entity.HasOne(d => d.ArticleKeyNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.ArticleKey)
+                    .HasConstraintName("Article_Article_Key_fk");
+            });
+
+            modelBuilder.Entity<ArticleLastContent>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ArticleLastContent");
+
+                entity.Property(e => e.Description).HasMaxLength(1000);
+
+                entity.Property(e => e.Title).HasMaxLength(300);
             });
 
             modelBuilder.Entity<ArticleTag>(entity =>
