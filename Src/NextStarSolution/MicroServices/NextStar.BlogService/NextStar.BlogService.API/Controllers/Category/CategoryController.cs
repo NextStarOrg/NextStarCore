@@ -34,4 +34,18 @@ public class CategoryController : ControllerBase
         await _business.AddAsync(category);
         return CommonDto<bool>.Ok(true);
     }
+
+    [HttpPut]
+    public async Task<ICommonDto<bool>> Update(Core.BlogDbModels.Category category)
+    {
+        await _business.UpdateAsync(category);
+        return CommonDto<bool>.Ok(true);
+    }
+
+    [HttpDelete("{categoryKey:Guid}")]
+    public async Task<ICommonDto<bool>> Delete(Guid categoryKey)
+    {
+        await _business.DeleteAsync(categoryKey);
+        return CommonDto<bool>.Ok(true);
+    }
 }

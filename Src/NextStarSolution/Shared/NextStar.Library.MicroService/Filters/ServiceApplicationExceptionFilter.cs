@@ -13,7 +13,7 @@ public class ServiceApplicationExceptionFilter : IActionFilter, IOrderedFilter
     {
         if (context.Exception is ServiceApplicationException exception)
         {
-            context.Result = new JsonResult(new CommonDto<object>("500", exception.Message));
+            context.Result = new JsonResult(new CommonDto<object>("400", exception.Message));
             context.ExceptionHandled = true;
         }
         else if (context.Exception != null)

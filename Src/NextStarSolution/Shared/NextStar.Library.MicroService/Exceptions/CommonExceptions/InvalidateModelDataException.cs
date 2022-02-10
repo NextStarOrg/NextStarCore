@@ -26,7 +26,7 @@ public class InvalidateModelDataException : ServiceApplicationException
 
     public override string ToString()
     {
-        return $"信息数据是不正确的。<br/> {Property} {Type.ToString()}。";
+        return $"信息数据不正确。<br/> {Property} {Type.GetMappingName()}。";
     }
     
     /// <summary>
@@ -40,6 +40,8 @@ public class InvalidateModelDataException : ServiceApplicationException
     {
         [MappingName("必须项目")]
         Required,
+        [MappingName("值不正确")]
+        IncorrectValue,
         [MappingName("未知错误")]
         UnknownError
     }

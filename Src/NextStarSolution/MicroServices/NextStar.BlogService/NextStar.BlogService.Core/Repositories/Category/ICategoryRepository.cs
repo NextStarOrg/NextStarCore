@@ -18,4 +18,18 @@ public interface ICategoryRepository
     /// <param name="category"></param>
     /// <returns></returns>
     Task AddEntityAsync(BlogDbModels.Category category);
+
+    /// <summary>
+    /// 更新分类
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    Task UpdateEntityAsync(BlogDbModels.Category category);
+
+    /// <summary>
+    /// 删除分类
+    /// </summary>
+    /// <param name="categoryKey"></param>
+    /// <returns></returns>
+    Task DeleteEntityAsync(Guid categoryKey);
 }

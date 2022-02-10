@@ -36,4 +36,26 @@ public class CategoryRepository : ICategoryRepository
         await _blogDbContext.Categories.AddAsync(entityCategory);
         await _blogDbContext.SaveChangesAsync();
     }
+    
+    public async Task UpdateEntityAsync(BlogDbModels.Category category)
+    {
+        var currentCategory = await _blogDbContext.Categories.FirstOrDefaultAsync(x => x.Key == category.Key);
+        if (currentCategory != null)
+        {
+            currentCategory.Name = category.Name;
+            currentCategory.UpdatedTime = DateTime.Now;
+            _blogDbContext.Categories.Update(currentCategory);
+            await _blogDbContext.SaveChangesAsync();
+        }
+    }
+
+    public async Task DeleteEntityAsync(Guid categoryKey)
+    {
+        var currentCategory = await _blogDbContext.Categories.FirstOrDefaultAsync(x => x.Key == categoryKey);
+        if (currentCategory != null)
+        {
+            _blogDbContext.Categories.Remove(currentCategory);
+            await _blogDbContext.SaveChangesAsync();
+        }
+    }
 }

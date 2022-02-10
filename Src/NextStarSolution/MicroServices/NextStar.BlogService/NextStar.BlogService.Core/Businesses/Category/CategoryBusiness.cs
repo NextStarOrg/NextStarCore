@@ -44,4 +44,39 @@ public class CategoryBusiness:ICategoryBusiness
         }
         await _repository.AddEntityAsync(category);
     }
+    
+    public async Task UpdateAsync(BlogDbModels.Category category)
+    {
+        if (category.Key == Guid.Empty)
+        {
+            throw new InvalidateModelDataException()
+            {
+                Property = "分类主键",
+                Type = InvalidateModelDataException.InvalidateType.IncorrectValue
+            };
+        }
+        if (string.IsNullOrWhiteSpace(category.Name))
+        {
+            throw new InvalidateModelDataException()
+            {
+                Property = "名称",
+                Type = InvalidateModelDataException.InvalidateType.Required
+            };
+        }
+        await _repository.UpdateEntityAsync(category);
+    }
+
+    public async Task DeleteAsync(Guid categoryKey)
+    {
+        if (categoryKey == Guid.Empty)
+        {
+            throw new InvalidateModelDataException()
+            {
+                Property = "分类主键",
+                Type = InvalidateModelDataException.InvalidateType.IncorrectValue
+            };
+        }
+
+        await _repository.DeleteEntityAsync(categoryKey);
+    }
 }
