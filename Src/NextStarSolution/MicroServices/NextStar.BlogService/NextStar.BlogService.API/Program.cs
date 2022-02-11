@@ -6,6 +6,7 @@ using Newtonsoft.Json.Serialization;
 using NextStar.BlogService.API.Configs;
 using NextStar.BlogService.API.Extensions;
 using NextStar.BlogService.Core;
+using NextStar.BlogService.Core.Configs;
 using NextStar.Library.AspNetCore.Audit;
 using NextStar.Library.AspNetCore.Extensions;
 using NextStar.Library.MicroService.Filters;
