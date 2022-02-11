@@ -18,7 +18,7 @@ public class CategoryController : ControllerBase
     }
 
     /// <summary>
-    /// 获取分析列表
+    /// 获取分类列表
     /// </summary>
     /// <returns></returns>
     [HttpPost]
