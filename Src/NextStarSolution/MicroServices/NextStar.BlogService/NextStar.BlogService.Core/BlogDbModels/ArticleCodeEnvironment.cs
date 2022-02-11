@@ -7,6 +7,7 @@ namespace NextStar.BlogService.Core.BlogDbModels
     {
         public Guid ArticleKey { get; set; }
         public Guid EnvironmentKey { get; set; }
+        public string Version { get; set; } = null!;
 
         public virtual Article ArticleKeyNavigation { get; set; } = null!;
         public virtual CodeEnvironment EnvironmentKeyNavigation { get; set; } = null!;

@@ -8,7 +8,7 @@ namespace NextStar.BlogService.Core.BlogDbModels
         public int Id { get; set; }
         public Guid Key { get; set; }
         public string Title { get; set; } = null!;
-        public string? Description { get; set; }
+        public string Description { get; set; } = null!;
         public bool IsPublish { get; set; }
         public DateTime PublishTime { get; set; }
         public DateTime CreatedTime { get; set; }

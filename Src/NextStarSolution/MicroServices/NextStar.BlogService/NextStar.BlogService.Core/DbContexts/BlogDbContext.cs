@@ -77,6 +77,8 @@ namespace NextStar.BlogService.Core.DbContexts
 
                 entity.ToTable("ArticleCodeEnvironment");
 
+                entity.Property(e => e.Version).HasMaxLength(50);
+
                 entity.HasOne(d => d.ArticleKeyNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.ArticleKey)
