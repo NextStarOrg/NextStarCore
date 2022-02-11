@@ -8,5 +8,5 @@ public interface ITagBusiness
     Task<PageCommonDto<BlogDbModels.Tag>> GetListAsync(TagSelectInput selectInput);
     Task AddAsync(BlogDbModels.Tag tag);
     Task UpdateAsync(BlogDbModels.Tag tag);
-    Task DeleteAsync(Guid categoryKey);
+    Task DeleteAsync(Guid tagKey);
 }

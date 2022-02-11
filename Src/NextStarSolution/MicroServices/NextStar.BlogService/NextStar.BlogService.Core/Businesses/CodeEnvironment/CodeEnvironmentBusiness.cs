@@ -1,21 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NextStar.BlogService.Core.Entities.Tag;
-using NextStar.BlogService.Core.Repositories.Tag;
+using NextStar.BlogService.Core.Entities.CodeEnvironment;
+using NextStar.BlogService.Core.Repositories.CodeEnvironment;
 using NextStar.Library.MicroService.Exceptions;
 using NextStar.Library.MicroService.Outputs;
 using NextStar.Library.MicroService.Utils;
 
-namespace NextStar.BlogService.Core.Businesses.Tag;
+namespace NextStar.BlogService.Core.Businesses.CodeEnvironment;
 
-public class TagBusiness : ITagBusiness
+public class CodeEnvironmentBusiness : ICodeEnvironmentBusiness
 {
-    private readonly ITagRepository _repository;
-    public TagBusiness(ITagRepository repository)
+    private readonly ICodeEnvironmentRepository _repository;
+    public CodeEnvironmentBusiness(ICodeEnvironmentRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<PageCommonDto<BlogDbModels.Tag>> GetListAsync(TagSelectInput selectInput)
+    public async Task<PageCommonDto<BlogDbModels.CodeEnvironment>> GetListAsync(CodeEnvironmentSelectInput selectInput)
     {
         var query = string.IsNullOrWhiteSpace(selectInput.SearchText)
             ? _repository.GetListQuery(null)
@@ -25,16 +25,16 @@ public class TagBusiness : ITagBusiness
 
         var result = await query.ToListAsync();
         var count = await query.CountAsync();
-        return new PageCommonDto<BlogDbModels.Tag>()
+        return new PageCommonDto<BlogDbModels.CodeEnvironment>()
         {
             Data = result,
             TotalCount = count
         };
     }
     
-    public async Task AddAsync(BlogDbModels.Tag tag)
+    public async Task AddAsync(BlogDbModels.CodeEnvironment codeEnvironment)
     {
-        if (string.IsNullOrWhiteSpace(tag.Name))
+        if (string.IsNullOrWhiteSpace(codeEnvironment.Name))
         {
             throw new InvalidateModelDataException()
             {
@@ -42,12 +42,12 @@ public class TagBusiness : ITagBusiness
                 Type = InvalidateModelDataException.InvalidateType.Required
             };
         }
-        await _repository.AddEntityAsync(tag);
+        await _repository.AddEntityAsync(codeEnvironment);
     }
     
-    public async Task UpdateAsync(BlogDbModels.Tag tag)
+    public async Task UpdateAsync(BlogDbModels.CodeEnvironment codeEnvironment)
     {
-        if (tag.Key == Guid.Empty)
+        if (codeEnvironment.Key == Guid.Empty)
         {
             throw new InvalidateModelDataException()
             {
@@ -55,7 +55,7 @@ public class TagBusiness : ITagBusiness
                 Type = InvalidateModelDataException.InvalidateType.IncorrectValue
             };
         }
-        if (string.IsNullOrWhiteSpace(tag.Name))
+        if (string.IsNullOrWhiteSpace(codeEnvironment.Name))
         {
             throw new InvalidateModelDataException()
             {
@@ -63,12 +63,12 @@ public class TagBusiness : ITagBusiness
                 Type = InvalidateModelDataException.InvalidateType.Required
             };
         }
-        await _repository.UpdateEntityAsync(tag);
+        await _repository.UpdateEntityAsync(codeEnvironment);
     }
 
-    public async Task DeleteAsync(Guid tagKey)
+    public async Task DeleteAsync(Guid codeEnvironmentKey)
     {
-        if (tagKey == Guid.Empty)
+        if (codeEnvironmentKey == Guid.Empty)
         {
             throw new InvalidateModelDataException()
             {
@@ -77,6 +77,6 @@ public class TagBusiness : ITagBusiness
             };
         }
 
-        await _repository.DeleteEntityAsync(tagKey);
+        await _repository.DeleteEntityAsync(codeEnvironmentKey);
     }
 }
