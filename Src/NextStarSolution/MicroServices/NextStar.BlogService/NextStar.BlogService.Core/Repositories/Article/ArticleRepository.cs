@@ -21,6 +21,29 @@ public class ArticleRepository
         _logger = logger;
     }
 
+    public async Task<IQueryable<BlogDbModels.Article>> SelectEntity(ArticleSelectInput selectInput)
+    {
+        var query = _blogDbContext.Articles.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(selectInput.SearchText))
+        {
+            query = query.Where(x =>
+                x.Title.Contains(selectInput.SearchText) || x.Description.Contains(selectInput.SearchText));
+        }
+
+        if (selectInput.StartTime.HasValue && selectInput.EndTime.HasValue &&
+            DateTime.Compare(selectInput.StartTime.Value, selectInput.EndTime.Value) <=0)
+        {
+            query = query.Where(x =>
+                x.Title.Contains(selectInput.SearchText) || x.Description.Contains(selectInput.SearchText));
+        }
+
+        if (selectInput.IsPublish.HasValue)
+        {
+            query = query.Where(x => x.IsPublish == selectInput.IsPublish);
+        }
+
+        return query.AsNoTracking();
+    }
     public async Task<bool> AddEntity(ArticleInput articleInput)
     {
         await using var t = await _blogDbContext.Database.BeginTransactionAsync();
