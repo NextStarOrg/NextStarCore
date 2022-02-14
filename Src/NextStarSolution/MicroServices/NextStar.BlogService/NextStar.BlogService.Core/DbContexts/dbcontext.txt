@@ -1,1 +1,4 @@
-﻿dotnet ef dbcontext scaffold "Server=localhost;Database=NextStarBlog;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -o  BlogDbModels --context-dir DbContexts -c BlogDbContext -f --no-onconfiguring
+﻿#Blog
+dotnet ef dbcontext scaffold "Server=localhost;Database=NextStarBlog;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -o  BlogDbModels --context-dir DbContexts -c BlogDbContext -f --no-onconfiguring
+
+Scaffold-DbContext "Server=localhost;Database=NextStarBlog;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir BlogDbModels -ContextDir DbContexts -Context BlogDbContext -Force -NoOnConfiguring
