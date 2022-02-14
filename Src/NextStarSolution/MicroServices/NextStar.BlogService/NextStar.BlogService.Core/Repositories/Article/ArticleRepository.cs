@@ -23,15 +23,6 @@ public class ArticleRepository
 
     public async Task<bool> AddEntity(ArticleInput articleInput)
     {
-        // var categoryKeys = _blogDbContext.Categories.Select(x => x.Key).ToList();
-        // article.Categories = article.Categories.Union(categoryKeys).ToList();
-        //
-        // var tagKeys = _blogDbContext.Tags.Select(x => x.Key).ToList();
-        // article.Tags = article.Tags.Union(tagKeys).ToList();
-        //
-        // var codeEnvironmentKeys = _blogDbContext.CodeEnvironments.Select(x => x.Key).ToList();
-        // article.CodeEnvironments = article.CodeEnvironments.Union(codeEnvironmentKeys).ToList();
-
         await using var t = await _blogDbContext.Database.BeginTransactionAsync();
         try
         {
