@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -132,6 +133,18 @@ public static class ServiceCollectionExtensions
         services.TryAddSingleton(typeof(IDistributedCache<>), typeof(DistributedCache<>));
         services.TryAddTransient<IApplicationConfigStore, ApplicationConfigStore>();
         services.TryAddTransient<IThirdPartyLogin, ThirdPartyLogin>();
+        return services;
+    }
+
+    /// <summary>
+    /// 添加访问认证用户的信息
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddIdentityStore(this IServiceCollection services)
+    {
+        services.TryAddTransient<IHttpContextAccessor,HttpContextAccessor>();
+        services.TryAddTransient<INextStarIdentityStore, NextStarIdentityStore>();
         return services;
     }
 }

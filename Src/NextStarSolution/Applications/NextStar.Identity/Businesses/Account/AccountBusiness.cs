@@ -64,7 +64,8 @@ public class AccountBusiness:IAccountBusiness
         if (user == null) return null;
         var nextStarSessionId = Guid.NewGuid();
         var identityServerUser = new IdentityServerUser(user.Key.ToString());
-        identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.Name, user.UserProfile.DisplayName));
+        identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.Name, user.UserProfile.LoginName));
+        identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.NickName, user.UserProfile.DisplayName));
         identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.Email, user.Email));
         identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.ClientId, buildUserSessionDto.ClientId));
         identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.SessionId, nextStarSessionId.ToString()));

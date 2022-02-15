@@ -41,10 +41,16 @@ public static class ClaimsPrincipalExtensions
             return sId;
         }
 
-        public static string GetNextStarName(this ClaimsPrincipal principal)
+        public static string? GetNextStarName(this ClaimsPrincipal principal)
         {
             var claim = principal?.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Name);
-            return claim == null ? string.Empty : claim.Value;
+            return claim?.Value;
+        }
+        
+        public static string? GetNextStarDisplayName(this ClaimsPrincipal principal)
+        {
+            var claim = principal?.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.NickName);
+            return claim?.Value;
         }
         
         public static string GetNextStarEmail(this ClaimsPrincipal principal)
@@ -53,14 +59,26 @@ public static class ClaimsPrincipalExtensions
             return claim == null ? string.Empty : claim.Value;
         }
         
-        public static string GetThirdPartyName(this ClaimsPrincipal principal)
+        public static string? GetNextStarClientId(this ClaimsPrincipal principal)
+        {
+            var claim = principal?.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.ClientId);
+            return claim?.Value;
+        }
+        
+        public static string? GetNextStarProvider(this ClaimsPrincipal principal)
+        {
+            var claim = principal?.Claims.FirstOrDefault(c => c.Type == NextStarClaimTypes.Provider);
+            return claim?.Value;
+        }
+        
+        public static string? GetThirdPartyName(this ClaimsPrincipal principal)
         {
             var claim = principal?.Claims.FirstOrDefault(c => c.Type == NextStarClaimTypes.ThirdPartyName);
-            return claim == null ? string.Empty : claim.Value;
+            return claim?.Value;
         }
-        public static string GetThirdPartyEmail(this ClaimsPrincipal principal)
+        public static string? GetThirdPartyEmail(this ClaimsPrincipal principal)
         {
             var claim = principal?.Claims.FirstOrDefault(c => c.Type == NextStarClaimTypes.ThirdPartyEmail);
-            return claim == null ? string.Empty : claim.Value;
+            return claim?.Value;
         }
 }
