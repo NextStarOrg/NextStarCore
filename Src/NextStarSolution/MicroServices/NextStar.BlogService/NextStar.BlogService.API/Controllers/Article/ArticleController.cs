@@ -21,4 +21,25 @@ public class ArticleController:ControllerBase
         var result = await _business.SelectArticleAsync(selectInput);
         return CommonDto<PageCommonDto<ArticleItem>?>.Ok(result);
     }
+
+    [HttpPost]
+    public async Task<ICommonDto<bool>> Add(ArticleInput articleInput)
+    {
+        await _business.AddAsync(articleInput);
+        return CommonDto<bool>.Ok(true);
+    }
+    
+    [HttpPut]
+    public async Task<ICommonDto<bool>> Update(ArticleInput articleInput)
+    {
+        await _business.UpdateAsync(articleInput);
+        return CommonDto<bool>.Ok(true);
+    }
+    
+    [HttpDelete("{articleKey:guid}")]
+    public async Task<ICommonDto<bool>> Update(Guid articleKey)
+    {
+        await _business.DeleteAsync(articleKey);
+        return CommonDto<bool>.Ok(true);
+    }
 }

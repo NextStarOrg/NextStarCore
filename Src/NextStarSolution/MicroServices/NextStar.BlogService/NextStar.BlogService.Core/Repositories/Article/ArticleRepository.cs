@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Text;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -53,14 +54,14 @@ public class ArticleRepository : IArticleRepository
             await _blogDbContext.SaveChangesAsync();
 
             // add relation
-            if (articleInput.Categories.Count > 0)
+            if (articleInput.Category != null && articleInput.Category != Guid.Empty)
             {
-                var acList = articleInput.Categories.Select(x => new ArticleCategory()
+                var ac = new ArticleCategory()
                 {
                     ArticleKey = article.Key,
-                    CategoryKey = x
-                }).ToList();
-                await _blogDbContext.ArticleCategories.AddRangeAsync(acList);
+                    CategoryKey = articleInput.Category.Value
+                };
+                await _blogDbContext.ArticleCategories.AddAsync(ac);
             }
 
             if (articleInput.Tags.Count > 0)
@@ -118,14 +119,14 @@ public class ArticleRepository : IArticleRepository
             var acExistList = _blogDbContext.ArticleCategories.Where(x => x.ArticleKey == article.Key);
             _blogDbContext.ArticleCategories.RemoveRange(acExistList);
             // add relation
-            if (articleInput.Categories.Count > 0)
+            if (articleInput.Category != null && articleInput.Category != Guid.Empty)
             {
-                var acList = articleInput.Categories.Select(x => new ArticleCategory()
+                var ac = new ArticleCategory()
                 {
                     ArticleKey = article.Key,
-                    CategoryKey = x
-                });
-                await _blogDbContext.ArticleCategories.AddRangeAsync(acList);
+                    CategoryKey = articleInput.Category.Value
+                };
+                await _blogDbContext.ArticleCategories.AddAsync(ac);
             }
 
             var atExistList = _blogDbContext.ArticleCategories.Where(x => x.ArticleKey == article.Key);
@@ -171,13 +172,22 @@ public class ArticleRepository : IArticleRepository
             return;
         var articleContent = await _blogDbContext.ArticleContents.Where(x => x.ArticleKey == articleKey)
             .OrderByDescending(x => x.CreatedTime).FirstOrDefaultAsync();
-        if (articleContent == null)
-            return;
-        // 删除之前对内容进行备份保存
-        var appSetting = _configuration.Get<AppSettingPartial>();
-        var path = Path.Combine(appSetting.ArticleDeleteBackupPath ?? string.Empty,
-            $"{DateTime.Now:yyyy-MM-dd-HH-mm-ss}{article.Title}.md");
-        await File.WriteAllTextAsync(path, articleContent.Content);
+        if (articleContent != null)
+        {
+            // 删除之前对内容进行备份保存
+            var appSetting = _configuration.Get<AppSettingPartial>();
+            var path = Path.Combine(appSetting.ArticleDeleteBackupPath ?? string.Empty);
+                //$"{DateTime.Now:yyyy-MM-dd-HH-mm-ss}{article.Title}.md");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            var filePath = Path.Combine(path, $"{DateTime.Now:yyyy-MM-dd-HH-mm-ss}_{article.Title}.md");
+            var fs = File.OpenWrite(filePath);
+            await fs.WriteAsync(Encoding.UTF8.GetBytes(articleContent.Content));
+            fs.Close();
+        }
 
         _logger.LogInformation("ERROR 30-040-040 delete article {@article} start", article);
         _blogDbContext.Articles.RemoveRange(article);

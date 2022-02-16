@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NextStar.BlogService.Core.Entities.Article;
 using NextStar.BlogService.Core.Repositories.Article;
+using NextStar.Library.MicroService.Exceptions;
 using NextStar.Library.MicroService.Outputs;
 using NextStar.Library.MicroService.Utils;
 
@@ -72,5 +73,65 @@ public class ArticleBusiness : IArticleBusiness
             Data = result,
             TotalCount = count
         };
+    }
+
+    public async Task AddAsync(ArticleInput articleInput)
+    {
+        if (string.IsNullOrWhiteSpace(articleInput.Title))
+        {
+            throw new InvalidateModelDataException()
+            {
+                Property = "标题",
+                Type = InvalidateModelDataException.InvalidateType.Required
+            };
+        }
+        
+        if (string.IsNullOrWhiteSpace(articleInput.Description))
+        {
+            throw new InvalidateModelDataException()
+            {
+                Property = "标题",
+                Type = InvalidateModelDataException.InvalidateType.Required
+            };
+        }
+
+        await _repository.AddEntityAsync(articleInput);
+    }
+    
+    public async Task UpdateAsync(ArticleInput articleInput)
+    {
+        if (string.IsNullOrWhiteSpace(articleInput.Title))
+        {
+            throw new InvalidateModelDataException()
+            {
+                Property = "标题",
+                Type = InvalidateModelDataException.InvalidateType.Required
+            };
+        }
+        
+        if (string.IsNullOrWhiteSpace(articleInput.Description))
+        {
+            throw new InvalidateModelDataException()
+            {
+                Property = "标题",
+                Type = InvalidateModelDataException.InvalidateType.Required
+            };
+        }
+        
+        if (articleInput.ArticleKey == null || articleInput.ArticleKey == Guid.Empty)
+        {
+            throw new InvalidateModelDataException()
+            {
+                Property = "主Key",
+                Type = InvalidateModelDataException.InvalidateType.Required
+            };
+        }
+
+        await _repository.AddEntityAsync(articleInput);
+    }
+
+    public async Task DeleteAsync(Guid articleKey)
+    {
+        await _repository.DeleteEntityAsync(articleKey);
     }
 }
