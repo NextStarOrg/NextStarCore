@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NextStar.BlogService.Core.Businesses.Article;
 using NextStar.BlogService.Core.Entities.Article;
+using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.API.Controllers.Article;
 
@@ -7,14 +9,16 @@ namespace NextStar.BlogService.API.Controllers.Article;
 [Route("api/[controller]/[action]")]
 public class ArticleController:ControllerBase
 {
-    public ArticleController()
+    private readonly IArticleBusiness _business;
+    public ArticleController(IArticleBusiness business)
     {
-        
+        _business = business;
     }
 
     [HttpPost]
-    public async Task Add(ArticleInput articleInput)
+    public async Task<ICommonDto<PageCommonDto<ArticleItem>?>> GetList(ArticleSelectInput selectInput)
     {
-        
+        var result = await _business.SelectArticleAsync(selectInput);
+        return CommonDto<PageCommonDto<ArticleItem>?>.Ok(result);
     }
 }

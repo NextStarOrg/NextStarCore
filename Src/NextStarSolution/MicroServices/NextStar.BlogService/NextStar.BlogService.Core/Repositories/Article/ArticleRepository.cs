@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NextStar.BlogService.Core.BlogDbModels;
@@ -8,43 +9,31 @@ using NextStar.BlogService.Core.Entities.Article;
 
 namespace NextStar.BlogService.Core.Repositories.Article;
 
-public class ArticleRepository
+public class ArticleRepository : IArticleRepository
 {
     private readonly BlogDbContext _blogDbContext;
     private readonly ILogger<ArticleRepository> _logger;
     private readonly IConfiguration _configuration;
+    private readonly IMapper _mapper;
 
     public ArticleRepository(BlogDbContext blogDbContext,
-        ILogger<ArticleRepository> logger)
+        ILogger<ArticleRepository> logger,
+        IConfiguration configuration,
+        IMapper mapper)
     {
         _blogDbContext = blogDbContext;
         _logger = logger;
+        _configuration = configuration;
+        _mapper = mapper;
     }
 
-    public async Task<IQueryable<BlogDbModels.Article>> SelectEntity(ArticleSelectInput selectInput)
+    public async Task<IQueryable<BlogDbModels.Article>> SelectEntityAsync()
     {
-        var query = _blogDbContext.Articles.AsQueryable();
-        if (!string.IsNullOrWhiteSpace(selectInput.SearchText))
-        {
-            query = query.Where(x =>
-                x.Title.Contains(selectInput.SearchText) || x.Description.Contains(selectInput.SearchText));
-        }
-
-        if (selectInput.StartTime.HasValue && selectInput.EndTime.HasValue &&
-            DateTime.Compare(selectInput.StartTime.Value, selectInput.EndTime.Value) <=0)
-        {
-            query = query.Where(x =>
-                x.Title.Contains(selectInput.SearchText) || x.Description.Contains(selectInput.SearchText));
-        }
-
-        if (selectInput.IsPublish.HasValue)
-        {
-            query = query.Where(x => x.IsPublish == selectInput.IsPublish);
-        }
-
-        return query.AsNoTracking();
+        var query = _blogDbContext.Articles.AsQueryable().AsNoTracking();
+        return await Task.FromResult(query);
     }
-    public async Task<bool> AddEntity(ArticleInput articleInput)
+
+    public async Task<bool> AddEntityAsync(ArticleInput articleInput)
     {
         await using var t = await _blogDbContext.Database.BeginTransactionAsync();
         try
@@ -106,7 +95,7 @@ public class ArticleRepository
         }
     }
 
-    public async Task<bool> UpdateEntity(ArticleInput articleInput)
+    public async Task<bool> UpdateEntityAsync(ArticleInput articleInput)
     {
         var article = await _blogDbContext.Articles.FirstOrDefaultAsync(x => x.Key == articleInput.ArticleKey);
         if (article == null)
@@ -175,7 +164,7 @@ public class ArticleRepository
         }
     }
 
-    public async Task DeleteEntity(Guid articleKey)
+    public async Task DeleteEntityAsync(Guid articleKey)
     {
         var article = await _blogDbContext.Articles.FirstOrDefaultAsync(x => x.Key == articleKey);
         if (article == null)
@@ -194,5 +183,60 @@ public class ArticleRepository
         _blogDbContext.Articles.RemoveRange(article);
         await _blogDbContext.SaveChangesAsync();
         _logger.LogInformation("ERROR 30-040-040 delete article {@article} finish", article);
+    }
+
+    public async Task GetArticleCategoryByArticles(List<ArticleItem> articleItems)
+    {
+        foreach (var articleItem in articleItems)
+        {
+            var relationCategory =
+                await _blogDbContext.ArticleCategories.FirstOrDefaultAsync(x => articleItem.Key == x.ArticleKey);
+
+            if (relationCategory != null)
+            {
+                var category =
+                    await _blogDbContext.Categories.FirstOrDefaultAsync(x => relationCategory.CategoryKey == x.Key);
+
+                articleItem.Category = category == null ? null : _mapper.Map<ArticleCategoryItem>(category);
+            }
+        }
+    }
+
+    public async Task GetArticleTagByArticles(List<ArticleItem> articleItems)
+    {
+        foreach (var articleItem in articleItems)
+        {
+            var relationTagKeys = await _blogDbContext.ArticleTags.Where(x => articleItem.Key == x.ArticleKey)
+                .Select(x => x.TagKey).ToListAsync();
+
+            if (relationTagKeys.Count > 0)
+            {
+                var tags = await _blogDbContext.Tags.Where(x => relationTagKeys.Contains(x.Key)).ToListAsync();
+                articleItem.Tags =
+                    tags.Count == 0 ? new List<ArticleTagItem>() : _mapper.Map<List<ArticleTagItem>>(tags);
+            }
+        }
+    }
+
+    public async Task GetArticleCodeEnvironmentByArticles(List<ArticleItem> articleItems)
+    {
+        foreach (var articleItem in articleItems)
+        {
+            var relationCodeEnvironments = await _blogDbContext.ArticleCodeEnvironments
+                .Where(x => articleItem.Key == x.ArticleKey).ToDictionaryAsync(x => x.EnvironmentKey, x => x.Version);
+
+            if (relationCodeEnvironments.Count > 0)
+            {
+                var keys = relationCodeEnvironments.Keys.ToList();
+                var codeEnvironmentItems = await _blogDbContext.CodeEnvironments.Where(x => keys.Contains(x.Key)).Select(x=> new ArticleCodeEnvironmentItem()
+                {
+                    Key = x.Key,
+                    Name = x.Name,
+                    IconUrl = x.IconUrl,
+                    Version = relationCodeEnvironments[x.Key]
+                }).ToListAsync();
+                articleItem.CodeEnvironment = codeEnvironmentItems;
+            }
+        }
     }
 }
