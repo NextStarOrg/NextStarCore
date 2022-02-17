@@ -38,10 +38,12 @@ public class InvalidateModelDataException : ServiceApplicationException
     /// </history>
     public enum InvalidateType
     {
-        [MappingName("必须项目")]
+        [MappingName("必须输入")]
         Required,
         [MappingName("值不正确")]
         IncorrectValue,
+        [MappingName("无法找到")]
+        NotFound,
         [MappingName("未知错误")]
         UnknownError
     }

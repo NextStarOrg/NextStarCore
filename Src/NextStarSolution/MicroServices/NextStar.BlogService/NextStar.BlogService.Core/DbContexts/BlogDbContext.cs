@@ -92,14 +92,17 @@ namespace NextStar.BlogService.Core.DbContexts
 
             modelBuilder.Entity<ArticleContent>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ArticleContent");
+
+                entity.HasIndex(e => e.Id, "ArticleContent_Id_uindex")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.CreatedTime, "Article_CreatedTime_index");
 
+                entity.Property(e => e.CommitMessage).HasMaxLength(500);
+
                 entity.HasOne(d => d.ArticleKeyNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ArticleContents)
                     .HasForeignKey(d => d.ArticleKey)
                     .HasConstraintName("Article_Article_Key_fk");
             });
@@ -165,7 +168,7 @@ namespace NextStar.BlogService.Core.DbContexts
                 entity.HasIndex(e => e.Key, "Environment_Key_uindex")
                     .IsUnique();
 
-                entity.Property(e => e.Key).ValueGeneratedNever();
+                entity.Property(e => e.Key).HasDefaultValueSql("(newsequentialid())");
 
                 entity.Property(e => e.IconUrl).HasMaxLength(200);
 

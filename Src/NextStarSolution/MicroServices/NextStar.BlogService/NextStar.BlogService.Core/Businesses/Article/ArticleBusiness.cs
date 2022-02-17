@@ -19,7 +19,7 @@ public class ArticleBusiness : IArticleBusiness
         _mapper = mapper;
     }
 
-    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText)
     {
         return await _repository.SearchSingleAsync(searchText);
     }
@@ -123,7 +123,7 @@ public class ArticleBusiness : IArticleBusiness
             };
         }
         
-        if (articleInput.ArticleKey == null || articleInput.ArticleKey == Guid.Empty)
+        if (articleInput.ArticleKey == Guid.Empty)
         {
             throw new InvalidateModelDataException()
             {

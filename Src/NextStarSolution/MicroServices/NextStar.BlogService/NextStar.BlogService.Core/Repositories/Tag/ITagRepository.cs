@@ -5,7 +5,7 @@ namespace NextStar.BlogService.Core.Repositories.Tag;
 
 public interface ITagRepository
 {
-    Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText);
+    Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText);
     /// <summary>
     /// 检索列表
     /// </summary>

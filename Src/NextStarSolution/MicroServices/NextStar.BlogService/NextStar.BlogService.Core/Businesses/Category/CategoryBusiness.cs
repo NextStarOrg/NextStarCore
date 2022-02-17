@@ -16,7 +16,7 @@ public class CategoryBusiness : ICategoryBusiness
         _repository = repository;
     }
 
-    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText)
     {
         return await _repository.SearchSingleAsync(searchText);
     }

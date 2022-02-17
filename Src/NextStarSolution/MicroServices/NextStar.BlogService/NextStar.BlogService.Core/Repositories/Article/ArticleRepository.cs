@@ -29,9 +29,9 @@ public class ArticleRepository : IArticleRepository
         _mapper = mapper;
     }
 
-    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText)
     {
-        var articles = await _blogDbContext.Articles.Where(x => x.Title.Contains(searchText)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
+        var articles = await _blogDbContext.Articles.Where(x => x.Title.Contains(searchText ?? string.Empty)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
         {
             Key = x.Key,
             DisplayName = x.Title

@@ -6,7 +6,7 @@ namespace NextStar.BlogService.Core.Repositories.Category;
 
 public interface ICategoryRepository
 {
-    Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText);
+    Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText);
     /// <summary>
     /// 检索列表
     /// </summary>

@@ -15,7 +15,7 @@ public class CodeEnvironmentBusiness : ICodeEnvironmentBusiness
         _repository = repository;
     }
 
-    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText)
     {
         return await _repository.SearchSingleAsync(searchText);
     }

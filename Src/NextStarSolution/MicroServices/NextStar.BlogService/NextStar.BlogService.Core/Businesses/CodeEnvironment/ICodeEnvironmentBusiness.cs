@@ -5,7 +5,7 @@ namespace NextStar.BlogService.Core.Businesses.CodeEnvironment;
 
 public interface ICodeEnvironmentBusiness
 {
-    Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText);
+    Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText);
     Task<PageCommonDto<BlogDbModels.CodeEnvironment>> GetListAsync(CodeEnvironmentSelectInput selectInput);
     Task AddAsync(BlogDbModels.CodeEnvironment codeEnvironment);
     Task UpdateAsync(BlogDbModels.CodeEnvironment codeEnvironment);

@@ -15,9 +15,9 @@ public class TagRepository : ITagRepository
         _blogDbContext = blogDbContext;
     }
     
-    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText)
     {
-        var articles = await _blogDbContext.Tags.Where(x => x.Name.Contains(searchText)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
+        var articles = await _blogDbContext.Tags.Where(x => x.Name.Contains(searchText ?? string.Empty)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
         {
             Key = x.Key,
             DisplayName = x.Name
