@@ -35,14 +35,14 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ICommonDto<bool>> Add(Core.BlogDbModels.Category category)
+    public async Task<ICommonDto<bool>> Add(CategoryInput category)
     {
         await _business.AddAsync(category);
         return CommonDto<bool>.Ok(true);
     }
 
     [HttpPut]
-    public async Task<ICommonDto<bool>> Update(Core.BlogDbModels.Category category)
+    public async Task<ICommonDto<bool>> Update(CategoryInput category)
     {
         await _business.UpdateAsync(category);
         return CommonDto<bool>.Ok(true);

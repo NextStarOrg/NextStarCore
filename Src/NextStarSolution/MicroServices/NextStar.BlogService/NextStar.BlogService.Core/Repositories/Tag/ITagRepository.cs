@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using NextStar.BlogService.Core.Entities.Tag;
 using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.Core.Repositories.Tag;
@@ -17,13 +18,13 @@ public interface ITagRepository
     /// 添加实体内容
     /// </summary>
     /// <returns></returns>
-    Task AddEntityAsync(BlogDbModels.Tag tag);
+    Task AddEntityAsync(TagInput tag);
 
     /// <summary>
     /// 更新实体
     /// </summary>
     /// <returns></returns>
-    Task UpdateEntityAsync(BlogDbModels.Tag tag);
+    Task UpdateEntityAsync(TagInput tag);
 
     /// <summary>
     /// 删除实体

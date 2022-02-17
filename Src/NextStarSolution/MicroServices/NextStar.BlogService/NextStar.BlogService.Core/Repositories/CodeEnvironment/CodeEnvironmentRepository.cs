@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NextStar.BlogService.Core.DbContexts;
+using NextStar.BlogService.Core.Entities.CodeEnvironment;
 using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.Core.Repositories.CodeEnvironment;
@@ -34,7 +35,7 @@ public class CodeEnvironmentRepository : ICodeEnvironmentRepository
         return _blogDbContext.CodeEnvironments.AsNoTracking();
     }
 
-    public async Task AddEntityAsync(BlogDbModels.CodeEnvironment codeEnvironment)
+    public async Task AddEntityAsync(CodeEnvironmentInput codeEnvironment)
     {
         var newTag = new BlogDbModels.CodeEnvironment()
         {
@@ -48,7 +49,7 @@ public class CodeEnvironmentRepository : ICodeEnvironmentRepository
         await _blogDbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateEntityAsync(BlogDbModels.CodeEnvironment codeEnvironment)
+    public async Task UpdateEntityAsync(CodeEnvironmentInput codeEnvironment)
     {
         var currentEntity = await _blogDbContext.CodeEnvironments.FirstOrDefaultAsync(x => x.Key == codeEnvironment.Key);
         if (currentEntity != null)

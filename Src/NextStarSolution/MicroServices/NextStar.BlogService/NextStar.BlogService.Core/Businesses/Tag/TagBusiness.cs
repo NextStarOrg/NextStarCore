@@ -35,7 +35,7 @@ public class TagBusiness : ITagBusiness
         };
     }
     
-    public async Task AddAsync(BlogDbModels.Tag tag)
+    public async Task AddAsync(TagInput tag)
     {
         if (string.IsNullOrWhiteSpace(tag.Name))
         {
@@ -48,7 +48,7 @@ public class TagBusiness : ITagBusiness
         await _repository.AddEntityAsync(tag);
     }
     
-    public async Task UpdateAsync(BlogDbModels.Tag tag)
+    public async Task UpdateAsync(TagInput tag)
     {
         if (tag.Key == Guid.Empty)
         {

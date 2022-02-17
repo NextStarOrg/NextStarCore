@@ -7,7 +7,7 @@ public interface ICodeEnvironmentBusiness
 {
     Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText);
     Task<PageCommonDto<BlogDbModels.CodeEnvironment>> GetListAsync(CodeEnvironmentSelectInput selectInput);
-    Task AddAsync(BlogDbModels.CodeEnvironment codeEnvironment);
-    Task UpdateAsync(BlogDbModels.CodeEnvironment codeEnvironment);
+    Task AddAsync(CodeEnvironmentInput codeEnvironment);
+    Task UpdateAsync(CodeEnvironmentInput codeEnvironment);
     Task DeleteAsync(Guid codeEnvironmentKey);
 }

@@ -7,7 +7,7 @@ public interface ITagBusiness
 {
     Task<List<CommonSingleOutput>> SearchSingleAsync(string? searchText);
     Task<PageCommonDto<BlogDbModels.Tag>> GetListAsync(TagSelectInput selectInput);
-    Task AddAsync(BlogDbModels.Tag tag);
-    Task UpdateAsync(BlogDbModels.Tag tag);
+    Task AddAsync(TagInput tag);
+    Task UpdateAsync(TagInput tag);
     Task DeleteAsync(Guid tagKey);
 }

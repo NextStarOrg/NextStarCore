@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NextStar.BlogService.Core.DbContexts;
+using NextStar.BlogService.Core.Entities.Tag;
 using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.Core.Repositories.Tag;
@@ -35,7 +36,7 @@ public class TagRepository : ITagRepository
         return _blogDbContext.Tags.AsNoTracking();
     }
 
-    public async Task AddEntityAsync(BlogDbModels.Tag tag)
+    public async Task AddEntityAsync(TagInput tag)
     {
         var newTag = new BlogDbModels.Tag()
         {
@@ -50,7 +51,7 @@ public class TagRepository : ITagRepository
         await _blogDbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateEntityAsync(BlogDbModels.Tag tag)
+    public async Task UpdateEntityAsync(TagInput tag)
     {
         var currentEntity = await _blogDbContext.Tags.FirstOrDefaultAsync(x => x.Key == tag.Key);
         if (currentEntity != null)

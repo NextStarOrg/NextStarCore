@@ -32,14 +32,14 @@ public class CodeEnvironmentController
     }
 
     [HttpPost]
-    public async Task<ICommonDto<bool>> Add(Core.BlogDbModels.CodeEnvironment codeEnvironment)
+    public async Task<ICommonDto<bool>> Add(CodeEnvironmentInput codeEnvironment)
     {
         await _business.AddAsync(codeEnvironment);
         return CommonDto<bool>.Ok(true);
     }
 
     [HttpPut]
-    public async Task<ICommonDto<bool>> Update(Core.BlogDbModels.CodeEnvironment codeEnvironment)
+    public async Task<ICommonDto<bool>> Update(CodeEnvironmentInput codeEnvironment)
     {
         await _business.UpdateAsync(codeEnvironment);
         return CommonDto<bool>.Ok(true);

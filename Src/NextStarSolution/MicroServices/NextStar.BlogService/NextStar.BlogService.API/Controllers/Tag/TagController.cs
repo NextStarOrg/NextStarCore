@@ -34,14 +34,14 @@ public class TagController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ICommonDto<bool>> Add(Core.BlogDbModels.Tag tag)
+    public async Task<ICommonDto<bool>> Add(TagInput tag)
     {
         await _business.AddAsync(tag);
         return CommonDto<bool>.Ok(true);
     }
 
     [HttpPut]
-    public async Task<ICommonDto<bool>> Update(Core.BlogDbModels.Tag tag)
+    public async Task<ICommonDto<bool>> Update(TagInput tag)
     {
         await _business.UpdateAsync(tag);
         return CommonDto<bool>.Ok(true);

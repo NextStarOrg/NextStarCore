@@ -36,7 +36,7 @@ public class CodeEnvironmentBusiness : ICodeEnvironmentBusiness
         };
     }
     
-    public async Task AddAsync(BlogDbModels.CodeEnvironment codeEnvironment)
+    public async Task AddAsync(CodeEnvironmentInput codeEnvironment)
     {
         if (string.IsNullOrWhiteSpace(codeEnvironment.Name))
         {
@@ -49,7 +49,7 @@ public class CodeEnvironmentBusiness : ICodeEnvironmentBusiness
         await _repository.AddEntityAsync(codeEnvironment);
     }
     
-    public async Task UpdateAsync(BlogDbModels.CodeEnvironment codeEnvironment)
+    public async Task UpdateAsync(CodeEnvironmentInput codeEnvironment)
     {
         if (codeEnvironment.Key == Guid.Empty)
         {

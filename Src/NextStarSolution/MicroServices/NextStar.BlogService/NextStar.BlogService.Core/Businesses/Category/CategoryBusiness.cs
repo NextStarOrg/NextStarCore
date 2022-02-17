@@ -38,7 +38,7 @@ public class CategoryBusiness : ICategoryBusiness
         };
     }
 
-    public async Task AddAsync(BlogDbModels.Category category)
+    public async Task AddAsync(CategoryInput category)
     {
         if (string.IsNullOrWhiteSpace(category.Name))
         {
@@ -52,7 +52,7 @@ public class CategoryBusiness : ICategoryBusiness
         await _repository.AddEntityAsync(category);
     }
 
-    public async Task UpdateAsync(BlogDbModels.Category category)
+    public async Task UpdateAsync(CategoryInput category)
     {
         if (category.Key == Guid.Empty)
         {

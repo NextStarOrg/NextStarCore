@@ -35,7 +35,7 @@ public class CategoryRepository : ICategoryRepository
         return _blogDbContext.Categories.AsNoTracking();
     }
 
-    public async Task AddEntityAsync(BlogDbModels.Category category)
+    public async Task AddEntityAsync(CategoryInput category)
     {
         var entityCategory = new BlogDbModels.Category()
         {
@@ -48,7 +48,7 @@ public class CategoryRepository : ICategoryRepository
         await _blogDbContext.SaveChangesAsync();
     }
     
-    public async Task UpdateEntityAsync(BlogDbModels.Category category)
+    public async Task UpdateEntityAsync(CategoryInput category)
     {
         var currentCategory = await _blogDbContext.Categories.FirstOrDefaultAsync(x => x.Key == category.Key);
         if (currentCategory != null)
