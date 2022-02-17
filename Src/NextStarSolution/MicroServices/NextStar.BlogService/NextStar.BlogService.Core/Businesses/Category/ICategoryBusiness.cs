@@ -5,6 +5,7 @@ namespace NextStar.BlogService.Core.Businesses.Category;
 
 public interface ICategoryBusiness
 {
+    Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText);
     Task<PageCommonDto<BlogDbModels.Category>> GetListAsync(CategorySelectInput selectInput);
     Task AddAsync(BlogDbModels.Category category);
     Task UpdateAsync(BlogDbModels.Category category);

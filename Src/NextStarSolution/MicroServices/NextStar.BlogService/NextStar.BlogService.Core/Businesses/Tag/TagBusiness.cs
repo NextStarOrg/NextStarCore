@@ -14,7 +14,10 @@ public class TagBusiness : ITagBusiness
     {
         _repository = repository;
     }
-
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    {
+        return await _repository.SearchSingleAsync(searchText);
+    }
     public async Task<PageCommonDto<BlogDbModels.Tag>> GetListAsync(TagSelectInput selectInput)
     {
         var query = string.IsNullOrWhiteSpace(selectInput.SearchText)

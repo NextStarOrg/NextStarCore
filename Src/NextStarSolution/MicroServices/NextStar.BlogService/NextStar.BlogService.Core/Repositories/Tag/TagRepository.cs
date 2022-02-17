@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NextStar.BlogService.Core.DbContexts;
+using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.Core.Repositories.Tag;
 
@@ -12,6 +13,16 @@ public class TagRepository : ITagRepository
     public TagRepository(BlogDbContext blogDbContext)
     {
         _blogDbContext = blogDbContext;
+    }
+    
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    {
+        var articles = await _blogDbContext.Tags.Where(x => x.Name.Contains(searchText)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
+        {
+            Key = x.Key,
+            DisplayName = x.Name
+        }).ToListAsync();
+        return articles;
     }
 
     public IQueryable<BlogDbModels.Tag> GetListQuery(Expression<Func<BlogDbModels.Tag, bool>>? searchWhere)

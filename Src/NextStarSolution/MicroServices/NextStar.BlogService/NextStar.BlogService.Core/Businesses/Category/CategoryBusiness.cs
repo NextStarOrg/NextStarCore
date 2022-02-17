@@ -7,14 +7,20 @@ using NextStar.Library.MicroService.Utils;
 
 namespace NextStar.BlogService.Core.Businesses.Category;
 
-public class CategoryBusiness:ICategoryBusiness
+public class CategoryBusiness : ICategoryBusiness
 {
     private readonly ICategoryRepository _repository;
+
     public CategoryBusiness(ICategoryRepository repository)
     {
         _repository = repository;
     }
 
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    {
+        return await _repository.SearchSingleAsync(searchText);
+    }
+    
     public async Task<PageCommonDto<BlogDbModels.Category>> GetListAsync(CategorySelectInput selectInput)
     {
         var query = string.IsNullOrWhiteSpace(selectInput.SearchText)
@@ -31,7 +37,7 @@ public class CategoryBusiness:ICategoryBusiness
             TotalCount = count
         };
     }
-    
+
     public async Task AddAsync(BlogDbModels.Category category)
     {
         if (string.IsNullOrWhiteSpace(category.Name))
@@ -42,9 +48,10 @@ public class CategoryBusiness:ICategoryBusiness
                 Type = InvalidateModelDataException.InvalidateType.Required
             };
         }
+
         await _repository.AddEntityAsync(category);
     }
-    
+
     public async Task UpdateAsync(BlogDbModels.Category category)
     {
         if (category.Key == Guid.Empty)
@@ -55,6 +62,7 @@ public class CategoryBusiness:ICategoryBusiness
                 Type = InvalidateModelDataException.InvalidateType.IncorrectValue
             };
         }
+
         if (string.IsNullOrWhiteSpace(category.Name))
         {
             throw new InvalidateModelDataException()
@@ -63,6 +71,7 @@ public class CategoryBusiness:ICategoryBusiness
                 Type = InvalidateModelDataException.InvalidateType.Required
             };
         }
+
         await _repository.UpdateEntityAsync(category);
     }
 

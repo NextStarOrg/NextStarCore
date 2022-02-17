@@ -1,9 +1,11 @@
 ﻿using NextStar.BlogService.Core.Entities.Article;
+using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.Core.Repositories.Article;
 
 public interface IArticleRepository
 {
+    Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText);
     Task<IQueryable<BlogDbModels.Article>> SelectEntityAsync();
     Task<bool> AddEntityAsync(ArticleInput articleInput);
     Task<bool> UpdateEntityAsync(ArticleInput articleInput);

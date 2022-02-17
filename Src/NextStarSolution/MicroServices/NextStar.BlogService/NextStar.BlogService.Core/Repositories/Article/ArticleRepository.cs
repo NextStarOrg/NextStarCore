@@ -7,6 +7,7 @@ using NextStar.BlogService.Core.BlogDbModels;
 using NextStar.BlogService.Core.Configs;
 using NextStar.BlogService.Core.DbContexts;
 using NextStar.BlogService.Core.Entities.Article;
+using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.Core.Repositories.Article;
 
@@ -28,6 +29,15 @@ public class ArticleRepository : IArticleRepository
         _mapper = mapper;
     }
 
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    {
+        var articles = await _blogDbContext.Articles.Where(x => x.Title.Contains(searchText)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
+        {
+            Key = x.Key,
+            DisplayName = x.Title
+        }).ToListAsync();
+        return articles;
+    }
     public async Task<IQueryable<BlogDbModels.Article>> SelectEntityAsync()
     {
         var query = _blogDbContext.Articles.AsQueryable().AsNoTracking();

@@ -16,6 +16,13 @@ public class CodeEnvironmentController
         _business = business;
     }
 
+    [HttpGet]
+    public async Task<ICommonDto<List<CommonSingleOutput>?>> GetSingle(string searchText)
+    {
+        var result = await _business.SearchSingleAsync(searchText);
+        return CommonDto<List<CommonSingleOutput>?>.Ok(result);
+    }
+    
     [HttpPost]
     public async Task<ICommonDto<PageCommonDto<Core.BlogDbModels.CodeEnvironment>?>> GetList(
         CodeEnvironmentSelectInput selectInput)

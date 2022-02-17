@@ -1,9 +1,11 @@
 ﻿using System.Linq.Expressions;
+using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.Core.Repositories.Tag;
 
 public interface ITagRepository
 {
+    Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText);
     /// <summary>
     /// 检索列表
     /// </summary>

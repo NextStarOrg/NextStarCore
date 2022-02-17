@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NextStar.BlogService.Core.DbContexts;
 using NextStar.BlogService.Core.Entities.Category;
+using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.Core.Repositories.Category;
 
@@ -12,6 +13,16 @@ public class CategoryRepository : ICategoryRepository
     public CategoryRepository(BlogDbContext blogDbContext)
     {
         _blogDbContext = blogDbContext;
+    }
+    
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    {
+        var articles = await _blogDbContext.Categories.Where(x => x.Name.Contains(searchText)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
+        {
+            Key = x.Key,
+            DisplayName = x.Name
+        }).ToListAsync();
+        return articles;
     }
 
     public IQueryable<BlogDbModels.Category> GetListQuery(Expression<Func<BlogDbModels.Category, bool>>? searchWhere)

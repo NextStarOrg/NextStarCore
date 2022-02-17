@@ -15,6 +15,10 @@ public class CodeEnvironmentBusiness : ICodeEnvironmentBusiness
         _repository = repository;
     }
 
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    {
+        return await _repository.SearchSingleAsync(searchText);
+    }
     public async Task<PageCommonDto<BlogDbModels.CodeEnvironment>> GetListAsync(CodeEnvironmentSelectInput selectInput)
     {
         var query = string.IsNullOrWhiteSpace(selectInput.SearchText)

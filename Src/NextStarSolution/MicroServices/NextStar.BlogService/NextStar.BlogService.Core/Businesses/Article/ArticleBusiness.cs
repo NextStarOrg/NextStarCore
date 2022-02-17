@@ -19,6 +19,11 @@ public class ArticleBusiness : IArticleBusiness
         _mapper = mapper;
     }
 
+    public async Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText)
+    {
+        return await _repository.SearchSingleAsync(searchText);
+    }
+
     public async Task<PageCommonDto<ArticleItem>> SelectArticleAsync(ArticleSelectInput selectInput)
     {
         var articleQuery = await _repository.SelectEntityAsync();

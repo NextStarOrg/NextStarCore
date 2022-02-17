@@ -5,6 +5,7 @@ namespace NextStar.BlogService.Core.Businesses.Tag;
 
 public interface ITagBusiness
 {
+    Task<List<CommonSingleOutput>> SearchSingleAsync(string searchText);
     Task<PageCommonDto<BlogDbModels.Tag>> GetListAsync(TagSelectInput selectInput);
     Task AddAsync(BlogDbModels.Tag tag);
     Task UpdateAsync(BlogDbModels.Tag tag);
