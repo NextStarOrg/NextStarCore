@@ -1,4 +1,4 @@
-﻿using NextStar.Identity.AccountDbModels;
+﻿using NextStar.Identity.NextStarDbModels;
 using NextStar.Library.Core.Consts;
 
 namespace NextStar.Identity.Repositories;

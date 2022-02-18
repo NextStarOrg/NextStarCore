@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using NextStar.Identity.AccountDbModels;
+using NextStar.Identity.NextStarDbModels;
 
 namespace NextStar.Identity.DbContexts
 {
-    public partial class AccountDbContext : DbContext
+    public partial class NextStarDbContext : DbContext
     {
-        public AccountDbContext()
+        public NextStarDbContext()
         {
         }
 
-        public AccountDbContext(DbContextOptions<AccountDbContext> options)
+        public NextStarDbContext(DbContextOptions<NextStarDbContext> options)
             : base(options)
         {
         }

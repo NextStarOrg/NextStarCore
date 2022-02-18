@@ -26,19 +26,9 @@ public class DataBaseSettingConfig
     public string Redis { get; set; } = string.Empty;
 
     /// <summary>
-    /// 账户/账号管理
+    /// 数据库
     /// </summary>
-    public string Account { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 管理数据库相关
-    /// </summary>
-    public string Management { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// 博客数据库相关
-    /// </summary>
-    public string Blog { get; set; } = string.Empty;
+    public string NextStar { get; set; } = string.Empty;
 }
 
 public class SerilogSettingConfig

@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
                 Path.Combine(basePath, appSetting.Certificates.Path),
                 appSetting.Certificates.Password);
             //获取持久化数据库连接字符串
-            var connectionString = appSetting.DataBaseSetting.Management;
+            var connectionString = appSetting.DataBaseSetting.NextStar;
 
             service.AddIdentityServer(option =>
                 {
@@ -51,8 +51,8 @@ public static class ServiceCollectionExtensions
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection service, AppSetting appSetting)
         {
-            service.AddDbContext<AccountDbContext>(options =>
-                options.UseSqlServer(appSetting.DataBaseSetting.Account));
+            service.AddDbContext<NextStarDbContext>(options =>
+                options.UseSqlServer(appSetting.DataBaseSetting.NextStar));
             return service;
         }
 

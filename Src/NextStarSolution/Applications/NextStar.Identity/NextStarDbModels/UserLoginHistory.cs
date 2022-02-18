@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NextStar.Identity.AccountDbModels
+namespace NextStar.Identity.NextStarDbModels
 {
     public partial class UserLoginHistory
     {

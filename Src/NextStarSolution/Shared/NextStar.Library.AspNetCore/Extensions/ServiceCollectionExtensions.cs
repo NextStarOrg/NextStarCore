@@ -103,7 +103,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddSessionStore(this IServiceCollection services, AppSetting appSetting)
     {
         services.AddDbContext<SessionDbContext>(options =>
-                options.UseSqlServer(appSetting.DataBaseSetting.Account),
+                options.UseSqlServer(appSetting.DataBaseSetting.NextStar),
             contextLifetime: ServiceLifetime.Transient,
             optionsLifetime: ServiceLifetime.Singleton);
         services.TryAddSingleton(typeof(IDistributedCache<>), typeof(DistributedCache<>));
@@ -120,7 +120,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplicationConfigStore(this IServiceCollection services, AppSetting appSetting)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(appSetting.DataBaseSetting.Management),
+                options.UseSqlServer(appSetting.DataBaseSetting.NextStar),
             contextLifetime: ServiceLifetime.Transient,
             optionsLifetime: ServiceLifetime.Singleton);
         services.TryAddSingleton(typeof(IDistributedCache<>), typeof(DistributedCache<>));

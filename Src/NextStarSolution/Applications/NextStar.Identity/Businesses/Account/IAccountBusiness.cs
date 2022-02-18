@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using IdentityServer4;
 using Microsoft.AspNetCore.Authentication;
-using NextStar.Identity.AccountDbModels;
+using NextStar.Identity.NextStarDbModels;
 using NextStar.Identity.Entities;
 using NextStar.Library.AspNetCore.Abstractions;
 

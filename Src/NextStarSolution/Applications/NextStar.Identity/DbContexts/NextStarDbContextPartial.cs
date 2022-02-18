@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using NextStar.Identity.AccountDbModels;
+using NextStar.Identity.NextStarDbModels;
 
 namespace NextStar.Identity.DbContexts;
 
-public partial class AccountDbContext : DbContext
+public partial class NextStarDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

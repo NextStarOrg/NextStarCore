@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDatabase(this IServiceCollection service, AppSetting appSetting)
     {
-        service.AddDbContext<BlogDbContext>(options => options.UseSqlServer(appSetting.DataBaseSetting.Blog));
+        service.AddDbContext<BlogDbContext>(options => options.UseSqlServer(appSetting.DataBaseSetting.NextStar));
         return service;
     }
 
