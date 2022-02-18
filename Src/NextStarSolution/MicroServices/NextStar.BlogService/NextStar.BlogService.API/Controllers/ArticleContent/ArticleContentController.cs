@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NextStar.BlogService.Core.Businesses.ArticleContent;
 using NextStar.BlogService.Core.Entities.ArticleContent;
+using NextStar.Library.AspNetCore.Abstractions;
 using NextStar.Library.MicroService.Outputs;
 
 namespace NextStar.BlogService.API.Controllers.ArticleContent;
@@ -33,6 +34,7 @@ public class ArticleContentController : ControllerBase
     }
 
     [HttpPost]
+    [IgnoreDataAuditing]
     public async Task<ICommonDto<bool>> Add(
         ArticleContentAddInput addInput)
     {
