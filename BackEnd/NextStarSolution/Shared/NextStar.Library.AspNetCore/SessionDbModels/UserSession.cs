@@ -6,7 +6,7 @@ namespace NextStar.Library.AspNetCore.SessionDbModels
     public partial class UserSession
     {
         public Guid SessionId { get; set; }
-        public Guid UserKey { get; set; }
+        public int UserId { get; set; }
         public DateTime CreatedTime { get; set; }
         public DateTime ExpiredTime { get; set; }
     }

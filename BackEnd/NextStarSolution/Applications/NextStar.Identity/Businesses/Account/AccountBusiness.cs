@@ -34,12 +34,6 @@ public class AccountBusiness:IAccountBusiness
     {
         return await _repository.GetUserProfileByLoginNameAsync(name);
     }
-
-    public async Task<Guid?> ThirdPartyLoginAsync(ThirdPartyLoginInfo loginInfo)
-    {
-        return await _repository.GetUserByThirdPartyKeyAsync(loginInfo.Key, loginInfo.Provider);
-    }
-    
     
     public async Task<bool> ValidateUserIsAuthenticatedAsync(ClaimsPrincipal user)
     {
@@ -60,12 +54,12 @@ public class AccountBusiness:IAccountBusiness
 
     public async Task<IdentityServerUser?> BuildIdentityServerUserAsync(BuildUserSessionDto buildUserSessionDto)
     {
-        var user = await _repository.GetUserByKeyAsync(buildUserSessionDto.UserKey);
+        var user = await _repository.GetUserByIdAsync(buildUserSessionDto.UserId);
         if (user == null) return null;
         var nextStarSessionId = Guid.NewGuid();
-        var identityServerUser = new IdentityServerUser(user.Key.ToString());
+        var identityServerUser = new IdentityServerUser(user.Id.ToString());
         identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.Name, user.UserProfile.LoginName));
-        identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.NickName, user.UserProfile.DisplayName));
+        identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.NickName, user.UserProfile.NickName));
         identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.Email, user.Email));
         identityServerUser.AdditionalClaims.Add(new Claim(JwtClaimTypes.ClientId, buildUserSessionDto.ClientId));
         identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.SessionId, nextStarSessionId.ToString()));
@@ -76,15 +70,15 @@ public class AccountBusiness:IAccountBusiness
         identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.ThirdPartyName,
             buildUserSessionDto.ThirdPartyName));
 
-        var session = new UserSession()
-        {
-            SessionId = nextStarSessionId,
-            UserKey = user.Key,
-            CreatedTime = DateTime.Now,
-            ExpiredTime = DateTime.Now.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
-        };
-
-        await _nextStarSessionStore.CreateAsync(session);
+        // var session = new UserSession()
+        // {
+        //     SessionId = nextStarSessionId,
+        //     UserKey = user.Key,
+        //     CreatedTime = DateTime.Now,
+        //     ExpiredTime = DateTime.Now.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
+        // };
+        //
+        // await _nextStarSessionStore.CreateAsync(session);
         return identityServerUser;
     }
 
@@ -100,27 +94,4 @@ public class AccountBusiness:IAccountBusiness
         return props;
     }
 
-    public async Task LoginHistoryAsync(IdentityServerUser user,HttpContext httpContext)
-    {
-        var sessionId = user.GetSessionId();
-        var provider = user.GetProvider();
-        var session = await _nextStarSessionStore.GetSessionByIdAsync(sessionId);
-        if (session == null) throw new NullReferenceException("session is null");
-        var userHistory = new UserLoginHistory()
-        {
-            UserKey = session.UserKey,
-            LoginType = provider.ToString(),
-            UserAgent = httpContext.Request.Headers["User-Agent"].ToString(),
-            IpV4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString(),
-            IpV6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv6().ToString(),
-            SessionId = sessionId,
-            LoginTime = session.CreatedTime
-        };
-        await _repository.CreateUserLoginHistoryAsync(userHistory);
-    }
-
-    public async Task UpdateHistoryLogoutAsync(Guid sessionId)
-    {
-        await _repository.UpdateHistoryLogoutTimeAsync(sessionId);
-    }
 }

@@ -95,9 +95,9 @@ public class NextStarSessionStore:INextStarSessionStore
         }
     }
 
-    public async Task<List<UserSession>> GetByUserIdAsync(Guid userId)
+    public async Task<List<UserSession>> GetByUserIdAsync(int userId)
     {
-        return await _context.UserSessions.AsNoTracking().Where(u => u.UserKey == userId).ToListAsync();
+        return await _context.UserSessions.AsNoTracking().Where(u => u.UserId == userId).ToListAsync();
     }
     
     public async Task<UserSession?> GetSessionByIdAsync(Guid sessionId)
@@ -105,9 +105,9 @@ public class NextStarSessionStore:INextStarSessionStore
         return await _context.UserSessions.AsNoTracking().FirstOrDefaultAsync(u => u.SessionId == sessionId);
     }
 
-    public async Task DeleteAllByUserIdAsync(Guid userId)
+    public async Task DeleteAllByUserIdAsync(int userId)
     {
-        var sessions = await _context.UserSessions.Where(x => x.UserKey == userId).ToListAsync();
+        var sessions = await _context.UserSessions.Where(x => x.UserId == userId).ToListAsync();
         var sessionIds = sessions.Select(x => x.SessionId).ToList();
         await DeleteCacheAsync(sessionIds);
         _context.UserSessions.RemoveRange(sessions);

@@ -21,8 +21,6 @@ namespace NextStar.Library.AspNetCore.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<UserSession>(entity =>
             {
                 entity.HasKey(e => e.SessionId)
@@ -33,7 +31,9 @@ namespace NextStar.Library.AspNetCore.DbContexts
                 entity.HasIndex(e => e.SessionId, "UserSession_SessionId_uindex")
                     .IsUnique();
 
-                entity.Property(e => e.SessionId).HasDefaultValueSql("(newsequentialid())");
+                entity.Property(e => e.SessionId).ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedTime).HasDefaultValueSql("(getdate())");
             });
 
             OnModelCreatingPartial(modelBuilder);

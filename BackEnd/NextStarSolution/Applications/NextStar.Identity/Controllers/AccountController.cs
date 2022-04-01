@@ -16,8 +16,7 @@ using NextStar.Library.Utils;
 
 namespace NextStar.Identity.Controllers;
 
-
-[SecurityHeaders]
+//[SecurityHeaders]
 public class AccountController : Controller
 {
     private readonly ILogger<AccountController> _logger;
@@ -65,57 +64,49 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(LoginModel model)
     {
-        var isAllowPasswordLogin = await
-            _applicationConfigStore.GetConfigBoolAsync(NextStarApplicationName.IsAllowPasswordLogin);
-        if (isAllowPasswordLogin)
+        var userProfile = await _business.GetUserProfileByLoginNameAsync(model.LoginName);
+        if (userProfile == null)
         {
-            var userProfile = await _business.GetUserProfileByLoginNameAsync(model.LoginName);
-            if (userProfile == null)
-            {
-                model.ErrorMessage = "当前登录账户不存在";
-                return View(model);
-            }
-
-            if (userProfile is { Salt: null } or { PassWord: null })
-            {
-                model.ErrorMessage = "当前登录账户不支持密码登录";
-                return View(model);
-            }
-
-            var str = PasswordUtils.Encryption512(userProfile.Salt.Value, model.LoginPassword);
-            if (str != userProfile.PassWord)
-            {
-                model.ErrorMessage = "当前用户密码错误";
-                return View(model);
-            }
-            
-            AuthorizationRequest? context = null;
-            context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
-
-            var buildUserSessionDto = new BuildUserSessionDto()
-            {
-                UserKey = userProfile.UserKey,
-                Provider = NextStarLoginType.None,
-                ClientId = "Unknown",
-                ThirdPartyEmail = string.Empty,
-                ThirdPartyName = string.Empty,
-                Seconds = await _applicationConfigStore.GetConfigIntAsync(NextStarApplicationName
-                    .CookieExpiredSeconds)
-            };
-            if (context != null)
-            {
-                buildUserSessionDto.ClientId = context.Client.ClientId;
-                buildUserSessionDto.Seconds = context.Client.AccessTokenLifetime;
-            }
-
-            var identityServerUser = await _business.BuildIdentityServerUserAsync(buildUserSessionDto);
-            if (identityServerUser == null) return BadRequest();
-            await _business.LoginHistoryAsync(identityServerUser, HttpContext);
-            var props = await _business.GetAuthPropAsync();
-            return await PersonalSingInAsync(identityServerUser, context, props, model.ReturnUrl);
+            model.ErrorMessage = "当前登录账户不存在";
+            return View(model);
         }
 
-        return BadRequest();
+        if (userProfile is { Salt: null } or { PassWord: null })
+        {
+            model.ErrorMessage = "当前登录账户不支持密码登录";
+            return View(model);
+        }
+
+        var str = PasswordUtils.Encryption512(userProfile.Salt, model.LoginPassword);
+        if (str != userProfile.PassWord)
+        {
+            model.ErrorMessage = "当前用户密码错误";
+            return View(model);
+        }
+
+        AuthorizationRequest? context = null;
+        context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
+
+        var buildUserSessionDto = new BuildUserSessionDto()
+        {
+            UserId = userProfile.UserId,
+            Provider = NextStarLoginType.None,
+            ClientId = "Unknown",
+            ThirdPartyEmail = string.Empty,
+            ThirdPartyName = string.Empty,
+            Seconds = await _applicationConfigStore.GetConfigIntAsync(NextStarApplicationName
+                .CookieExpiredSeconds)
+        };
+        if (context != null)
+        {
+            buildUserSessionDto.ClientId = context.Client.ClientId;
+            buildUserSessionDto.Seconds = context.Client.AccessTokenLifetime;
+        }
+
+        var identityServerUser = await _business.BuildIdentityServerUserAsync(buildUserSessionDto);
+        if (identityServerUser == null) return BadRequest();
+        var props = await _business.GetAuthPropAsync();
+        return await PersonalSingInAsync(identityServerUser, context, props, model.ReturnUrl);
     }
 
     [HttpGet]
@@ -132,54 +123,6 @@ public class AccountController : Controller
             catch (Exception e)
             {
                 _logger.LogError(e, "{RoutingParameters} is get openid configuration key error", routingParameters);
-                return BadRequest();
-            }
-        }
-
-        return BadRequest();
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> ThirdPartyCallback(string routingParameters, string state, string code)
-    {
-        var isEnum = Enum.TryParse<NextStarLoginType>(routingParameters, true, out var provider);
-        if (isEnum)
-        {
-            try
-            {
-                var loginInfo = await _thirdPartyLogin.PostRequestTokenAsync(state, code, provider);
-                var userKey = await _business.ThirdPartyLoginAsync(loginInfo);
-                // 如果返回后查询没有关联其他数据则返回对于Key并提示用户添加进去
-                if (userKey == null) return View(loginInfo);
-
-                AuthorizationRequest? context = null;
-                context = await _interaction.GetAuthorizationContextAsync(loginInfo.ReturnUrl);
-
-                var buildUserSessionDto = new BuildUserSessionDto()
-                {
-                    UserKey = userKey.Value,
-                    Provider = loginInfo.Provider,
-                    ClientId = "Unknown",
-                    ThirdPartyEmail = loginInfo.Email,
-                    ThirdPartyName = loginInfo.Name,
-                    Seconds = await _applicationConfigStore.GetConfigIntAsync(NextStarApplicationName
-                        .CookieExpiredSeconds)
-                };
-                if (context != null)
-                {
-                    buildUserSessionDto.ClientId = context.Client.ClientId;
-                    buildUserSessionDto.Seconds = context.Client.AccessTokenLifetime;
-                }
-
-                var identityServerUser = await _business.BuildIdentityServerUserAsync(buildUserSessionDto);
-                if (identityServerUser == null) return BadRequest();
-                await _business.LoginHistoryAsync(identityServerUser, HttpContext);
-                var props = await _business.GetAuthPropAsync();
-                return await PersonalSingInAsync(identityServerUser, context, props, loginInfo.ReturnUrl);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "{RoutingParameters} is get key error", routingParameters);
                 return BadRequest();
             }
         }
@@ -205,7 +148,6 @@ public class AccountController : Controller
                     {
                         //删除session和更新登录记录的退出时间
                         await _nextStarSessionStore.DeleteAsync(sessionId.Value);
-                        await _business.UpdateHistoryLogoutAsync(sessionId.Value);
                     }
                 }
                 catch (Exception ex)

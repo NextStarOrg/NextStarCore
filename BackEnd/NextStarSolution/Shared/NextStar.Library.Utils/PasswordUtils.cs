@@ -11,20 +11,13 @@ public static class PasswordUtils
     /// <param name="salt"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public static string Encryption512(Guid salt,string password)
+    public static string Encryption512(string salt,string password)
     {
-        var str = $"next{salt}star{password}";
+        var str = $"nextstar_{salt}_{password}";
         using var sha = SHA512.Create();
         var bytes = Encoding.Default.GetBytes(str);
-        var shaStr = sha.ComputeHash(bytes);
         
-        var hex = "";
-        foreach (byte x in shaStr)
-        {
-            hex += $"{x:x2}";
-        }
-        
-        var output = Convert.ToBase64String(Encoding.Default.GetBytes(hex));
+        var output = Convert.ToBase64String(sha.ComputeHash(bytes));
         return output;
     }
 }

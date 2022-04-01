@@ -16,42 +16,16 @@ public class AccountRepository:IAccountRepository
         _nextStarDbContext = nextStarDbContext;
     }
 
-    public async Task<User?> GetUserByKeyAsync(Guid userKey)
+    public async Task<User?> GetUserByIdAsync(int userId)
     {
-        var user = await _nextStarDbContext.Users.Include(x=>x.UserProfile).AsNoTracking().FirstOrDefaultAsync(x => x.Key == userKey);
+        var user = await _nextStarDbContext.Users.Include(x=>x.UserProfile).AsNoTracking().FirstOrDefaultAsync(x => x.Id == userId);
         return user;
     }
 
     public async Task<UserProfile?> GetUserProfileByLoginNameAsync(string loginName)
     {
-        var userProfile = await _nextStarDbContext.UserProfiles.Include(x => x.UserKeyNavigation)
+        var userProfile = await _nextStarDbContext.UserProfiles.Include(x => x.User)
             .AsNoTracking().FirstOrDefaultAsync(x => x.LoginName.ToLower() == loginName.ToLower());
         return userProfile;
-    }
-
-    public async Task<Guid?> GetUserByThirdPartyKeyAsync(string key, NextStarLoginType provider)
-    {
-        var thirdParty = await _nextStarDbContext.UserThirdPartyLogins.AsNoTracking()
-            .FirstOrDefaultAsync(x => x.ThirdPartyKey == key && x.LoginType == provider.ToString());
-        if (thirdParty == null) return null;
-        return thirdParty.UserKey;
-    }
-
-    public async Task CreateUserLoginHistoryAsync(UserLoginHistory userLoginHistory)
-    {
-        await _nextStarDbContext.UserLoginHistories.AddAsync(userLoginHistory);
-        await _nextStarDbContext.SaveChangesAsync();
-    }
-
-    public async Task UpdateHistoryLogoutTimeAsync(Guid sessionId)
-    {
-        // 防止后续删除的sessionId再次出现，只取最新的登录时间
-        var userHistory = await _nextStarDbContext.UserLoginHistories.OrderByDescending(x=>x.LoginTime).FirstOrDefaultAsync(x => x.SessionId == sessionId && !x.LogoutTime.HasValue);
-        if (userHistory != null)
-        {
-            userHistory.LogoutTime = DateTime.Now;
-            _nextStarDbContext.UserLoginHistories.Update(userHistory);
-            await _nextStarDbContext.SaveChangesAsync();
-        }
     }
 }

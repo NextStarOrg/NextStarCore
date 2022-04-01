@@ -5,12 +5,17 @@ namespace NextStar.Identity.NextStarDbModels
 {
     public partial class UserProfile
     {
-        public Guid UserKey { get; set; }
+        public int UserId { get; set; }
         public string LoginName { get; set; } = null!;
-        public string DisplayName { get; set; } = null!;
-        public Guid? Salt { get; set; }
-        public string? PassWord { get; set; }
+        public string NickName { get; set; } = null!;
+        public string Salt { get; set; } = null!;
+        /// <summary>
+        /// Base64(nextstar_{salt}_xA123456)
+        /// </summary>
+        public string PassWord { get; set; } = null!;
+        public DateTime CreatedTime { get; set; }
+        public DateTime UpdatedTime { get; set; }
 
-        public virtual User UserKeyNavigation { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
     }
 }

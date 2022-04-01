@@ -10,7 +10,6 @@ namespace NextStar.Identity.Businesses;
 public interface IAccountBusiness
 {
     Task<UserProfile?> GetUserProfileByLoginNameAsync(string name);
-    Task<Guid?> ThirdPartyLoginAsync(ThirdPartyLoginInfo loginInfo);
     /// <summary>
     /// 验证用户是否已经登录
     /// </summary>
@@ -30,7 +29,4 @@ public interface IAccountBusiness
     /// </summary>
     /// <returns></returns>
     Task<AuthenticationProperties> GetAuthPropAsync();
-
-    Task LoginHistoryAsync(IdentityServerUser user, HttpContext httpContext);
-    Task UpdateHistoryLogoutAsync(Guid sessionId);
 }

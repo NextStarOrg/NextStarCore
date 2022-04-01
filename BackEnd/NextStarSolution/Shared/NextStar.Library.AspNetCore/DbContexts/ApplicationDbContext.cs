@@ -28,15 +28,12 @@ namespace NextStar.Library.AspNetCore.DbContexts
 
                 entity.ToTable("ApplicationConfig");
 
-                entity.HasIndex(e => e.Id, "ApplicationConfig_Id_uindex")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.Name, "ApplicationConfig_Name_uindex")
                     .IsUnique();
 
                 entity.Property(e => e.Name).HasMaxLength(200);
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Remark).HasMaxLength(50);
 
                 entity.Property(e => e.Value).HasMaxLength(200);
             });
