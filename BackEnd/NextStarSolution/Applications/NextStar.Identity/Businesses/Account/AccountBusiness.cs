@@ -70,15 +70,15 @@ public class AccountBusiness:IAccountBusiness
         identityServerUser.AdditionalClaims.Add(new Claim(NextStarClaimTypes.ThirdPartyName,
             buildUserSessionDto.ThirdPartyName));
 
-        // var session = new UserSession()
-        // {
-        //     SessionId = nextStarSessionId,
-        //     UserKey = user.Key,
-        //     CreatedTime = DateTime.Now,
-        //     ExpiredTime = DateTime.Now.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
-        // };
-        //
-        // await _nextStarSessionStore.CreateAsync(session);
+        var session = new UserSession()
+        {
+            SessionId = nextStarSessionId,
+            UserId = user.Id,
+            CreatedTime = DateTime.Now,
+            ExpiredTime = DateTime.Now.AddSeconds(buildUserSessionDto.Seconds).AddSeconds(10)
+        };
+        
+        await _nextStarSessionStore.CreateAsync(session);
         return identityServerUser;
     }
 
