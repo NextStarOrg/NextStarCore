@@ -3,26 +3,25 @@ const {
     addWebpackPlugin,
     addWebpackModuleRule,
     addDecoratorsLegacy,
-    addLessLoader,
-} = require("customize-cra");
-const path = require("path");
-const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
-const lessLocalIdentName = "sl_[name]_[local]_[emoji]_[sha512:hash:base62:6]";
+    addWebpackResolve
+} = require('customize-cra');
+const path = require('path');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
     webpack: override(
-        addWebpackPlugin(new AntdDayjsWebpackPlugin()),
-        addLessLoader({
-            localIdentName: lessLocalIdentName,
-        }),
+        addWebpackPlugin(new AntdDayjsWebpackPlugin(), new NodePolyfillPlugin({
+            excludeAliases: ['console']
+        })),
         addWebpackModuleRule({
             test: /\.css$/,
             use: [
                 {
-                    loader: "style-loader",
+                    loader: 'style-loader',
                     options: {
                         insert: function insertAtTop(element) {
-                            var parent = document.querySelector("head");
+                            var parent = document.querySelector('head');
                             var lastInsertedElement =
                                 window._lastElementInsertedByStyleLoader;
 
@@ -41,9 +40,9 @@ module.exports = {
                         },
                     },
                 },
-                "css-loader",
+                'css-loader',
             ],
-            include: [path.join(__dirname, "node_modules")],
+            include: [path.join(__dirname, 'node_modules')],
         }),
         addDecoratorsLegacy()
     ),

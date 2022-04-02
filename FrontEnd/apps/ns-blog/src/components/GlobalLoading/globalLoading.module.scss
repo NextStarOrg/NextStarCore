@@ -1,0 +1,41 @@
+.loadingWrapper{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    .loadingContainer{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        background-color: #FFF;
+        width: 300px;
+        padding: 1rem;
+        border-radius: 12px;
+        margin-top: -100px;
+        box-shadow: 0px 6px 16px -8px rgba(0, 0, 0, 0.08);
+        .image{
+            width: 80px;
+            height: 80px;
+        }
+        .text{
+            font-size: 18px;
+            color: #1890ff;
+            user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+        }
+    }
+}

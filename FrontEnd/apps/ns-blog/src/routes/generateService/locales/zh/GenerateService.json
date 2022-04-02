@@ -1,0 +1,31 @@
+{
+  "GeneratedNumber": "生成数量",
+  "GenerateLength": "生成长度",
+  "GenerateButton": "生成",
+  "RandomString": {
+    "Description": "随机字符串生成，格式如下：URL安全访问的格式、纯数字的格式、容易区别的格式、自定义的格式",
+    "UrlSafe": "Url安全",
+    "PureDigital": "纯数字",
+    "EasilyDistinguishable": "容易识别",
+    "Custom": "自定义",
+    "FormatComposition": "格式组成",
+    "CustomCharacters": "自定义字符"
+  },
+  "UUID": {
+    "Name": "名称",
+    "Namespace": "命名空间(UUID)",
+    "NamespaceError": "命名空间格式必须为UUID",
+    "v1": {
+      "Description": "创建 版本 1 (时间戳) UUID"
+    },
+    "v3": {
+      "Description": "创建 版本 3 (命名空间和md5) UUID"
+    },
+    "v4": {
+      "Description": "创建 版本 4 (随机) UUID"
+    },
+    "v5": {
+      "Description": "创建 版本 5 (命名空间和SHA1) UUID"
+    }
+  }
+}

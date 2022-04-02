@@ -1,21 +1,12 @@
 interface Window {
-    _REACT_BASE_URL: string;
+    //!!! _devHelper 只会在开发环境的控制台使用 无需在这里声明其类型 源代码也不应该依赖于 _devHelper
+    // eslint-disable-next-line
+    _devHelper: any;
+    debugFlag: boolean;
+    _AUTHORITY_ENDPOINT: string;
+    _API_END_POINT: string;
     _ICON_FONT_URL: string;
-    enums: ReduxGlobalEnum;
-    callback: Function;
-    TencentCaptcha: class;
-}
-interface GlobalStatus {
-    loading?: boolean;
-    pathname?: string;
+    _VERSION: string;
 }
 
-interface GLobalAction<T, M> {
-    type: T;
-    payload: M;
-}
-
-interface GlobalRootState {
-    userInfo: UserInfo;
-    globalStatus: GlobalStatus;
-}
+type Nullable<T> = T | null;

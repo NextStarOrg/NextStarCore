@@ -1,4 +1,2 @@
-/* eslint-disable no-unused-vars */
-var _REACT_BASE_URL = "/"
-var _ICON_FONT_URL = "//at.alicdn.com/t/font_1933496_3v2xld3iw61.js";
-var _BAIDU_TONGJI_ = "7dd04b477d00aa4f680b7f1c36f7c8c2";
+var _AUTHORITY_ENDPOINT = "https://ns-tool.authing.cn/oidc";
+var _ICON_FONT_URL = "//at.alicdn.com/t/font_2947381_v9ui7n3wl8.js";

@@ -1,23 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
+import './index.css';
+import App from 'routes/App';
+import reportWebVitals from './reportWebVitals';
+import {BrowserRouter} from "react-router-dom";
+import {Provider} from "react-redux";
+import {store} from "store/store";
+import {OidcProvider} from "redux-oidc";
+import {userManager} from "utils/auth-utils/user-manager";
 
-import RouterComponent from './router';
-import { Provider } from 'react-redux';
-import store from './store';
 
-import * as serviceWorker from './serviceWorker';
-import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/stable';
+import {isDev} from "utils/envDetect";
+import {initDevHelper} from 'utils/devHelper';
+import "locales/i18n";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <RouterComponent />
-  </Provider>,
-  document.getElementById('root'),
+    <React.StrictMode>
+        <Provider store={store}>
+            <OidcProvider store={store} userManager={userManager}>
+                <BrowserRouter>
+                    <App/>
+                </BrowserRouter>
+            </OidcProvider>
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+if (isDev) {
+    initDevHelper(store);
+}
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

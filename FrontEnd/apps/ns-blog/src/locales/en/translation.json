@@ -1,0 +1,24 @@
+{
+  "SiteTitle": "NextStar Tools",
+  "LanguageTips": "中文",
+  "Login": "Login",
+  "LoadingText": "Loading...",
+  "Logout": "Logout",
+  "LogoutConfirm": "Do you want to log out?",
+  "SafetyService": {
+    "Title":"Safety Tools",
+    "Dashboard": "Dashboard",
+    "OneWayEncryption": "One Way Encryption",
+    "OneWayEncryption_Description": "MD5、SHA1、SHA256、SHA512、SHA3",
+    "HMAC": "HMAC",
+    "HMAC_Description": "HmacMD5、HmacSHA1、HmacSHA256、HmacSHA512、HmacSHA3"
+  },
+  "GenerateService": {
+    "Title":"Generate Tools",
+    "Dashboard": "Dashboard",
+    "RandomString": "Random String",
+    "RandomString_Description": "URL-securely accessible formats, purely numeric formats, easily distinguishable formats, custom formats",
+    "UUID": "UUID",
+    "UUID_Description": "A universally unique identifier (UUID) is a 128-bit label used for information in computer systems. The term globally unique identifier (GUID) is also used"
+  }
+}

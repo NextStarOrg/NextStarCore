@@ -71,12 +71,6 @@ public class AccountController : Controller
             return View(model);
         }
 
-        if (userProfile is { Salt: null } or { PassWord: null })
-        {
-            model.ErrorMessage = "当前登录账户不支持密码登录";
-            return View(model);
-        }
-
         var str = PasswordUtils.Encryption512(userProfile.Salt, model.LoginPassword);
         if (str != userProfile.PassWord)
         {
