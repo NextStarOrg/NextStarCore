@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e72b3666-d1c0-400a-a861-3f525e4835c8" name="Changes" comment="feat(ns-blog): remove old ns-blog , add tools website template">
+      <change afterPath="$PROJECT_DIR$/.env.production" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/ns-blog.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/android-chrome-192x192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/android-chrome-384x384.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/apple-touch-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/browserconfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon-16x16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon-32x32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/method-draw-image (1).png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/mstile-150x150.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/safari-pinned-tab.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/site.webmanifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/netlify.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/@types/react.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/consts/MenuAboutName.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/consts/RouterAboutName.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/consts/StoreCacheName.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/403.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/404.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/loading.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/login_bg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/GlobalLoading/GlobalLoading.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/GlobalLoading/globalLoading.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/QuestionTooltip/QuestionTooltip.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/RequireAuth/RequireAuth.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SpinLoading/SpinLoading.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SpinLoading/spinLoading.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useAuth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useQuery.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useTabQuery.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/layout/LayoutIndex.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/layout/LayoutIndex.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/layout/components/SiderMenu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/layout/components/TopNav.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/layout/components/TopRightTool.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/layout/utils/pathUtils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/locales/en/translation.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/locales/i18n.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/locales/zh/translation.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reportWebVitals.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/App.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/App.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/CommonIndex/CommonIndex.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/Forbidden/Forbidden.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/Forbidden/router.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/NotFound/NotFound.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/NotFound/router.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/routes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/rtk/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/rtk/language.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/rtk/loading.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/rtk/prompt.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/commonService/rtk/selector.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/Dashboard/Dashboard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/Dashboard/router.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/GenerateIndex/SystemIndex.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/RandomString/RandomString.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/RandomString/components/RandomStringCustom.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/RandomString/components/RandomStringDistinguishable.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/RandomString/components/RandomStringNumeric.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/RandomString/components/RandomStringUrlSafe.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/RandomString/router.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/UUID/UUID.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/UUID/components/UUIDv1.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/UUID/components/UUIDv3.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/UUID/components/UUIDv4.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/UUID/components/UUIDv5.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/UUID/router.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/locales/en/GenerateService.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/locales/zh/GenerateService.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/generateService/routes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/Login/Login.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/Login/login.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/Login/router.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/SignInCallback/SignInCallback.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/SignInCallback/router.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/SignOutCallback/SignOutCallback.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/SignOutCallback/router.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/locales/en/PublicService.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/locales/zh/PublicService.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/routes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/rtk/auth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/rtk/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/publicService/rtk/selector.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/routes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Dashboard/Dashboard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Dashboard/router.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/Hmac.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/components/HmacMD5.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/components/HmacSHA1.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/components/HmacSHA224.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/components/HmacSHA256.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/components/HmacSHA3.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/components/HmacSHA384.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/components/HmacSHA512.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/Hmac/router.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/OneWayEncryption.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/components/MD5.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/components/SHA1.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/components/SHA224.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/components/SHA256.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/components/SHA3.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/components/SHA384.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/components/SHA512.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/OneWayEncryption/router.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/SafetyIndex/SystemIndex.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/locales/en/SafetyService.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/locales/zh/SafetyService.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/safetyService/routes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/rtk/rtk.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/selector/selector.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/setupTests.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/configureStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/auth-utils/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/auth-utils/user-manager.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/codeFormatUtils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/devHelper.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/envDetect.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/randomString.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/routerUtils.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/storage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../BackEnd/NextStarSolution/Applications/NextStar.Identity/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/NextStarSolution/Applications/NextStar.Identity/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Tools.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.npmrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-overrides.js" beforeDir="false" afterPath="$PROJECT_DIR$/config-overrides.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/craco.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/_redirects" beforeDir="false" afterPath="$PROJECT_DIR$/public/_redirects" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/robots.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/robots.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sldocs.config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/@types/global.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/@types/global.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/consts.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/global-font.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Bold-Italic.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Bold.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-ExtraBold-Italic.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-ExtraBold.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Italic.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Medium-Italic.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Medium.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Regular.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Bold-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Bold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-ExtraBold-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-ExtraBold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Medium-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Medium.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Bold-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-ExtraBold-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-ExtraBold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Medium-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Medium.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Bold-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Bold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-ExtraBold-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-ExtraBold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Medium-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Medium.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Regular.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/2014120615262212179.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/git.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/randomString.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/uuid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChromePickerColor/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChromePickerColor/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CopyToClipboard/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CopyToClipboard/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SupenseLoading/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SupenseLoading/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TipsIcon/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/menuList.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enums/store.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/components/aside.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/components/contentFooter.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/components/header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/components/sub.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/router.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/git/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/git/index.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/git/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/randomString/components/base64.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/randomString/components/custome.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/randomString/components/distinguishable.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/randomString/components/hex.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/randomString/components/numeric.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/randomString/components/urlSafe.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/randomString/index.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/randomString/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/uuid/components/uuidComponent.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/uuid/components/uuidv1Component.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/uuid/components/uuidv3Component.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/uuid/components/uuidv4Component.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/uuid/components/uuidv5Component.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/uuid/index.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/development/uuid/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/index.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/notFound/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serviceWorker.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/globalStatus.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.flowconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.idea/Tools.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.idea/prettier.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.npmrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/.prettierrc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/config-overrides.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/craco.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/public/_redirects" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/public/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/sldocs.config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/@types/global.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/css/consts.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/css/global-font.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Bold-Italic.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Bold.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-ExtraBold-Italic.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-ExtraBold.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Italic.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Medium-Italic.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Medium.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/eot/JetBrainsMono-Regular.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Bold-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Bold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-ExtraBold-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-ExtraBold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Medium-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Medium.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/ttf/JetBrainsMono-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Bold-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-ExtraBold-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-ExtraBold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Medium-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Medium.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff/JetBrainsMono-Regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Bold-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Bold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-ExtraBold-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-ExtraBold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Medium-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Medium.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/fonts/JetBrainsMono/woff2/JetBrainsMono-Regular.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/images/2014120615262212179.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/images/git.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/images/randomString.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/assets/images/uuid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/components/ChromePickerColor/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/components/ChromePickerColor/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/components/CopyToClipboard/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/components/CopyToClipboard/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/components/SupenseLoading/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/components/SupenseLoading/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/components/TipsIcon/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/configs/menuList.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/enums/store.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/index.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/layout/components/aside.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/layout/components/contentFooter.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/layout/components/header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/layout/components/sub.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/layout/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/layout/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/layout/router.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/git/index.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/git/index.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/git/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/randomString/components/base64.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/randomString/components/custome.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/randomString/components/distinguishable.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/randomString/components/hex.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/randomString/components/numeric.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/randomString/components/urlSafe.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/randomString/index.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/randomString/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/uuid/components/uuidComponent.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/uuid/components/uuidv1Component.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/uuid/components/uuidv3Component.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/uuid/components/uuidv4Component.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/uuid/components/uuidv5Component.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/uuid/index.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/development/uuid/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/index/index.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/index/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/pages/notFound/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/react-app-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/router.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/serviceWorker.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/store/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/store/reducers/globalStatus.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/src/store/reducers/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ns-system/tsconfig.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="27E5jO7Fx6Gq4Isg0w3O9cGjqna" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e72b3666-d1c0-400a-a861-3f525e4835c8" name="Changes" comment="" />
+      <created>1648872545724</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648872545724</updated>
+      <workItem from="1648872548008" duration="508000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat(ns-blog): remove old ns-blog , add tools website template" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(ns-blog): remove old ns-blog , add tools website template" />
+  </component>
+</project>
