@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./globalLoading.module.scss";
 import loadingImag from "assets/images/loading.gif";
-import { useTranslation } from "react-i18next";
 
 export interface IGlobalLoadingProps {
     message?: string;
@@ -9,8 +8,7 @@ export interface IGlobalLoadingProps {
 }
 
 const GlobalLoading = (props: IGlobalLoadingProps) => {
-    const { t } = useTranslation();
-    const message = props.message ?? t("LoadingText");
+    const message = props.message ?? "加载中...";
     const isLoading = props.isLoading ?? true;
     return (
         <>

@@ -3,12 +3,9 @@ import styles from "components/SpinLoading/spinLoading.module.scss";
 import loadingImag from "assets/images/loading.gif";
 import { useSelector } from "react-redux";
 import { selectLoading } from "routes/commonService/rtk/selector";
-import { useTranslation } from "react-i18next";
 
 const SpinLoading = () => {
-    const { t } = useTranslation();
     const loading = useSelector(selectLoading);
-    const message = t(loading.message);
     const isLoading = loading.isLoading;
 
     return (
@@ -22,7 +19,7 @@ const SpinLoading = () => {
                             alt={"loading gif"}
                         />
                         <br />
-                        <span className={styles.text}>{message}</span>
+                        <span className={styles.text}>加载中...</span>
                     </div>
                 </div>
             )}

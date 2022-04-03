@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import GlobalLoading from "components/GlobalLoading/GlobalLoading";
 import { RouterAboutConfig } from "assets/consts/RouterAboutName";
+import {redirectToLogin} from "utils/auth-utils";
 
 const SignOutCallback = () => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const SignOutCallback = () => {
     const successCallback = useCallback(
         (user) => {
             dispatch(changeLogoutStatus(AsyncStatus.Fulfilled));
-            navigate(RouterAboutConfig.RootPath);
+            redirectToLogin();
         },
         [dispatch, navigate]
     );

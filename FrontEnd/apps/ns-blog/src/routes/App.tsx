@@ -23,6 +23,14 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import "dayjs/locale/zh";
 import SpinLoading from "components/SpinLoading/SpinLoading";
+import SignInCallbackRouter from "routes/publicService/SignInCallback/router";
+import SignOutCallbackRouter from "routes/publicService/SignOutCallback/router";
+import BlogServicesRoutes from "routes/blogService/routes";
+import BlogDashboardRouter from "routes/blogService/Dashboard/router";
+import CommonServicesRoutes from "routes/commonService/routes";
+import NotFoundRouter from "routes/commonService/NotFound/router";
+import ForbiddenRouter from "routes/commonService/Forbidden/router";
+import {setLoadingStatus} from "routes/commonService/rtk/loading";
 
 dayjs.extend(relativeTime);
 dayjs.extend(LocalizedFormat);
@@ -31,10 +39,10 @@ const App = () => {
     const authState = useSelector(selectAuthState);
     const authStateRef = useRef(authState);
     const dispatch = useDispatch();
-    const isLogined = authState.loginStatus === AsyncStatus.Fulfilled;
-    console.log(AllRoutes);
+    const isLogin = authState.loginStatus === AsyncStatus.Fulfilled;
     const loadUserCallback = useCallback(
         async (user) => {
+            console.log(authStateRef)
             //登录中或者登出中状态 不进行后续流程
             if (
                 authStateRef.current.loginStatus === AsyncStatus.Pending ||
@@ -73,6 +81,7 @@ const App = () => {
         [dispatch]
     );
     useEffect(() => {
+        console.log(authState)
         authStateRef.current = authState;
     }, [authState]);
 
@@ -80,118 +89,94 @@ const App = () => {
         loadOidcUser(store).then(loadUserCallback);
     });
 
-    const renderRoute = (serviceKey: string, routes: IRoute[]) => {
-        return routes.map((x) => {
-            if (x.routes != undefined && x.routes?.length > 0) {
-                return (
-                    <Route
-                        key={serviceKey + "_" + x.name}
-                        path={x.path}
-                        element={
-                            x.auth ? (
-                                <RequireAuth functionalityIds={x.functionalityId}>
-                                    <x.component/>
-                                </RequireAuth>
-                            ) : (
-                                <x.component/>
-                            )
-                        }
-                    >
-                        {renderRoute(serviceKey, x.routes)}
-                    </Route>
-                );
-            } else {
-                return (
-                    <Route
-                        key={serviceKey + "_" + x.name}
-                        path={x.path}
-                        element={
-                            x.auth ? (
-                                <RequireAuth functionalityIds={x.functionalityId}>
-                                    <x.component/>
-                                </RequireAuth>
-                            ) : (
-                                <x.component/>
-                            )
-                        }
-                    />
-                );
-            }
-        });
-    };
     return (
         <ConfigProvider locale={zhCN}>
             <SpinLoading/>
             <React.Suspense fallback={<GlobalLoading/>}>
                 <Routes>
                     {/* 公开路由 */}
-                    {_.map(PublicRoutes, BuildRouterComponent)}
                     <Route
-                        key={RouterAboutConfig.RootPath}
-                        path={RouterAboutConfig.RootPath}
-                        element={<LayoutIndex/>}
-                    >
-                        <Route
-                            key={"root_index"}
-                            index
-                            element={
-                                <Navigate
-                                    to={AllRoutes[0].path}
-                                    replace={true}
-                                />
-                            }
-                        />
-                        {AllRoutes.map((x) => {
-                            // 如果有自己的layout，则嵌套加载自己的layout，但是请注意需要移除掉上面的根路径的layout，否则会出现多层layout
-                            if (x.layoutComponent == undefined) {
-                                return (
-                                    <Route key={x.key} path={x.path}>
-                                        <Route
-                                            key={x.key + "_root"}
-                                            index
-                                            element={<x.indexComponent/>}
-                                        />
-                                        {x.routes != undefined &&
-                                            renderRoute(x.key, x.routes)}
-                                    </Route>
-                                );
-                            } else {
-                                return (
-                                    <Route
-                                        key={x.key}
-                                        path={x.path}
-                                        element={<x.layoutComponent/>}
-                                    >
-                                        <Route
-                                            key={x.key + "_root"}
-                                            index
-                                            element={<x.indexComponent/>}
-                                        />
-                                        {x.routes != undefined &&
-                                            renderRoute(x.key, x.routes)}
-                                    </Route>
-                                );
-                            }
-                        })}
-                        <Route
-                            path={"*"}
-                            element={
-                                <Navigate
-                                    to={
-                                        RouterAboutConfig.CommonService
-                                            .BasePath +
-                                        "/" +
-                                        RouterAboutConfig.CommonService.NotFound
-                                            .Path
-                                    }
-                                />
-                            }
-                        />
-                    </Route>
+                        key={SignInCallbackRouter.path}
+                        path={RouterAboutConfig.RootPath + SignInCallbackRouter.path}
+                        element={<SignInCallbackRouter.component/>}
+                    />
+                    <Route
+                        key={SignOutCallbackRouter.path}
+                        path={RouterAboutConfig.RootPath + SignOutCallbackRouter.path}
+                        element={<SignOutCallbackRouter.component/>}
+                    />
                 </Routes>
+                {isLogin && <AppAuth />}
             </React.Suspense>
         </ConfigProvider>
     );
 };
+
+
+const AppAuth = () => {
+    return (
+        <Routes>
+            <Route
+                key={RouterAboutConfig.RootPath}
+                path={RouterAboutConfig.RootPath}
+                element={<LayoutIndex/>}
+            >
+                <Route
+                    key={"root_index"}
+                    index
+                    element={
+                        <Navigate
+                            to={BlogServicesRoutes.path}
+                            replace={true}
+                        />
+                    }
+                />
+                <Route key={BlogServicesRoutes.key} path={BlogServicesRoutes.path}>
+                    <Route
+                        key={BlogServicesRoutes.key + "_root"}
+                        index
+                        element={<BlogServicesRoutes.indexComponent/>}
+                    />
+                    <Route
+                        key={BlogDashboardRouter.name}
+                        path={BlogDashboardRouter.path}
+                        element={<BlogDashboardRouter.component/>}
+                    />
+                </Route>
+                <Route key={CommonServicesRoutes.key} path={CommonServicesRoutes.path}>
+                    <Route
+                        key={CommonServicesRoutes.key + "_root"}
+                        index
+                        element={<CommonServicesRoutes.indexComponent/>}
+                    />
+                    <Route
+                        key={NotFoundRouter.name}
+                        path={NotFoundRouter.path}
+                        element={<NotFoundRouter.component/>}
+                    />
+                    <Route
+                        key={ForbiddenRouter.name}
+                        path={ForbiddenRouter.path}
+                        element={<ForbiddenRouter.component/>}
+                    />
+                </Route>
+                <Route
+                    path={"*"}
+                    element={
+                        <Navigate
+                            to={
+                                RouterAboutConfig.CommonService
+                                    .BasePath +
+                                "/" +
+                                RouterAboutConfig.CommonService.NotFound
+                                    .Path
+                            }
+                        />
+                    }
+                />
+            </Route>
+        </Routes>
+    )
+}
 
 export default App;

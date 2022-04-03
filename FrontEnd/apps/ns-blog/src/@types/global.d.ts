@@ -4,7 +4,7 @@ interface Window {
     _devHelper: any;
     debugFlag: boolean;
     _AUTHORITY_ENDPOINT: string;
-    _API_END_POINT: string;
+    _BLOG_SERVICE_API_ENDPOINT: string;
     _ICON_FONT_URL: string;
     _VERSION: string;
 }

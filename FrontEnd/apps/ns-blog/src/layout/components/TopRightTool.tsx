@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RouterAboutConfig } from "assets/consts/RouterAboutName";
 import nsStorage from "utils/storage";
 import { PrevAuthUrl } from "assets/consts/StoreCacheName";
-import { useTranslation } from "react-i18next";
 import {
     createFromIconfontCN,
     GithubOutlined,
@@ -57,7 +56,6 @@ const TopRightTool = (props: { className?: string | undefined }) => {
 };
 
 const NoExistLogin = () => {
-    const { t } = useTranslation();
     const navigate = useNavigate();
     const location = useLocation();
     return (
@@ -68,7 +66,7 @@ const NoExistLogin = () => {
                 navigate(RouterAboutConfig.Login.Path);
             }}
         >
-            {t("Login")}
+            登录
         </Button>
     );
 };

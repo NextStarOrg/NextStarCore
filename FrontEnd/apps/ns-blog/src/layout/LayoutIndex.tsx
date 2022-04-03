@@ -1,14 +1,20 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {NavLink, Outlet} from 'react-router-dom';
 import {Layout, Breadcrumb, Typography, Button} from 'antd';
 import SiderMenu from "layout/components/SiderMenu";
 import styles from './LayoutIndex.module.scss';
 import dayjs from "dayjs";
 import TopRightTool from "layout/components/TopRightTool";
+import {useDispatch} from "react-redux";
+import {setLoadingStatus} from "routes/commonService/rtk/loading";
 
 const {Header, Content, Sider, Footer} = Layout;
 
 const LayoutIndex = () => {
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        dispatch(setLoadingStatus(false));
+    },[])
     return (
         <Layout className={styles.layoutWrapper}>
             <Header className={styles.header}>

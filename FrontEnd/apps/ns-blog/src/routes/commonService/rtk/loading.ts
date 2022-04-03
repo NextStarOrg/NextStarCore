@@ -8,7 +8,7 @@ export type ILoadingState = {
 const message = "LoadingText";
 
 const initialState: ILoadingState = {
-    isLoading: false,
+    isLoading: true,
     message: message,
 };
 

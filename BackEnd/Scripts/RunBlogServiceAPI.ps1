@@ -1,0 +1,1 @@
+dotnet run --no-build --project ..\NextStarSolution\MicroServices\NextStar.BlogService\NextStar.BlogService.API\NextStar.BlogService.API.csproj --launch-profile NextStar.BlogService.API

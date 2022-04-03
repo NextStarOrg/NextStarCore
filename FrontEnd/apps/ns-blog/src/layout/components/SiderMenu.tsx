@@ -5,10 +5,8 @@ import {getService} from "layout/utils/pathUtils";
 import {
     BlogManageMenus
 } from "assets/consts/MenuAboutName";
-import {useTranslation} from "react-i18next";
 
 const SiderMenu = () => {
-    const {t} = useTranslation();
     const [selectKey, setSelectKey] = useState<string[]>([""]);
 
     const handlerMenuSelect = useCallback(
@@ -28,7 +26,7 @@ const SiderMenu = () => {
             {BlogManageMenus.map((x) => {
                 return (
                     <Menu.Item key={x.id}>
-                        <NavLink to={x.url}>{t(`${x.name}`)}</NavLink>
+                        <NavLink to={x.url}>{x.name}</NavLink>
                     </Menu.Item>
                 );
             })}

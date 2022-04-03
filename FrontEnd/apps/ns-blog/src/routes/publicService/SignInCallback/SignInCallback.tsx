@@ -9,6 +9,7 @@ import GlobalLoading from "components/GlobalLoading/GlobalLoading";
 import { RouterAboutConfig } from "assets/consts/RouterAboutName";
 import nsStorage from "utils/storage";
 import { PrevAuthUrl } from "assets/consts/StoreCacheName";
+import {redirectToLogin} from "utils/auth-utils";
 
 const SignInCallback = () => {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ const SignInCallback = () => {
 
     const successCallback = useCallback(
         (user) => {
+            dispatch(changeLoginStatus(AsyncStatus.Fulfilled));
             const prevUrl = nsStorage.get(PrevAuthUrl);
             if (prevUrl != undefined) {
                 navigate(prevUrl);
@@ -32,7 +34,8 @@ const SignInCallback = () => {
 
     const errorCallback = useCallback(
         (error: Error): void => {
-            navigate(RouterAboutConfig.RootPath);
+            dispatch(changeLoginStatus(AsyncStatus.Rejected));
+            redirectToLogin();
         },
         [dispatch, navigate]
     );
