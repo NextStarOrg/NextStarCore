@@ -2,10 +2,10 @@ import React from 'react';
 import {RouterAboutConfig} from "assets/consts/RouterAboutName";
 import {Navigate} from "react-router-dom";
 
-const GenerateIndex = () => {
+const BlogIndex = () => {
     return (
-        <Navigate to={RouterAboutConfig.GenerateService.Dashboard.Path} replace={true}/>
+        <Navigate to={RouterAboutConfig.BlogService.Dashboard.Path} replace={true}/>
     )
 }
 
-export default GenerateIndex
+export default BlogIndex

@@ -15,7 +15,7 @@ const Login = () => {
     return (
         <div className={styles.login} style={{backgroundImage:`url(${LoginBg})`}}>
             <div className={styles.loginMain}>
-                <Button size={"large"} type={"primary"} onClick={handleLogin}>Login with Authing</Button>
+                <Button size={"large"} type={"primary"} onClick={handleLogin}>Login</Button>
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ import {Navigate} from "react-router-dom";
 
 const CommonIndex = () => {
     return (
-        <Navigate to={RouterAboutConfig.SafetyService.BasePath} replace={true}/>
+        <Navigate to={RouterAboutConfig.BlogService.BasePath} replace={true}/>
     )
 }
 

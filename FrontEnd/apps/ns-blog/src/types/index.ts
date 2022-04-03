@@ -17,6 +17,7 @@ export interface IRouteBasic{
     name: string;
     path: string;
     auth:boolean;
+    functionalityId?: number[]
     routes?: IRoute[];
 }
 

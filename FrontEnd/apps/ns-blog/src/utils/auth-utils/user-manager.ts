@@ -4,10 +4,10 @@ import { getHostPath } from "../envDetect";
 
 const config = {
     authority: window._AUTHORITY_ENDPOINT,
-    client_id: "62258429b571ad7650339d57",
+    client_id: "blogmanagefront",
     redirect_uri: getHostPath() + "/callback",
     response_type: "code",
-    scope: "openid profile email",
+    scope: "openid profile manageapi",
     post_logout_redirect_uri: getHostPath() + "/signoutcallback",
     loadUserInfo: true,
 };

@@ -12,7 +12,6 @@ import {userManager} from "utils/auth-utils/user-manager";
 
 import {isDev} from "utils/envDetect";
 import {initDevHelper} from 'utils/devHelper';
-import "locales/i18n";
 
 ReactDOM.render(
     <React.StrictMode>

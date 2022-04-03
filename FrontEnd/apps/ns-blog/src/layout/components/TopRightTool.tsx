@@ -1,16 +1,11 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    selectLanguage,
-    selectUserState,
-} from "routes/commonService/rtk/selector";
 import { Avatar, Button, Dropdown, Menu, Space, Modal } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RouterAboutConfig } from "assets/consts/RouterAboutName";
 import nsStorage from "utils/storage";
 import { PrevAuthUrl } from "assets/consts/StoreCacheName";
 import { useTranslation } from "react-i18next";
-import { setLanguage } from "routes/commonService/rtk/language";
 import {
     createFromIconfontCN,
     GithubOutlined,
@@ -20,6 +15,7 @@ import {
 } from "@ant-design/icons";
 import { redirectToLogout } from "utils/auth-utils";
 import { setLoadingStatus } from "routes/commonService/rtk/loading";
+import {selectUserState} from "routes/commonService/rtk/selector";
 
 const { confirm } = Modal;
 const IconFont = createFromIconfontCN({
@@ -28,17 +24,7 @@ const IconFont = createFromIconfontCN({
 
 const TopRightTool = (props: { className?: string | undefined }) => {
     const user = useSelector(selectUserState);
-    const language = useSelector(selectLanguage);
     const dispatch = useDispatch();
-    const { t } = useTranslation();
-    const handleChangeLanguage = useCallback(() => {
-        const lang = language.lang;
-        if (lang == "en") {
-            dispatch(setLanguage("zh"));
-        } else {
-            dispatch(setLanguage("en"));
-        }
-    }, [language]);
 
     return (
         <Space>
@@ -59,9 +45,6 @@ const TopRightTool = (props: { className?: string | undefined }) => {
                 >
                     <IconFont type={"ns-youtrack"} /> YouTrack
                 </a>
-            </Button>
-            <Button size={"small"} onClick={handleChangeLanguage}>
-                {t("LanguageTips")}
             </Button>
             {user.user == null || user.user?.expired ? (
                 <NoExistLogin />
@@ -91,14 +74,10 @@ const NoExistLogin = () => {
 
 const ExistLogin = () => {
     const user = useSelector(selectUserState);
-    const language = useSelector(selectLanguage);
     const dispatch = useDispatch();
-    const { t } = useTranslation();
-    const navigate = useNavigate();
-    const location = useLocation();
     const logoutConfirm = function () {
         confirm({
-            title: t("LogoutConfirm"),
+            title: "是否退出？",
             icon: <QuestionCircleOutlined color={"#fa8c16"} />,
             onOk() {
                 dispatch(setLoadingStatus(true));
@@ -113,7 +92,7 @@ const ExistLogin = () => {
                 title={`Signed in as ${user.user?.profile.nickname}`}
             />
             <Menu.Item onClick={logoutConfirm} icon={<LogoutOutlined />}>
-                {t("Logout")}
+                退出
             </Menu.Item>
         </Menu>
     );

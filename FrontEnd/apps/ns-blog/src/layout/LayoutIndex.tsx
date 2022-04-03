@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import {NavLink, Outlet} from 'react-router-dom';
 import {Layout, Breadcrumb, Typography, Button} from 'antd';
-import TopNav from "layout/components/TopNav";
 import SiderMenu from "layout/components/SiderMenu";
 import styles from './LayoutIndex.module.scss';
 import dayjs from "dayjs";
@@ -13,7 +12,7 @@ const LayoutIndex = () => {
     return (
         <Layout className={styles.layoutWrapper}>
             <Header className={styles.header}>
-                <TopNav className={styles.topNav}/>
+                <div></div>
                 <TopRightTool className={styles.topRightTool}/>
             </Header>
             <Layout>

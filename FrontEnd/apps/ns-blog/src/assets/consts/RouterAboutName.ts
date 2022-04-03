@@ -8,16 +8,8 @@ export interface ISafetyServiceConfigItem {
     BasePath: string;
     ServiceName: string;
     Dashboard: IRouterAboutConfigItem;
-    OneWayEncryption: IRouterAboutConfigItem;
-    Hmac: IRouterAboutConfigItem;
-}
-
-export interface IGenerateServiceConfigItem {
-    BasePath: string;
-    ServiceName: string;
-    Dashboard: IRouterAboutConfigItem;
-    RandomString: IRouterAboutConfigItem;
-    UUID: IRouterAboutConfigItem;
+    Category: IRouterAboutConfigItem;
+    Article: IRouterAboutConfigItem;
 }
 
 export interface ICommonAboutConfigItem {
@@ -29,8 +21,7 @@ export interface ICommonAboutConfigItem {
 
 export type IRouterAboutConfig = {
     RootPath: string;
-    SafetyService: ISafetyServiceConfigItem;
-    GenerateService: IGenerateServiceConfigItem;
+    BlogService: ISafetyServiceConfigItem;
     CommonService: ICommonAboutConfigItem;
     Login: IRouterAboutConfigItem;
     Callback: IRouterAboutConfigItem;
@@ -39,42 +30,23 @@ export type IRouterAboutConfig = {
 
 export const RouterAboutConfig: IRouterAboutConfig = {
     RootPath: "/",
-    SafetyService: {
-        BasePath: "safety",
+    BlogService: {
+        BasePath: "blog",
         ServiceName: "安全工具",
         Dashboard: {
             Path: "dashboard",
             Name: "仪表板",
-            Auth: false,
+            Auth: true,
         },
-        OneWayEncryption: {
-            Path: "one-way-encryption",
-            Name: "单向加密",
-            Auth: false,
+        Category: {
+            Path: "category",
+            Name: "分类",
+            Auth: true,
         },
-        Hmac: {
-            Path: "hmac",
-            Name: "HMAC",
-            Auth: false,
-        },
-    },
-    GenerateService: {
-        BasePath: "generate",
-        ServiceName: "生成工具",
-        Dashboard: {
-            Path: "dashboard",
-            Name: "仪表板",
-            Auth: false,
-        },
-        RandomString: {
-            Path: "random-string",
-            Name: "随机字符串",
-            Auth: false,
-        },
-        UUID: {
-            Path: "uuid",
-            Name: "UUID",
-            Auth: false,
+        Article: {
+            Path: "article",
+            Name: "文章",
+            Auth: true,
         },
     },
     CommonService: {
@@ -83,12 +55,12 @@ export const RouterAboutConfig: IRouterAboutConfig = {
         Forbidden: {
             Path: "forbidden",
             Name: "未授权页面",
-            Auth: false,
+            Auth: true,
         },
         NotFound: {
             Path: "notfound",
             Name: "Not Found",
-            Auth: false,
+            Auth: true,
         },
     },
     Login: {

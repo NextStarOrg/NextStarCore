@@ -9,12 +9,10 @@ import GlobalLoading from "components/GlobalLoading/GlobalLoading";
 import { RouterAboutConfig } from "assets/consts/RouterAboutName";
 import nsStorage from "utils/storage";
 import { PrevAuthUrl } from "assets/consts/StoreCacheName";
-import { useTranslation } from "react-i18next";
 
 const SignInCallback = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { t } = useTranslation("PublicService");
 
     useEffect(() => {
         dispatch(changeLoginStatus(AsyncStatus.Pending));
@@ -44,7 +42,7 @@ const SignInCallback = () => {
             successCallback={successCallback}
             errorCallback={errorCallback}
         >
-            <GlobalLoading message={t("LoginIn")} />
+            <GlobalLoading message={"正在登录中..."} />
         </CallbackComponent>
     );
 };

@@ -1,9 +1,0 @@
-{
-  "InputType":"输入类型",
-  "OutputType": "输出类型",
-  "OutputLength": "输出长度",
-  "OutputButton": "输出",
-  "AutoUpdate": "自动更新",
-  "OriginalArticle": "原文",
-  "Ciphertext": "密文"
-}

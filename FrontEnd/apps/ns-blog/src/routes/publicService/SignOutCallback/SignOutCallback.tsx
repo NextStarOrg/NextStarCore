@@ -5,16 +5,12 @@ import { changeLogoutStatus } from "routes/publicService/rtk/auth";
 import { AsyncStatus } from "types";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { redirectToLogin } from "utils/auth-utils";
 import GlobalLoading from "components/GlobalLoading/GlobalLoading";
-import { reject } from "lodash";
 import { RouterAboutConfig } from "assets/consts/RouterAboutName";
-import { useTranslation } from "react-i18next";
 
 const SignOutCallback = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { t } = useTranslation("PublicService");
     useEffect(() => {
         dispatch(changeLogoutStatus(AsyncStatus.Pending));
     }, [dispatch]);
@@ -40,7 +36,7 @@ const SignOutCallback = () => {
             successCallback={successCallback}
             errorCallback={errorCallback}
         >
-            <GlobalLoading message={t("LogoutIn")} />
+            <GlobalLoading message={"退出登录中..."} />
         </SignoutCallbackComponent>
     );
 };

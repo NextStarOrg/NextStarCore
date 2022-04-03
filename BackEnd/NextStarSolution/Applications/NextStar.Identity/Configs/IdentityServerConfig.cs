@@ -28,7 +28,7 @@ public class IdentityServerConfig
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>
         {
-            new ApiScope("nextstarapi", "nextstar api",new List<string>(){
+            new ApiScope("manageapi", "manage api",new List<string>(){
                 JwtClaimTypes.Email,
                 JwtClaimTypes.Name,
                 NextStarClaimTypes.SessionId,

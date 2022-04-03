@@ -40,11 +40,12 @@ public static class ServiceCollectionExtensions
                 .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
                 .AddInMemoryClients(appSetting.IdentityServer.Clients)
                 .AddSigningCredential(certificate)
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseSqlServer(connectionString);
-                    options.EnableTokenCleanup = true;
-                });
+                // .AddOperationalStore(options =>
+                // {
+                //     options.ConfigureDbContext = b => b.UseSqlServer(connectionString);
+                //     options.EnableTokenCleanup = true;
+                // })
+                ;
 
             return service;
         }

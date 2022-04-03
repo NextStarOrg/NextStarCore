@@ -5,7 +5,7 @@ import nsStorage from "utils/storage";
 import {RouterAboutConfig} from "assets/consts/RouterAboutName";
 import {PrevAuthUrl} from "assets/consts/StoreCacheName";
 
-const RequireAuth = ({children}: { children: JSX.Element }) => {
+const RequireAuth = ({children,functionalityIds}: { children: JSX.Element,functionalityIds?:number[] }) => {
     const [isLogin, userState] = useAuth();
     const location = useLocation();
 
@@ -15,7 +15,7 @@ const RequireAuth = ({children}: { children: JSX.Element }) => {
         // trying to go to when they were redirected. This allows us to send them
         // along to that page after they login, which is a nicer user experience
         // than dropping them off on the home page.
-        return <Navigate to={RouterAboutConfig.RootPath + RouterAboutConfig.Login.Path} replace/>;
+        return <Navigate to={RouterAboutConfig.RootPath + RouterAboutConfig.CommonService.BasePath + RouterAboutConfig.CommonService.Forbidden.Path} replace/>;
     }
     return children;
 }
