@@ -32,6 +32,7 @@ const App = () => {
     const authStateRef = useRef(authState);
     const dispatch = useDispatch();
     const isLogined = authState.loginStatus === AsyncStatus.Fulfilled;
+    console.log(AllRoutes);
     const loadUserCallback = useCallback(
         async (user) => {
             //登录中或者登出中状态 不进行后续流程
@@ -74,6 +75,7 @@ const App = () => {
     useEffect(() => {
         authStateRef.current = authState;
     }, [authState]);
+
     useMount(() => {
         loadOidcUser(store).then(loadUserCallback);
     });
@@ -124,7 +126,7 @@ const App = () => {
                 <Routes>
                     {/* 公开路由 */}
                     {_.map(PublicRoutes, BuildRouterComponent)}
-                    {isLogined && <Route
+                    <Route
                         key={RouterAboutConfig.RootPath}
                         path={RouterAboutConfig.RootPath}
                         element={<LayoutIndex/>}
@@ -186,7 +188,6 @@ const App = () => {
                             }
                         />
                     </Route>
-                    }
                 </Routes>
             </React.Suspense>
         </ConfigProvider>

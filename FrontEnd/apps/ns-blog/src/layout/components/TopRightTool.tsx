@@ -12,6 +12,7 @@ import {
     DownOutlined,
     LogoutOutlined,
     QuestionCircleOutlined,
+    UserOutlined
 } from "@ant-design/icons";
 import { redirectToLogout } from "utils/auth-utils";
 import { setLoadingStatus } from "routes/commonService/rtk/loading";
@@ -108,10 +109,15 @@ const ExistLogin = () => {
                     className='ant-dropdown-link'
                     onClick={(e) => e.preventDefault()}
                 >
-                    <Avatar
+                    {
+                        user.user?.profile.picture != undefined ?
+                        <Avatar
                         src={user.user?.profile.picture}
                         style={{ marginRight: "4px" }}
-                    />
+                        />
+                            : <Avatar style={{ marginRight: "4px" }} icon={<UserOutlined />} />
+                    }
+
                     <DownOutlined />
                 </a>
             </Dropdown>
