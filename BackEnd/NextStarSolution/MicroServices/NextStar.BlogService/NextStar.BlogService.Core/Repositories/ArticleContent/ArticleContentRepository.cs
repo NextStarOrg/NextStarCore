@@ -16,23 +16,22 @@ public class ArticleContentRepository : IArticleContentRepository
     public async Task<BlogDbModels.ArticleContent?> GetContentAsync(ArticleContentGetContentInput getContentInput)
     {
         return await _blogDbContext.ArticleContents.AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == getContentInput.ContentId && x.ArticleKey == getContentInput.ArticleKey);
+            .FirstOrDefaultAsync(x => x.Id == getContentInput.ContentId && x.ArticleId == getContentInput.ArticleId);
     }
     
-    public async Task<List<BlogDbModels.ArticleContent>> GetListAsync()
+    public async Task<List<BlogDbModels.ArticleContent>> GetListAsync(int articleId)
     {
-        return await _blogDbContext.ArticleContents.AsNoTracking().Select(x => new BlogDbModels.ArticleContent()
+        return await _blogDbContext.ArticleContents.AsNoTracking().Where(x=>x.ArticleId == articleId).Select(x => new BlogDbModels.ArticleContent()
         {
-            ArticleKey = x.ArticleKey,
-            CommitMessage = x.CommitMessage,
             Id = x.Id,
+            CommitMessage = x.CommitMessage,
             Content = string.Empty
         }).ToListAsync();
     }
 
     public async Task AddEntityAsync(ArticleContentAddInput addInput)
     {
-        var article = await _blogDbContext.Articles.AsNoTracking().FirstOrDefaultAsync(x => x.Key == addInput.ArticleKey);
+        var article = await _blogDbContext.Articles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == addInput.ArticleId);
         if (article == null)
         {
             throw new InvalidateModelDataException()
@@ -44,7 +43,7 @@ public class ArticleContentRepository : IArticleContentRepository
 
         var articleContent = new BlogDbModels.ArticleContent()
         {
-            ArticleKey = addInput.ArticleKey,
+            ArticleId = addInput.ArticleId,
             Content = addInput.Content,
             CommitMessage = addInput.CommitMessage
         };

@@ -9,17 +9,9 @@ public class ArticleSelectInput : PageSearchTextInput
     /// </summary>
     public DateTime? StartTime { get; set; }
     public DateTime? EndTime { get; set; }
-    public bool? IsPublish { get; set; }
+    public DateTime? PublishTime { get; set; }
     /// <summary>
     /// 分类
     /// </summary>
     public List<Guid> CategoryKeys { get; set; } = new List<Guid>();
-    /// <summary>
-    /// 标签
-    /// </summary>
-    public List<Guid> TagKeys  { get; set; } = new List<Guid>();
-    /// <summary>
-    /// 环境
-    /// </summary>
-    public List<Guid> CodeEnvironmentKeys { get; set; } = new List<Guid>();
 }

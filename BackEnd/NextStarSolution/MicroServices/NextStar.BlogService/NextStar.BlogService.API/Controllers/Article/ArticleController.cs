@@ -43,10 +43,10 @@ public class ArticleController:ControllerBase
         return CommonDto<bool>.Ok(true);
     }
     
-    [HttpDelete("{articleKey:guid}")]
-    public async Task<ICommonDto<bool>> Update(Guid articleKey)
+    [HttpDelete("{articleKey:int}")]
+    public async Task<ICommonDto<bool>> Update(int articleId)
     {
-        await _business.DeleteAsync(articleKey);
+        await _business.DeleteAsync(articleId);
         return CommonDto<bool>.Ok(true);
     }
 }

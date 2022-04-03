@@ -9,15 +9,11 @@ public interface IArticleRepository
     Task<IQueryable<BlogDbModels.Article>> SelectEntityAsync();
     Task<bool> AddEntityAsync(ArticleInput articleInput);
     Task<bool> UpdateEntityAsync(ArticleInput articleInput);
-    Task DeleteEntityAsync(Guid articleKey);
+    Task DeleteEntityAsync(int articleId);
     /// <summary>
     /// 更新文章关联的分类
     /// </summary>
     /// <param name="articleItems"></param>
     /// <returns></returns>
     Task GetArticleCategoryByArticles(List<ArticleItem> articleItems);
-
-    Task GetArticleTagByArticles(List<ArticleItem> articleItems);
-
-    Task GetArticleCodeEnvironmentByArticles(List<ArticleItem> articleItems);
 }

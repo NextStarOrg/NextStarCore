@@ -5,10 +5,10 @@ namespace NextStar.BlogService.Core.BlogDbModels
 {
     public partial class ArticleCategory
     {
-        public Guid ArticleKey { get; set; }
-        public Guid CategoryKey { get; set; }
+        public int ArticleId { get; set; }
+        public int? CategoryId { get; set; }
 
-        public virtual Article ArticleKeyNavigation { get; set; } = null!;
-        public virtual Category CategoryKeyNavigation { get; set; } = null!;
+        public virtual Article Article { get; set; } = null!;
+        public virtual Category? Category { get; set; }
     }
 }

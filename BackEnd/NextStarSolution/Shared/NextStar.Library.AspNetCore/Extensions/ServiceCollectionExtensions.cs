@@ -31,6 +31,8 @@ public static class ServiceCollectionExtensions
                 options.Authority = appSetting.Authority;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
                     ValidateAudience = false,
                     ValidateIssuer = false,
                     ClockSkew = TimeSpan.FromSeconds(30),
@@ -51,7 +53,7 @@ public static class ServiceCollectionExtensions
             options.AddPolicy("apiScope", policy =>
             {
                 policy.RequireAuthenticatedUser();
-                policy.RequireClaim("scope", "nextstarapi");
+                policy.RequireClaim("scope", "manageapi");
             });
         });
     }

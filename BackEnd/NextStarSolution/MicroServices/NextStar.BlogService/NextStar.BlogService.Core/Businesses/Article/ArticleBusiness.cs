@@ -33,16 +33,16 @@ public class ArticleBusiness : IArticleBusiness
                 x.Title.Contains(selectInput.SearchText) || x.Description.Contains(selectInput.SearchText));
         }
 
-        if (selectInput.StartTime.HasValue && selectInput.EndTime.HasValue &&
-            DateTime.Compare(selectInput.StartTime.Value, selectInput.EndTime.Value) <=0)
-        {
-            articleQuery = articleQuery.Where(x =>
-                x.Title.Contains(selectInput.SearchText) || x.Description.Contains(selectInput.SearchText));
-        }
+        // if (selectInput.StartTime.HasValue && selectInput.EndTime.HasValue &&
+        //     DateTime.Compare(selectInput.StartTime.Value, selectInput.EndTime.Value) <=0)
+        // {
+        //     articleQuery = articleQuery.Where(x =>
+        //         x.Title.Contains(selectInput.SearchText) || x.Description.Contains(selectInput.SearchText));
+        // }
 
-        if (selectInput.IsPublish.HasValue)
+        if (selectInput.PublishTime.HasValue)
         {
-            articleQuery = articleQuery.Where(x => x.IsPublish == selectInput.IsPublish);
+            articleQuery = articleQuery.Where(x => x.PublishTime < selectInput.PublishTime.Value);
         }
 
         var articles = _mapper.Map<List<ArticleItem>>(await articleQuery.ToListAsync());
@@ -54,20 +54,6 @@ public class ArticleBusiness : IArticleBusiness
             articles = articles.Where(x => x.Category != null && selectInput.CategoryKeys.Contains(x.Category.Key)).ToList();
         }
         
-        await _repository.GetArticleTagByArticles(articles);
-
-        if (selectInput.TagKeys.Count > 0)
-        {
-            articles = articles.Where(x => x.Tags.Select(y=>y.Key).Intersect(selectInput.TagKeys).Any()).ToList();
-        }
-        
-        await _repository.GetArticleCodeEnvironmentByArticles(articles);
-
-        if (selectInput.CodeEnvironmentKeys.Count > 0)
-        {
-            articles = articles.Where(x => x.Tags.Select(y=>y.Key).Intersect(selectInput.CodeEnvironmentKeys).Any()).ToList();
-        }
-
         var query = articles.AsQueryable();
         query = query.CommonPageSort(selectInput, "Id desc");
 
@@ -123,20 +109,11 @@ public class ArticleBusiness : IArticleBusiness
             };
         }
         
-        if (articleInput.ArticleKey == Guid.Empty)
-        {
-            throw new InvalidateModelDataException()
-            {
-                Property = "主Key",
-                Type = InvalidateModelDataException.InvalidateType.Required
-            };
-        }
-
         await _repository.AddEntityAsync(articleInput);
     }
 
-    public async Task DeleteAsync(Guid articleKey)
+    public async Task DeleteAsync(int articleId)
     {
-        await _repository.DeleteEntityAsync(articleKey);
+        await _repository.DeleteEntityAsync(articleId);
     }
 }

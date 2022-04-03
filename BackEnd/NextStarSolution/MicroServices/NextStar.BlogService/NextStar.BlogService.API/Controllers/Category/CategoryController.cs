@@ -48,10 +48,10 @@ public class CategoryController : ControllerBase
         return CommonDto<bool>.Ok(true);
     }
 
-    [HttpDelete("{categoryKey:Guid}")]
-    public async Task<ICommonDto<bool>> Delete(Guid categoryKey)
+    [HttpDelete("{categoryKey:int}")]
+    public async Task<ICommonDto<bool>> Delete(int categoryId)
     {
-        await _business.DeleteAsync(categoryKey);
+        await _business.DeleteAsync(categoryId);
         return CommonDto<bool>.Ok(true);
     }
 }

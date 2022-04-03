@@ -26,7 +26,7 @@ public class ArticleContentBusiness : IArticleContentBusiness
     /// <returns></returns>
     public async Task<PageCommonDto<BlogDbModels.ArticleContent>> GetListAsync(ArticleContentSelectInput selectInput)
     {
-        var acList = await _repository.GetListAsync();
+        var acList = await _repository.GetListAsync(selectInput.ArticleId);
         acList = acList.OrderByDescending(x => x.CreatedTime).ToList();
         var query = acList.AsQueryable().CommonPagination(selectInput);
         
@@ -41,15 +41,6 @@ public class ArticleContentBusiness : IArticleContentBusiness
 
     public async Task AddAsync(ArticleContentAddInput addInput)
     {
-        if (addInput.ArticleKey == Guid.Empty)
-        {
-            throw new InvalidateModelDataException()
-            {
-                Property = "文章",
-                Type = InvalidateModelDataException.InvalidateType.Required
-            };
-        }
-        
         if (string.IsNullOrWhiteSpace(addInput.Content))
         {
             throw new InvalidateModelDataException()

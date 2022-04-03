@@ -19,75 +19,50 @@ namespace NextStar.BlogService.Core.DbContexts
 
         public virtual DbSet<Article> Articles { get; set; } = null!;
         public virtual DbSet<ArticleCategory> ArticleCategories { get; set; } = null!;
-        public virtual DbSet<ArticleCodeEnvironment> ArticleCodeEnvironments { get; set; } = null!;
         public virtual DbSet<ArticleContent> ArticleContents { get; set; } = null!;
         public virtual DbSet<ArticleLastContent> ArticleLastContents { get; set; } = null!;
-        public virtual DbSet<ArticleTag> ArticleTags { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
-        public virtual DbSet<CodeEnvironment> CodeEnvironments { get; set; } = null!;
-        public virtual DbSet<Tag> Tags { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<Article>(entity =>
             {
-                entity.HasKey(e => e.Key)
-                    .HasName("Article_pk");
-
                 entity.ToTable("Article");
 
                 entity.HasIndex(e => e.Id, "Article_Id_uindex")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Key, "Article_Key_uindex")
-                    .IsUnique();
+                entity.Property(e => e.Description).HasMaxLength(500);
 
-                entity.Property(e => e.Key).HasDefaultValueSql("(newsequentialid())");
+                entity.Property(e => e.Title).HasMaxLength(200);
 
-                entity.Property(e => e.Description).HasMaxLength(1000);
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Title).HasMaxLength(300);
+                entity.Property(e => e.UpdatedTime).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<ArticleCategory>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.ArticleId)
+                    .HasName("ArticleCategory_pk");
 
                 entity.ToTable("ArticleCategory");
 
-                entity.HasIndex(e => e.ArticleKey, "ArticleCategory_ArticleKey_uindex")
+                entity.HasIndex(e => e.ArticleId, "ArticleCategory_ArticleId_uindex")
                     .IsUnique();
 
-                entity.HasOne(d => d.ArticleKeyNavigation)
-                    .WithOne()
-                    .HasForeignKey<ArticleCategory>(d => d.ArticleKey)
-                    .HasConstraintName("ArticleCategory_Article_Key_fk");
+                entity.Property(e => e.ArticleId).ValueGeneratedNever();
 
-                entity.HasOne(d => d.CategoryKeyNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.CategoryKey)
-                    .HasConstraintName("ArticleCategory_Category_Key_fk");
-            });
+                entity.HasOne(d => d.Article)
+                    .WithOne(p => p.ArticleCategory)
+                    .HasForeignKey<ArticleCategory>(d => d.ArticleId)
+                    .HasConstraintName("ArticleCategory_Article_Id_fk");
 
-            modelBuilder.Entity<ArticleCodeEnvironment>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ArticleCodeEnvironment");
-
-                entity.Property(e => e.Version).HasMaxLength(50);
-
-                entity.HasOne(d => d.ArticleKeyNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.ArticleKey)
-                    .HasConstraintName("ArticleEnvironment_Article_Key_fk");
-
-                entity.HasOne(d => d.EnvironmentKeyNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.EnvironmentKey)
-                    .HasConstraintName("ArticleEnvironment_Environment_Key_fk");
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.ArticleCategories)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("ArticleCategory_Category_Id_fk");
             });
 
             modelBuilder.Entity<ArticleContent>(entity =>
@@ -97,14 +72,14 @@ namespace NextStar.BlogService.Core.DbContexts
                 entity.HasIndex(e => e.Id, "ArticleContent_Id_uindex")
                     .IsUnique();
 
-                entity.HasIndex(e => e.CreatedTime, "Article_CreatedTime_index");
+                entity.Property(e => e.CommitMessage).HasMaxLength(200);
 
-                entity.Property(e => e.CommitMessage).HasMaxLength(500);
+                entity.Property(e => e.CreatedTime).HasDefaultValueSql("(getdate())");
 
-                entity.HasOne(d => d.ArticleKeyNavigation)
+                entity.HasOne(d => d.Article)
                     .WithMany(p => p.ArticleContents)
-                    .HasForeignKey(d => d.ArticleKey)
-                    .HasConstraintName("Article_Article_Key_fk");
+                    .HasForeignKey(d => d.ArticleId)
+                    .HasConstraintName("ArticleContent_Article_Id_fk");
             });
 
             modelBuilder.Entity<ArticleLastContent>(entity =>
@@ -113,96 +88,28 @@ namespace NextStar.BlogService.Core.DbContexts
 
                 entity.ToView("ArticleLastContent");
 
-                entity.Property(e => e.Description).HasMaxLength(1000);
+                entity.Property(e => e.Description).HasMaxLength(500);
 
-                entity.Property(e => e.Title).HasMaxLength(300);
-            });
-
-            modelBuilder.Entity<ArticleTag>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ArticleTag");
-
-                entity.HasOne(d => d.ArticleKeyNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.ArticleKey)
-                    .HasConstraintName("ArticleTag_Article_Key_fk");
-
-                entity.HasOne(d => d.TagKeyNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.TagKey)
-                    .HasConstraintName("ArticleTag_Tag_Key_fk");
+                entity.Property(e => e.Title).HasMaxLength(200);
             });
 
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.HasKey(e => e.Key)
-                    .HasName("Category_pk");
-
                 entity.ToTable("Category");
 
                 entity.HasIndex(e => e.Id, "Category_Id_uindex")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Key, "Category_Key_uindex")
+                entity.HasIndex(e => e.Name, "Category_Name_uindex")
                     .IsUnique();
 
-                entity.Property(e => e.Key).HasDefaultValueSql("(newsequentialid())");
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Name).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<CodeEnvironment>(entity =>
-            {
-                entity.HasKey(e => e.Key)
-                    .HasName("Environment_pk");
-
-                entity.ToTable("CodeEnvironment");
-
-                entity.HasIndex(e => e.Id, "Environment_Id_uindex")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Key, "Environment_Key_uindex")
-                    .IsUnique();
-
-                entity.Property(e => e.Key).HasDefaultValueSql("(newsequentialid())");
-
-                entity.Property(e => e.IconUrl).HasMaxLength(200);
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Name).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<Tag>(entity =>
-            {
-                entity.HasKey(e => e.Key)
-                    .HasName("Tag_pk");
-
-                entity.ToTable("Tag");
-
-                entity.HasIndex(e => e.Id, "Tag_Id_uindex")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Key, "Tag_Key_uindex")
-                    .IsUnique();
-
-                entity.Property(e => e.Key).HasDefaultValueSql("(newsequentialid())");
-
-                entity.Property(e => e.BackgroundColor)
-                    .HasMaxLength(15)
-                    .HasDefaultValueSql("('#000000')");
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Name).HasMaxLength(50);
 
-                entity.Property(e => e.TextColor)
-                    .HasMaxLength(15)
-                    .HasDefaultValueSql("('#FFFFFF')");
+                entity.Property(e => e.UpdatedTime).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Url).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

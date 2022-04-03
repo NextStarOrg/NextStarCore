@@ -16,28 +16,6 @@ public partial class BlogDbContext : DbContext
     
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Article>(entity =>
-        {
-            entity.Property(p => p.Id)
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-        });
-        
-        modelBuilder.Entity<Tag>(entity =>
-        {
-            entity.Property(p => p.Id)
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-        });
-        
-        modelBuilder.Entity<Category>(entity =>
-        {
-            entity.Property(p => p.Id)
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-        });
-        
-        modelBuilder.Entity<CodeEnvironment>(entity =>
-        {
-            entity.Property(p => p.Id)
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-        });
+        //empty
     }
 }

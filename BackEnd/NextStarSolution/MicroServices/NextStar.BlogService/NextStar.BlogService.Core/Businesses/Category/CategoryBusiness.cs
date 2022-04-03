@@ -54,15 +54,6 @@ public class CategoryBusiness : ICategoryBusiness
 
     public async Task UpdateAsync(CategoryInput category)
     {
-        if (category.Key == Guid.Empty)
-        {
-            throw new InvalidateModelDataException()
-            {
-                Property = "分类主键",
-                Type = InvalidateModelDataException.InvalidateType.IncorrectValue
-            };
-        }
-
         if (string.IsNullOrWhiteSpace(category.Name))
         {
             throw new InvalidateModelDataException()
@@ -75,17 +66,8 @@ public class CategoryBusiness : ICategoryBusiness
         await _repository.UpdateEntityAsync(category);
     }
 
-    public async Task DeleteAsync(Guid categoryKey)
+    public async Task DeleteAsync(int categoryId)
     {
-        if (categoryKey == Guid.Empty)
-        {
-            throw new InvalidateModelDataException()
-            {
-                Property = "分类主键",
-                Type = InvalidateModelDataException.InvalidateType.IncorrectValue
-            };
-        }
-
-        await _repository.DeleteEntityAsync(categoryKey);
+        await _repository.DeleteEntityAsync(categoryId);
     }
 }

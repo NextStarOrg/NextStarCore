@@ -2,6 +2,6 @@
 
 public class CommonSingleOutput
 {
-    public Guid Key { get; set; }
+    public int Id { get; set; }
     public string DisplayName { get; set; } = string.Empty;
 }

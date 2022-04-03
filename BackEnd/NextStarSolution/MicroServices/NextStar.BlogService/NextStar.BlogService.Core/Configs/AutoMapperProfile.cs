@@ -12,7 +12,6 @@ public class AutoMapperProfile: Profile
 
         CreateMap<Article, ArticleItem>();
         CreateMap<Category, ArticleCategoryItem>();
-        CreateMap<Tag, ArticleTagItem>();
 
         #endregion
     }

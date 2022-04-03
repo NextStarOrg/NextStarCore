@@ -19,7 +19,7 @@ public class CategoryRepository : ICategoryRepository
     {
         var articles = await _blogDbContext.Categories.Where(x => x.Name.Contains(searchText ?? string.Empty)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
         {
-            Key = x.Key,
+            Id = x.Id,
             DisplayName = x.Name
         }).ToListAsync();
         return articles;
@@ -39,7 +39,6 @@ public class CategoryRepository : ICategoryRepository
     {
         var entityCategory = new BlogDbModels.Category()
         {
-            Key = Guid.NewGuid(),
             Name = category.Name,
             CreatedTime = DateTime.Now,
             UpdatedTime = DateTime.Now
@@ -50,7 +49,7 @@ public class CategoryRepository : ICategoryRepository
     
     public async Task UpdateEntityAsync(CategoryInput category)
     {
-        var currentCategory = await _blogDbContext.Categories.FirstOrDefaultAsync(x => x.Key == category.Key);
+        var currentCategory = await _blogDbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
         if (currentCategory != null)
         {
             currentCategory.Name = category.Name;
@@ -60,9 +59,9 @@ public class CategoryRepository : ICategoryRepository
         }
     }
 
-    public async Task DeleteEntityAsync(Guid categoryKey)
+    public async Task DeleteEntityAsync(int categoryId)
     {
-        var currentCategory = await _blogDbContext.Categories.FirstOrDefaultAsync(x => x.Key == categoryKey);
+        var currentCategory = await _blogDbContext.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
         if (currentCategory != null)
         {
             _blogDbContext.Categories.Remove(currentCategory);

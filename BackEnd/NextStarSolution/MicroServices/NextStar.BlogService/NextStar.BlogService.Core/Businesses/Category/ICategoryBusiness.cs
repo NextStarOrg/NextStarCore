@@ -9,5 +9,5 @@ public interface ICategoryBusiness
     Task<PageCommonDto<BlogDbModels.Category>> GetListAsync(CategorySelectInput selectInput);
     Task AddAsync(CategoryInput category);
     Task UpdateAsync(CategoryInput category);
-    Task DeleteAsync(Guid categoryKey);
+    Task DeleteAsync(int categoryKey);
 }

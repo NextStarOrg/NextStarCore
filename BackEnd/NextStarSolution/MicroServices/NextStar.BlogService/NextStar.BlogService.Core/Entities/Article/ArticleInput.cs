@@ -2,12 +2,9 @@
 
 public class ArticleInput
 {
-    public Guid ArticleKey { get; set; } = Guid.Empty;
+    public int ArticleId { get; set; }
     public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
-    public Guid? Category { get; set; } = null;
-    public List<Guid> Tags { get; set; } = new List<Guid>();
-    public List<Guid> CodeEnvironments { get; set; } = new List<Guid>();
-    public bool IsPublish { get; set; } = false;
+    public int? Category { get; set; } = null;
     public DateTime PublishTime { get; set; } = DateTime.Now;
 }

@@ -2,7 +2,7 @@
 
 public class ArticleContentAddInput
 {
-    public Guid ArticleKey { get; set; }
+    public int ArticleId { get; set; }
     public string Content { get; set; } = null!;
     public string? CommitMessage { get; set; }
 }

@@ -9,6 +9,6 @@ public interface IArticleContentRepository
     /// 返回的不携带content
     /// </summary>
     /// <returns></returns>
-    Task<List<BlogDbModels.ArticleContent>> GetListAsync();
+    Task<List<BlogDbModels.ArticleContent>> GetListAsync(int articleId);
     Task AddEntityAsync(ArticleContentAddInput addInput);
 }

@@ -5,12 +5,12 @@ namespace NextStar.BlogService.Core.BlogDbModels
 {
     public partial class ArticleContent
     {
-        public Guid ArticleKey { get; set; }
+        public long Id { get; set; }
+        public int ArticleId { get; set; }
         public string Content { get; set; } = null!;
-        public DateTime CreatedTime { get; set; }
         public string? CommitMessage { get; set; }
-        public int Id { get; set; }
+        public DateTime CreatedTime { get; set; }
 
-        public virtual Article ArticleKeyNavigation { get; set; } = null!;
+        public virtual Article Article { get; set; } = null!;
     }
 }

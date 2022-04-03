@@ -33,10 +33,10 @@ public class ArticleRepository : IArticleRepository
     {
         var articles = await _blogDbContext.Articles.Where(x => x.Title.Contains(searchText ?? string.Empty)).AsNoTracking().OrderByDescending(x=>x.UpdatedTime).Select(x=> new CommonSingleOutput()
         {
-            Key = x.Key,
+            Id = x.Id,
             DisplayName = x.Title
         }).ToListAsync();
-        return articles;
+        return articles ?? new List<CommonSingleOutput>();
     }
     public async Task<IQueryable<BlogDbModels.Article>> SelectEntityAsync()
     {
@@ -52,10 +52,8 @@ public class ArticleRepository : IArticleRepository
             // create article
             var article = new BlogDbModels.Article()
             {
-                Key = Guid.NewGuid(),
                 Title = articleInput.Title,
                 Description = articleInput.Description,
-                IsPublish = articleInput.IsPublish,
                 PublishTime = articleInput.PublishTime,
                 CreatedTime = DateTime.Now,
                 UpdatedTime = DateTime.Now
@@ -64,34 +62,14 @@ public class ArticleRepository : IArticleRepository
             await _blogDbContext.SaveChangesAsync();
 
             // add relation
-            if (articleInput.Category != null && articleInput.Category != Guid.Empty)
+            if (articleInput.Category != null)
             {
                 var ac = new ArticleCategory()
                 {
-                    ArticleKey = article.Key,
-                    CategoryKey = articleInput.Category.Value
+                    ArticleId = article.Id,
+                    CategoryId = articleInput.Category
                 };
                 await _blogDbContext.ArticleCategories.AddAsync(ac);
-            }
-
-            if (articleInput.Tags.Count > 0)
-            {
-                var atList = articleInput.Tags.Select(x => new ArticleTag()
-                {
-                    ArticleKey = article.Key,
-                    TagKey = x
-                }).ToList();
-                await _blogDbContext.ArticleTags.AddRangeAsync(atList);
-            }
-
-            if (articleInput.CodeEnvironments.Count > 0)
-            {
-                var aceList = articleInput.CodeEnvironments.Select(x => new ArticleCodeEnvironment()
-                {
-                    ArticleKey = article.Key,
-                    EnvironmentKey = x
-                }).ToList();
-                await _blogDbContext.ArticleCodeEnvironments.AddRangeAsync(aceList);
             }
 
             await _blogDbContext.SaveChangesAsync();
@@ -108,7 +86,7 @@ public class ArticleRepository : IArticleRepository
 
     public async Task<bool> UpdateEntityAsync(ArticleInput articleInput)
     {
-        var article = await _blogDbContext.Articles.FirstOrDefaultAsync(x => x.Key == articleInput.ArticleKey);
+        var article = await _blogDbContext.Articles.FirstOrDefaultAsync(x => x.Id == articleInput.ArticleId);
         if (article == null)
         {
             return false;
@@ -121,48 +99,23 @@ public class ArticleRepository : IArticleRepository
             // update article
             article.Title = articleInput.Title;
             article.Description = articleInput.Description;
-            article.IsPublish = articleInput.IsPublish;
             article.PublishTime = articleInput.PublishTime;
             article.UpdatedTime = DateTime.Now;
             _blogDbContext.Articles.Update(article);
 
-            var acExistList = _blogDbContext.ArticleCategories.Where(x => x.ArticleKey == article.Key);
+            var acExistList = _blogDbContext.ArticleCategories.Where(x => x.ArticleId == article.Id);
             _blogDbContext.ArticleCategories.RemoveRange(acExistList);
             // add relation
-            if (articleInput.Category != null && articleInput.Category != Guid.Empty)
+            if (articleInput.Category != null)
             {
                 var ac = new ArticleCategory()
                 {
-                    ArticleKey = article.Key,
-                    CategoryKey = articleInput.Category.Value
+                    ArticleId = article.Id,
+                    CategoryId = articleInput.Category
                 };
                 await _blogDbContext.ArticleCategories.AddAsync(ac);
             }
-
-            var atExistList = _blogDbContext.ArticleCategories.Where(x => x.ArticleKey == article.Key);
-            _blogDbContext.ArticleCategories.RemoveRange(acExistList);
-            if (articleInput.Tags.Count > 0)
-            {
-                var atList = articleInput.Tags.Select(x => new ArticleTag()
-                {
-                    ArticleKey = article.Key,
-                    TagKey = x
-                });
-                await _blogDbContext.ArticleTags.AddRangeAsync(atList);
-            }
-
-            var aceExistList = _blogDbContext.ArticleCodeEnvironments.Where(x => x.ArticleKey == article.Key);
-            _blogDbContext.ArticleCodeEnvironments.RemoveRange(aceExistList);
-            if (articleInput.CodeEnvironments.Count > 0)
-            {
-                var aceList = articleInput.CodeEnvironments.Select(x => new ArticleCodeEnvironment()
-                {
-                    ArticleKey = article.Key,
-                    EnvironmentKey = x
-                });
-                await _blogDbContext.ArticleCodeEnvironments.AddRangeAsync(aceList);
-            }
-
+            
             await _blogDbContext.SaveChangesAsync();
             await t.CommitAsync();
             return true;
@@ -175,12 +128,12 @@ public class ArticleRepository : IArticleRepository
         }
     }
 
-    public async Task DeleteEntityAsync(Guid articleKey)
+    public async Task DeleteEntityAsync(int articleId)
     {
-        var article = await _blogDbContext.Articles.FirstOrDefaultAsync(x => x.Key == articleKey);
+        var article = await _blogDbContext.Articles.FirstOrDefaultAsync(x => x.Id == articleId);
         if (article == null)
             return;
-        var articleContent = await _blogDbContext.ArticleContents.Where(x => x.ArticleKey == articleKey)
+        var articleContent = await _blogDbContext.ArticleContents.Where(x => x.ArticleId == articleId)
             .OrderByDescending(x => x.CreatedTime).FirstOrDefaultAsync();
         if (articleContent != null)
         {
@@ -210,52 +163,14 @@ public class ArticleRepository : IArticleRepository
         foreach (var articleItem in articleItems)
         {
             var relationCategory =
-                await _blogDbContext.ArticleCategories.FirstOrDefaultAsync(x => articleItem.Key == x.ArticleKey);
+                await _blogDbContext.ArticleCategories.FirstOrDefaultAsync(x => articleItem.Id == x.ArticleId);
 
             if (relationCategory != null)
             {
                 var category =
-                    await _blogDbContext.Categories.FirstOrDefaultAsync(x => relationCategory.CategoryKey == x.Key);
+                    await _blogDbContext.Categories.FirstOrDefaultAsync(x => relationCategory.CategoryId == x.Id);
 
                 articleItem.Category = category == null ? null : _mapper.Map<ArticleCategoryItem>(category);
-            }
-        }
-    }
-
-    public async Task GetArticleTagByArticles(List<ArticleItem> articleItems)
-    {
-        foreach (var articleItem in articleItems)
-        {
-            var relationTagKeys = await _blogDbContext.ArticleTags.Where(x => articleItem.Key == x.ArticleKey)
-                .Select(x => x.TagKey).ToListAsync();
-
-            if (relationTagKeys.Count > 0)
-            {
-                var tags = await _blogDbContext.Tags.Where(x => relationTagKeys.Contains(x.Key)).ToListAsync();
-                articleItem.Tags =
-                    tags.Count == 0 ? new List<ArticleTagItem>() : _mapper.Map<List<ArticleTagItem>>(tags);
-            }
-        }
-    }
-
-    public async Task GetArticleCodeEnvironmentByArticles(List<ArticleItem> articleItems)
-    {
-        foreach (var articleItem in articleItems)
-        {
-            var relationCodeEnvironments = await _blogDbContext.ArticleCodeEnvironments
-                .Where(x => articleItem.Key == x.ArticleKey).ToDictionaryAsync(x => x.EnvironmentKey, x => x.Version);
-
-            if (relationCodeEnvironments.Count > 0)
-            {
-                var keys = relationCodeEnvironments.Keys.ToList();
-                var codeEnvironmentItems = await _blogDbContext.CodeEnvironments.Where(x => keys.Contains(x.Key)).Select(x=> new ArticleCodeEnvironmentItem()
-                {
-                    Key = x.Key,
-                    Name = x.Name,
-                    IconUrl = x.IconUrl,
-                    Version = relationCodeEnvironments[x.Key]
-                }).ToListAsync();
-                articleItem.CodeEnvironment = codeEnvironmentItems;
             }
         }
     }

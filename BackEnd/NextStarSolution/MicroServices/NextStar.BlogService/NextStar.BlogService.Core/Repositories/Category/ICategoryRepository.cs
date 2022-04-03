@@ -31,7 +31,7 @@ public interface ICategoryRepository
     /// <summary>
     /// 删除分类
     /// </summary>
-    /// <param name="categoryKey"></param>
+    /// <param name="categoryId"></param>
     /// <returns></returns>
-    Task DeleteEntityAsync(Guid categoryKey);
+    Task DeleteEntityAsync(int categoryId);
 }
