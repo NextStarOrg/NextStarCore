@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import TopRightTool from "layout/components/TopRightTool";
 import {useDispatch} from "react-redux";
 import {setLoadingStatus} from "routes/commonService/rtk/loading";
+import BreadcrumbList from "layout/components/BreadcrumbList";
 
 const {Header, Content, Sider, Footer} = Layout;
 
@@ -26,9 +27,7 @@ const LayoutIndex = () => {
                     <SiderMenu/>
                 </Sider>
                 <Layout className={styles.mainLayout}>
-                    <Breadcrumb className={styles.breadcrumb}>
-                        <Breadcrumb.Item><NavLink to={"/"}>Home</NavLink></Breadcrumb.Item>
-                    </Breadcrumb>
+                    <BreadcrumbList />
                     <Content className={styles.mainContent}>
                         <Outlet/>
                     </Content>
