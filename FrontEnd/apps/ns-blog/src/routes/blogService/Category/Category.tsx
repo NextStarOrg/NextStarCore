@@ -5,6 +5,7 @@ import _ from "lodash";
 import {useState} from "react";
 import {ConvertInputByAntTable, defaultInputAntTable} from "utils/antTableUtils";
 import {ITableFilter} from "types";
+import {useNavigate} from "react-router-dom";
 
 interface CategoryItem {
     id: number,
@@ -108,6 +109,7 @@ const columns: ColumnsType<CategoryItem> = [
 
 const Category = () => {
     const [tableFilter, setTableFilter] = useState<ITableFilter>(defaultInputAntTable)
+    const navigate = useNavigate();
 
     function onChange(pagination: TablePaginationConfig, filters: any, sorter: SorterResult<CategoryItem> | SorterResult<CategoryItem>[]) {
         setTableFilter(ConvertInputByAntTable(pagination, sorter))
@@ -115,6 +117,7 @@ const Category = () => {
 
     const handleTableDoubleClick = function (item?: CategoryItem) {
         console.log(item);
+        navigate("/blog/category/new");
     }
 
     return (

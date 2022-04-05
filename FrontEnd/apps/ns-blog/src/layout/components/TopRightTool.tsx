@@ -6,8 +6,6 @@ import { RouterAboutConfig } from "assets/consts/RouterAboutName";
 import nsStorage from "utils/storage";
 import { PrevAuthUrl } from "assets/consts/StoreCacheName";
 import {
-    createFromIconfontCN,
-    GithubOutlined,
     DownOutlined,
     LogoutOutlined,
     QuestionCircleOutlined,
@@ -18,34 +16,11 @@ import { setLoadingStatus } from "routes/commonService/rtk/loading";
 import {selectUserState} from "routes/commonService/rtk/selector";
 
 const { confirm } = Modal;
-const IconFont = createFromIconfontCN({
-    scriptUrl: window._ICON_FONT_URL,
-});
 
-const TopRightTool = (props: { className?: string | undefined }) => {
+const TopRightTool = () => {
     const user = useSelector(selectUserState);
-    const dispatch = useDispatch();
-
     return (
         <Space>
-            <Button size={"small"}>
-                <a
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    href='https://github.com/NextStarOrg'
-                >
-                    <GithubOutlined /> Github
-                </a>
-            </Button>
-            <Button size={"small"}>
-                <a
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    href='https://youtrack.nextstar.org.cn'
-                >
-                    <IconFont type={"ns-youtrack"} /> YouTrack
-                </a>
-            </Button>
             {user.user == null || user.user?.expired ? (
                 <NoExistLogin />
             ) : (
