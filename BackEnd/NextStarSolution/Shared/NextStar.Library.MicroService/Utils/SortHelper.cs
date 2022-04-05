@@ -11,7 +11,7 @@ public class SortHelper
 
         List<string> sortStrings = new List<string>();
 
-        foreach (SortDescriptor sort in sorts.Where(s => s.PropertyName != null))
+        foreach (SortDescriptor sort in sorts.OrderBy(x=>x.Multiple))
         {
             if (sort.Direction == SortDirection.Desc)
             {
@@ -38,9 +38,9 @@ public class SortHelper
 
         List<string> sortStrings = new List<string>();
 
-        foreach (SortDescriptor sort in sorts.Where(s => s.PropertyName != null))
+        foreach (SortDescriptor sort in sorts.OrderBy(x=>x.Multiple))
         {
-            if (type.GetProperty(sort.PropertyName!) != null)
+            if (type.GetProperty(sort.PropertyName) != null)
             {
                 if (sort.Direction == SortDirection.Desc)
                 {

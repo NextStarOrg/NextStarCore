@@ -9,5 +9,11 @@ const BlogCategoryRouter: IRoute = {
     component: React.lazy(() => import("./Category")),
 };
 
+const BlogCategoryNewRouter: IRoute = {
+    name: "分类新建",
+    path: "category/new",
+    auth: false,
+    component: React.lazy(() => import("./sub/CategoryNew")),
+}
 
-export default [BlogCategoryRouter];
+export default [BlogCategoryRouter,BlogCategoryNewRouter];

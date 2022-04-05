@@ -10,5 +10,10 @@ public class SortDescriptor
     /// <summary>
     ///  属性名
     /// </summary>
-    public string? PropertyName { get; set; }
+    public string PropertyName { get; set; }
+
+    /// <summary>
+    /// 多字段排序顺序
+    /// </summary>
+    public int Multiple { get; set; } = 0;
 }

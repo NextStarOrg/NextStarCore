@@ -42,7 +42,6 @@ const App = () => {
     const isLogin = authState.loginStatus === AsyncStatus.Fulfilled;
     const loadUserCallback = useCallback(
         async (user) => {
-            console.log(authStateRef)
             //登录中或者登出中状态 不进行后续流程
             if (
                 authStateRef.current.loginStatus === AsyncStatus.Pending ||
@@ -81,7 +80,6 @@ const App = () => {
         [dispatch]
     );
     useEffect(() => {
-        console.log(authState)
         authStateRef.current = authState;
     }, [authState]);
 
