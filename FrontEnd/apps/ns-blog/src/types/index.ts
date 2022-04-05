@@ -12,23 +12,50 @@ export enum AsyncStatus {
     Rejected,
 }
 
-export interface IRouteBasic{
+export interface IRouteBasic {
     //对于后端 Menu 没有配置的页面： 比如通知，登录履历 需要在 Route 中配置 name, 供面包屑导航使用
     name: string;
     path: string;
-    auth:boolean;
+    auth: boolean;
     functionalityId?: number[]
     routes?: IRoute[];
 }
 
-export interface IRoute extends IRouteBasic{
+export interface IRoute extends IRouteBasic {
     component: () => NonNullable<JSX.Element>;
 }
 
 export interface IServiceRoute {
-    key:string;
-    path:string;
-    indexComponent:() => NonNullable<JSX.Element>;
+    key: string;
+    path: string;
+    indexComponent: () => NonNullable<JSX.Element>;
     layoutComponent?: () => NonNullable<JSX.Element>;
-    routes?:IRoute[];
+    routes?: IRoute[];
+}
+
+export interface IPagination {
+    // 10
+    pageSize: number,
+    // 1
+    pageNumber: number
+}
+
+
+export enum SortDirection {
+    Asc,
+    Desc
+}
+
+export interface ISortDescriptor {
+    direction: SortDirection,
+    propertyName: string,
+    multiple: number
+}
+
+export interface IPageSort {
+    sorts: ISortDescriptor[]
+}
+
+export interface ITableFilter extends IPageSort, IPagination {
+
 }

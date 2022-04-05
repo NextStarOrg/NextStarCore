@@ -106,7 +106,7 @@ const App = () => {
                         element={<SignOutCallbackRouter.component/>}
                     />
                 </Routes>
-                {isLogin && <AppAuth />}
+                {isLogin && <AppAuth/>}
             </React.Suspense>
         </ConfigProvider>
     );
@@ -114,6 +114,29 @@ const App = () => {
 
 
 const AppAuth = () => {
+    const renderRoute = (serviceKey: string, routes: IRoute[]) => {
+        return routes.map((x) => {
+            if (x.routes != undefined && x.routes?.length > 0) {
+                return (
+                    <Route
+                        key={serviceKey + "_" + x.name}
+                        path={x.path}
+                        element={<x.component/>}
+                    >
+                        {renderRoute(serviceKey, x.routes)}
+                    </Route>
+                );
+            } else {
+                return (
+                    <Route
+                        key={serviceKey + "_" + x.name}
+                        path={x.path}
+                        element={<x.component/>}
+                    />
+                );
+            }
+        });
+    };
     return (
         <Routes>
             <Route
@@ -131,35 +154,38 @@ const AppAuth = () => {
                         />
                     }
                 />
-                <Route key={BlogServicesRoutes.key} path={BlogServicesRoutes.path}>
-                    <Route
-                        key={BlogServicesRoutes.key + "_root"}
-                        index
-                        element={<BlogServicesRoutes.indexComponent/>}
-                    />
-                    <Route
-                        key={BlogDashboardRouter.name}
-                        path={BlogDashboardRouter.path}
-                        element={<BlogDashboardRouter.component/>}
-                    />
-                </Route>
-                <Route key={CommonServicesRoutes.key} path={CommonServicesRoutes.path}>
-                    <Route
-                        key={CommonServicesRoutes.key + "_root"}
-                        index
-                        element={<CommonServicesRoutes.indexComponent/>}
-                    />
-                    <Route
-                        key={NotFoundRouter.name}
-                        path={NotFoundRouter.path}
-                        element={<NotFoundRouter.component/>}
-                    />
-                    <Route
-                        key={ForbiddenRouter.name}
-                        path={ForbiddenRouter.path}
-                        element={<ForbiddenRouter.component/>}
-                    />
-                </Route>
+                {AllRoutes.map((x) => {
+                    // 如果有自己的layout，则嵌套加载自己的layout，但是请注意需要移除掉上面的根路径的layout，否则会出现多层layout
+                    if (x.layoutComponent == undefined) {
+                        return (
+                            <Route key={x.key} path={x.path}>
+                                <Route
+                                    key={x.key + "_root"}
+                                    index
+                                    element={<x.indexComponent/>}
+                                />
+                                {x.routes != undefined &&
+                                    renderRoute(x.key, x.routes)}
+                            </Route>
+                        );
+                    } else {
+                        return (
+                            <Route
+                                key={x.key}
+                                path={x.path}
+                                element={<x.layoutComponent/>}
+                            >
+                                <Route
+                                    key={x.key + "_root"}
+                                    index
+                                    element={<x.indexComponent/>}
+                                />
+                                {x.routes != undefined &&
+                                    renderRoute(x.key, x.routes)}
+                            </Route>
+                        );
+                    }
+                })}
                 <Route
                     path={"*"}
                     element={
