@@ -12,7 +12,7 @@ namespace NextStar.Identity.NextStarDbModels
         public string? OtherInfo { get; set; }
         public string? IpV4 { get; set; }
         public string? IpV6 { get; set; }
-        public string SessionId { get; set; } = null!;
+        public Guid? SessionId { get; set; }
         public DateTime LoginTime { get; set; }
         public DateTime? LogoutTime { get; set; }
 

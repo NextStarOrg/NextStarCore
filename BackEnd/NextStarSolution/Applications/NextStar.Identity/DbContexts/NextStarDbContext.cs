@@ -23,6 +23,8 @@ namespace NextStar.Identity.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
@@ -55,8 +57,6 @@ namespace NextStar.Identity.DbContexts
                     .HasDefaultValueSql("('Normal')");
 
                 entity.Property(e => e.OtherInfo).HasMaxLength(100);
-
-                entity.Property(e => e.SessionId).HasMaxLength(50);
 
                 entity.Property(e => e.UserAgent).HasMaxLength(200);
 
