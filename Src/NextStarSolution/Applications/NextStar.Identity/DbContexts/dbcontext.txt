@@ -1,4 +1,0 @@
-# Account 
-dotnet ef dbcontext scaffold "Server=localhost;Database=NextStar;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -t "User" -t "UserLoginHistory" -t "UserProfile" -t "UserThirdPartyLogin" -o  NextStarDbModels --context-dir DbContexts -c NextStarDbContext -f --no-onconfiguring
-
-Scaffold-DbContext "Server=localhost;Database=NextStar;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -Tables "User","UserLoginHistory","UserProfile","UserThirdPartyLogin" -OutputDir NextStarDbModels -ContextDir DbContexts -Context NextStarDbContext -Force -NoOnConfiguring

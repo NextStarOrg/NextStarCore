@@ -1,1 +1,0 @@
-dotnet run --no-build --project ..\NextStarSolution\Applications\NextStar.Identity\NextStar.Identity.csproj --launch-profile NextStar.Identity

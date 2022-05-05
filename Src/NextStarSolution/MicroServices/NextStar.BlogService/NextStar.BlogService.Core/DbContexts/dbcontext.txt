@@ -1,4 +1,0 @@
-﻿#Blog
-dotnet ef dbcontext scaffold "Server=localhost;Database=NextStar;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -t "Article" -t "Category" -t "Tag" -t "CodeEnvironment" -t "ArticleCategory" -t "ArticleCodeEnvironment" - t "ArticleContent" -t "ArticleLastContent" -t "ArticleTag" -o  BlogDbModels --context-dir DbContexts -c BlogDbContext -f --no-onconfiguring
-
-Scaffold-DbContext "Server=localhost;Database=NextStar;User Id=sa;Password=xA123456;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir NextStarDbModels -ContextDir DbContexts -Context NextStarDbContext -Force -NoOnConfiguring
